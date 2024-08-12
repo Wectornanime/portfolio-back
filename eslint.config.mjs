@@ -37,8 +37,7 @@ export default [
       //   'allowSeparatedGroups': true
       // }],
       'simple-import-sort/imports': 'error',
-      'simple-import-sort/exports': 'error',
-      'linebreak-style': ['warn', 'unix']
+      'simple-import-sort/exports': 'error'
     }
   }
 ];

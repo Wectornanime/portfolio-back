@@ -14,6 +14,7 @@ module.exports = {
                 '@controllers/*': './src/controllers/*',
                 '@dtos/*': './src/dtos/*',
                 '@services/*': './src/services/*',
+                '@repositories/*': './src/repositories/*',
                 '@middlewares/*': './src/middlewares/*'
             }
         }]
