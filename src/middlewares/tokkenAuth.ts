@@ -2,7 +2,7 @@ import { verifyJwtToken } from '@services/tokenJwt.service';
 import { NextFunction, Request, Response } from 'express';
 
 export function authJwtToken(req: Request, res: Response, next: NextFunction) {
-    const token = req.headers['token']?.split(' ')[1];
+    const token = req.headers['token'];
     if (!token) {
         return res.status(401).json({
             error: 'Unauthorized',
@@ -13,7 +13,7 @@ export function authJwtToken(req: Request, res: Response, next: NextFunction) {
     if (!verifiedToken) {
         return res.status(401).json({
             error: 'Unauthorized',
-            message: 'Você não tem autorização'
+            message: 'Você não tem autorização 2'
         });
     }
     next();
