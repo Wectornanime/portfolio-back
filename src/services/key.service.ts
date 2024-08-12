@@ -3,5 +3,8 @@ import crypto from 'crypto';
 
 export function keyGen() {
     const key = crypto.randomBytes(32).toString('hex');
-    return saveKey(key);
+    saveKey(key);
+    return key;
 };
+
+console.log(keyGen());
