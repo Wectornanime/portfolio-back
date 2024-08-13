@@ -6,14 +6,14 @@ export function authJwtToken(req: Request, res: Response, next: NextFunction) {
     if (!token) {
         return res.status(401).json({
             error: 'Unauthorized',
-            message: 'Você não tem autorização'
+            message: 'Você precisa de um login'
         });
     };
     const verifiedToken = verifyJwtToken(token);
     if (!verifiedToken) {
         return res.status(401).json({
             error: 'Unauthorized',
-            message: 'Você não tem autorização 2'
+            message: 'Você precisa de um token jwt valido'
         });
     }
     next();
