@@ -1,3 +1,4 @@
+import { createNewUser } from '@repositories/userRepository';
 import { generateJwtToken } from '@services/tokenJwt.service';
 import { Request, Response } from 'express';
 
@@ -13,4 +14,15 @@ export function login(req: Request, resp: Response) {
   }
 
   return resp.status(200).json({ error: 'senha errada' });
+}
+
+export async function signup(req: Request, resp: Response) {
+  const { name, email, password } = req.body;
+  const newUser = await createNewUser({ name, email, password });
+
+  if (newUser) {
+    resp.status(201).json({ message: 'Usuario criado com sucesso!' });
+  }
+
+  resp.status(400).json({ message: 'Usuario não criado.' });
 }
