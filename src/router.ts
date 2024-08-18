@@ -11,7 +11,7 @@ router.use('/user', usersRouter);
 router.use('/auth', authRouter);
 
 router.use((req: Request, res: Response) => {
-    res.status(400).json({ message: 'Rota não encontrada' });
+  res.status(400).json({ message: 'Rota não encontrada' });
 });
 
 export default router;
