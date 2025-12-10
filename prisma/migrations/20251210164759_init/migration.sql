@@ -1,6 +1,7 @@
 -- CreateTable
 CREATE TABLE "Project" (
     "id" SERIAL NOT NULL,
+    "imageUrl" TEXT NULL,
     "title" TEXT NOT NULL,
     "text" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
