@@ -9,12 +9,13 @@
     "rootDir": "./src",
     "baseUrl": ".",
     "paths": {
-      "@types/*": ["./src/@types/*"],
-      "@models/*": ["./src/models/*"],
-      "@controllers/*": ["./src/controllers/*"],
-      "@dtos/*": ["./src/dtos/*"],
-      "@services/*": ["./src/services/*"],
-      "@middlewares/*": ["./src/middlewares/*"]
+      "@adapter/*": ["./src/adapter/*"],
+      // "@types/*": ["./src/@types/*"],
+      // "@models/*": ["./src/models/*"],
+      // "@controllers/*": ["./src/controllers/*"],
+      // "@dtos/*": ["./src/dtos/*"],
+      // "@services/*": ["./src/services/*"],
+      // "@middlewares/*": ["./src/middlewares/*"]
     },
     "typeRoots": [
       "./node_modules/@types",
