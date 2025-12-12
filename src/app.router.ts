@@ -5,11 +5,13 @@ import GetAllProjectsController from './controllers/projects/getAll-projects.con
 import GetAllCertificatesController from './controllers/certificates/getAll-certificates.controller';
 import GetAllSkillsController from './controllers/skills/getAll-skills.controller';
 import GetAllInfoController from './controllers/info/getAll-info.controller';
+import GetAllDataController from './controllers/data/getAll-data.controller';
 
 export default class AppRouter {
   private router = Router();
 
   routes() {
+    this.router.get('/', expressRouterAdapter(new GetAllDataController));
     this.router.get('/projects', expressRouterAdapter(new GetAllProjectsController));
     this.router.get('/certificates', expressRouterAdapter(new GetAllCertificatesController));
     this.router.get('/skills', expressRouterAdapter(new GetAllSkillsController));
