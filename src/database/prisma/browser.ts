@@ -23,10 +23,10 @@ export * from './enums';
  */
 export type Project = Prisma.ProjectModel
 /**
- * Model Link
+ * Model ProjectLink
  * 
  */
-export type Link = Prisma.LinkModel
+export type ProjectLink = Prisma.ProjectLinkModel
 /**
  * Model Certificate
  * 
@@ -37,3 +37,13 @@ export type Certificate = Prisma.CertificateModel
  * 
  */
 export type Skill = Prisma.SkillModel
+/**
+ * Model Info
+ * 
+ */
+export type Info = Prisma.InfoModel
+/**
+ * Model InfoLink
+ * 
+ */
+export type InfoLink = Prisma.InfoLinkModel

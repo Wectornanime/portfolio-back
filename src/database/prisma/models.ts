@@ -9,7 +9,9 @@
  * 🟢 You can import this file directly.
  */
 export type * from './models/Project'
-export type * from './models/Link'
+export type * from './models/ProjectLink'
 export type * from './models/Certificate'
 export type * from './models/Skill'
+export type * from './models/Info'
+export type * from './models/InfoLink'
 export type * from './commonInputTypes'

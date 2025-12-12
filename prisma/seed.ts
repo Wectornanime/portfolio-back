@@ -1,10 +1,12 @@
 import { prisma } from '../src/adapter/prisma.adapter';
 
 async function main() {
-  await prisma.link.deleteMany();
+  await prisma.projectLink.deleteMany();
   await prisma.project.deleteMany();
   await prisma.certificate.deleteMany();
   await prisma.skill.deleteMany();
+  await prisma.infoLink.deleteMany();
+  await prisma.info.deleteMany();
 
   await prisma.project.createMany({
     data: [
@@ -26,7 +28,7 @@ async function main() {
     ]
   });
 
-  await prisma.link.createMany({
+  await prisma.projectLink.createMany({
     data: [
       {
         title: 'link 1.1',
@@ -89,6 +91,32 @@ async function main() {
         iconUrl: 'image',
       }
     ]
+  });
+
+  await prisma.info.create({
+    data: {
+      aboutMe: 'about me',
+      subtitle: 'subtitle',
+      title: 'title',
+      links: {
+        createMany: {
+          data: [
+            {
+              title: 'link 1',
+              link: '#'
+            },
+            {
+              title: 'link 2',
+              link: '#'
+            },
+            {
+              title: 'link 3',
+              link: '#'
+            }
+          ]
+        }
+      }
+    }
   });
 }
 

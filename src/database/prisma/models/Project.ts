@@ -216,7 +216,7 @@ export type ProjectWhereInput = {
   title?: Prisma.StringFilter<"Project"> | string
   text?: Prisma.StringFilter<"Project"> | string
   createdAt?: Prisma.DateTimeFilter<"Project"> | Date | string
-  links?: Prisma.LinkListRelationFilter
+  links?: Prisma.ProjectLinkListRelationFilter
 }
 
 export type ProjectOrderByWithRelationInput = {
@@ -225,7 +225,7 @@ export type ProjectOrderByWithRelationInput = {
   title?: Prisma.SortOrder
   text?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  links?: Prisma.LinkOrderByRelationAggregateInput
+  links?: Prisma.ProjectLinkOrderByRelationAggregateInput
 }
 
 export type ProjectWhereUniqueInput = Prisma.AtLeast<{
@@ -237,7 +237,7 @@ export type ProjectWhereUniqueInput = Prisma.AtLeast<{
   title?: Prisma.StringFilter<"Project"> | string
   text?: Prisma.StringFilter<"Project"> | string
   createdAt?: Prisma.DateTimeFilter<"Project"> | Date | string
-  links?: Prisma.LinkListRelationFilter
+  links?: Prisma.ProjectLinkListRelationFilter
 }, "id">
 
 export type ProjectOrderByWithAggregationInput = {
@@ -269,7 +269,7 @@ export type ProjectCreateInput = {
   title: string
   text: string
   createdAt?: Date | string
-  links?: Prisma.LinkCreateNestedManyWithoutProjectInput
+  links?: Prisma.ProjectLinkCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectUncheckedCreateInput = {
@@ -278,7 +278,7 @@ export type ProjectUncheckedCreateInput = {
   title: string
   text: string
   createdAt?: Date | string
-  links?: Prisma.LinkUncheckedCreateNestedManyWithoutProjectInput
+  links?: Prisma.ProjectLinkUncheckedCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectUpdateInput = {
@@ -286,7 +286,7 @@ export type ProjectUpdateInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   text?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  links?: Prisma.LinkUpdateManyWithoutProjectNestedInput
+  links?: Prisma.ProjectLinkUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectUncheckedUpdateInput = {
@@ -295,7 +295,7 @@ export type ProjectUncheckedUpdateInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   text?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  links?: Prisma.LinkUncheckedUpdateManyWithoutProjectNestedInput
+  links?: Prisma.ProjectLinkUncheckedUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectCreateManyInput = {
@@ -465,7 +465,7 @@ export type ProjectCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Exte
  * ProjectCountOutputType without action
  */
 export type ProjectCountOutputTypeCountLinksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.LinkWhereInput
+  where?: Prisma.ProjectLinkWhereInput
 }
 
 
@@ -514,7 +514,7 @@ export type ProjectIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
 export type $ProjectPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Project"
   objects: {
-    links: Prisma.$LinkPayload<ExtArgs>[]
+    links: Prisma.$ProjectLinkPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -916,7 +916,7 @@ readonly fields: ProjectFieldRefs;
  */
 export interface Prisma__ProjectClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  links<T extends Prisma.Project$linksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$linksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LinkPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  links<T extends Prisma.Project$linksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$linksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProjectLinkPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1343,23 +1343,23 @@ export type ProjectDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
  */
 export type Project$linksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the Link
+   * Select specific fields to fetch from the ProjectLink
    */
-  select?: Prisma.LinkSelect<ExtArgs> | null
+  select?: Prisma.ProjectLinkSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the Link
+   * Omit specific fields from the ProjectLink
    */
-  omit?: Prisma.LinkOmit<ExtArgs> | null
+  omit?: Prisma.ProjectLinkOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.LinkInclude<ExtArgs> | null
-  where?: Prisma.LinkWhereInput
-  orderBy?: Prisma.LinkOrderByWithRelationInput | Prisma.LinkOrderByWithRelationInput[]
-  cursor?: Prisma.LinkWhereUniqueInput
+  include?: Prisma.ProjectLinkInclude<ExtArgs> | null
+  where?: Prisma.ProjectLinkWhereInput
+  orderBy?: Prisma.ProjectLinkOrderByWithRelationInput | Prisma.ProjectLinkOrderByWithRelationInput[]
+  cursor?: Prisma.ProjectLinkWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.LinkScalarFieldEnum | Prisma.LinkScalarFieldEnum[]
+  distinct?: Prisma.ProjectLinkScalarFieldEnum | Prisma.ProjectLinkScalarFieldEnum[]
 }
 
 /**

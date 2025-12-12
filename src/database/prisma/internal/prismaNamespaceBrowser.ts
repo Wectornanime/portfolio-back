@@ -52,9 +52,11 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   Project: 'Project',
-  Link: 'Link',
+  ProjectLink: 'ProjectLink',
   Certificate: 'Certificate',
-  Skill: 'Skill'
+  Skill: 'Skill',
+  Info: 'Info',
+  InfoLink: 'InfoLink'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -84,7 +86,7 @@ export const ProjectScalarFieldEnum = {
 export type ProjectScalarFieldEnum = (typeof ProjectScalarFieldEnum)[keyof typeof ProjectScalarFieldEnum]
 
 
-export const LinkScalarFieldEnum = {
+export const ProjectLinkScalarFieldEnum = {
   id: 'id',
   projectId: 'projectId',
   title: 'title',
@@ -92,7 +94,7 @@ export const LinkScalarFieldEnum = {
   createdAt: 'createdAt'
 } as const
 
-export type LinkScalarFieldEnum = (typeof LinkScalarFieldEnum)[keyof typeof LinkScalarFieldEnum]
+export type ProjectLinkScalarFieldEnum = (typeof ProjectLinkScalarFieldEnum)[keyof typeof ProjectLinkScalarFieldEnum]
 
 
 export const CertificateScalarFieldEnum = {
@@ -114,6 +116,29 @@ export const SkillScalarFieldEnum = {
 } as const
 
 export type SkillScalarFieldEnum = (typeof SkillScalarFieldEnum)[keyof typeof SkillScalarFieldEnum]
+
+
+export const InfoScalarFieldEnum = {
+  id: 'id',
+  imageUrl: 'imageUrl',
+  title: 'title',
+  subtitle: 'subtitle',
+  aboutMe: 'aboutMe',
+  createdAt: 'createdAt'
+} as const
+
+export type InfoScalarFieldEnum = (typeof InfoScalarFieldEnum)[keyof typeof InfoScalarFieldEnum]
+
+
+export const InfoLinkScalarFieldEnum = {
+  id: 'id',
+  infoId: 'infoId',
+  title: 'title',
+  link: 'link',
+  createdAt: 'createdAt'
+} as const
+
+export type InfoLinkScalarFieldEnum = (typeof InfoLinkScalarFieldEnum)[keyof typeof InfoLinkScalarFieldEnum]
 
 
 export const SortOrder = {

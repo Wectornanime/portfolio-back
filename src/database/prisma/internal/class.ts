@@ -20,7 +20,7 @@ const config: runtime.GetPrismaClientConfig = {
   "clientVersion": "7.1.0",
   "engineVersion": "ab635e6b9d606fa5c8fb8b1a7f909c3c3c1c98ba",
   "activeProvider": "postgresql",
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client\"\n  output   = \"../src/database/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n\nmodel Project {\n  id        Int      @id @default(autoincrement())\n  imageUrl  String?\n  title     String\n  text      String\n  links     Link[]\n  createdAt DateTime @default(now())\n}\n\nmodel Link {\n  id        Int      @id @default(autoincrement())\n  projectId Int\n  title     String\n  link      String\n  createdAt DateTime @default(now())\n\n  project Project @relation(fields: [projectId], references: [id])\n}\n\nmodel Certificate {\n  id        Int      @id @default(autoincrement())\n  title     String\n  link      String?\n  imageUrl  String?\n  createdAt DateTime @default(now())\n}\n\nmodel Skill {\n  id        Int      @id @default(autoincrement())\n  title     String\n  iconUrl   String\n  createdAt DateTime @default(now())\n}\n",
+  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client\"\n  output   = \"../src/database/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n\nmodel Project {\n  id        Int           @id @default(autoincrement())\n  imageUrl  String?\n  title     String\n  text      String\n  links     ProjectLink[]\n  createdAt DateTime      @default(now())\n}\n\nmodel ProjectLink {\n  id        Int      @id @default(autoincrement())\n  projectId Int\n  title     String\n  link      String\n  createdAt DateTime @default(now())\n\n  project Project @relation(fields: [projectId], references: [id])\n}\n\nmodel Certificate {\n  id        Int      @id @default(autoincrement())\n  title     String\n  link      String?\n  imageUrl  String?\n  createdAt DateTime @default(now())\n}\n\nmodel Skill {\n  id        Int      @id @default(autoincrement())\n  title     String\n  iconUrl   String\n  createdAt DateTime @default(now())\n}\n\nmodel Info {\n  id        Int        @id @default(autoincrement())\n  imageUrl  String?\n  title     String\n  subtitle  String\n  aboutMe   String\n  links     InfoLink[]\n  createdAt DateTime   @default(now())\n}\n\nmodel InfoLink {\n  id        Int      @id @default(autoincrement())\n  infoId    Int\n  title     String\n  link      String\n  createdAt DateTime @default(now())\n\n  info Info @relation(fields: [infoId], references: [id])\n}\n",
   "runtimeDataModel": {
     "models": {},
     "enums": {},
@@ -28,7 +28,7 @@ const config: runtime.GetPrismaClientConfig = {
   }
 }
 
-config.runtimeDataModel = JSON.parse("{\"models\":{\"Project\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"imageUrl\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"text\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"links\",\"kind\":\"object\",\"type\":\"Link\",\"relationName\":\"LinkToProject\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"Link\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"projectId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"link\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"project\",\"kind\":\"object\",\"type\":\"Project\",\"relationName\":\"LinkToProject\"}],\"dbName\":null},\"Certificate\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"link\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"imageUrl\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"Skill\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"iconUrl\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
+config.runtimeDataModel = JSON.parse("{\"models\":{\"Project\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"imageUrl\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"text\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"links\",\"kind\":\"object\",\"type\":\"ProjectLink\",\"relationName\":\"ProjectToProjectLink\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"ProjectLink\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"projectId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"link\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"project\",\"kind\":\"object\",\"type\":\"Project\",\"relationName\":\"ProjectToProjectLink\"}],\"dbName\":null},\"Certificate\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"link\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"imageUrl\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"Skill\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"iconUrl\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"Info\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"imageUrl\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"subtitle\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"aboutMe\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"links\",\"kind\":\"object\",\"type\":\"InfoLink\",\"relationName\":\"InfoToInfoLink\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"InfoLink\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"infoId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"link\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"info\",\"kind\":\"object\",\"type\":\"Info\",\"relationName\":\"InfoToInfoLink\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
 
 async function decodeBase64AsWasm(wasmBase64: string): Promise<WebAssembly.Module> {
   const { Buffer } = await import('node:buffer')
@@ -185,14 +185,14 @@ export interface PrismaClient<
   get project(): Prisma.ProjectDelegate<ExtArgs, { omit: OmitOpts }>;
 
   /**
-   * `prisma.link`: Exposes CRUD operations for the **Link** model.
+   * `prisma.projectLink`: Exposes CRUD operations for the **ProjectLink** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more Links
-    * const links = await prisma.link.findMany()
+    * // Fetch zero or more ProjectLinks
+    * const projectLinks = await prisma.projectLink.findMany()
     * ```
     */
-  get link(): Prisma.LinkDelegate<ExtArgs, { omit: OmitOpts }>;
+  get projectLink(): Prisma.ProjectLinkDelegate<ExtArgs, { omit: OmitOpts }>;
 
   /**
    * `prisma.certificate`: Exposes CRUD operations for the **Certificate** model.
@@ -213,6 +213,26 @@ export interface PrismaClient<
     * ```
     */
   get skill(): Prisma.SkillDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.info`: Exposes CRUD operations for the **Info** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Infos
+    * const infos = await prisma.info.findMany()
+    * ```
+    */
+  get info(): Prisma.InfoDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.infoLink`: Exposes CRUD operations for the **InfoLink** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more InfoLinks
+    * const infoLinks = await prisma.infoLink.findMany()
+    * ```
+    */
+  get infoLink(): Prisma.InfoLinkDelegate<ExtArgs, { omit: OmitOpts }>;
 }
 
 export function getPrismaClientClass(): PrismaClientConstructor {
