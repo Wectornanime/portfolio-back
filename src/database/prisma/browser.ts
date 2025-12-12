@@ -32,3 +32,8 @@ export type Link = Prisma.LinkModel
  * 
  */
 export type Certificate = Prisma.CertificateModel
+/**
+ * Model Skill
+ * 
+ */
+export type Skill = Prisma.SkillModel

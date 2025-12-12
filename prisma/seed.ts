@@ -4,6 +4,7 @@ async function main() {
   await prisma.link.deleteMany();
   await prisma.project.deleteMany();
   await prisma.certificate.deleteMany();
+  await prisma.skill.deleteMany();
 
   await prisma.project.createMany({
     data: [
@@ -55,6 +56,40 @@ async function main() {
     ]
   });
 
+  await prisma.certificate.createMany({
+    data: [
+      {
+        title: 'certificate 1',
+        link: '#'
+      },
+      {
+        title: 'certificate 2',
+        link: '#'
+      },
+      {
+        title: 'certificate 3',
+        imageUrl: 'image:',
+        link: '#'
+      },
+    ]
+  });
+
+  await prisma.skill.createMany({
+    data: [
+      {
+        title: 'skill 1',
+        iconUrl: 'image',
+      },
+      {
+        title: 'skill 2',
+        iconUrl: 'image',
+      },
+      {
+        title: 'skill 3',
+        iconUrl: 'image',
+      }
+    ]
+  });
 }
 
 main()

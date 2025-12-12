@@ -11,4 +11,5 @@
 export type * from './models/Project'
 export type * from './models/Link'
 export type * from './models/Certificate'
+export type * from './models/Skill'
 export type * from './commonInputTypes'

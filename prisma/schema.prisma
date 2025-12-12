@@ -39,3 +39,10 @@ model Certificate {
   imageUrl  String?
   createdAt DateTime @default(now())
 }
+
+model Skill {
+  id        Int      @id @default(autoincrement())
+  title     String
+  iconUrl   String
+  createdAt DateTime @default(now())
+}
