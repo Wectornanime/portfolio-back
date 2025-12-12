@@ -3,6 +3,7 @@ import { prisma } from '../src/adapter/prisma.adapter';
 async function main() {
   await prisma.link.deleteMany();
   await prisma.project.deleteMany();
+  await prisma.certificate.deleteMany();
 
   await prisma.project.createMany({
     data: [

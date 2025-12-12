@@ -27,3 +27,8 @@ export type Project = Prisma.ProjectModel
  * 
  */
 export type Link = Prisma.LinkModel
+/**
+ * Model Certificate
+ * 
+ */
+export type Certificate = Prisma.CertificateModel

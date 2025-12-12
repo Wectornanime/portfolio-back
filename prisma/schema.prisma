@@ -31,3 +31,11 @@ model Link {
 
   project Project @relation(fields: [projectId], references: [id])
 }
+
+model Certificate {
+  id        Int      @id @default(autoincrement())
+  title     String
+  link      String?
+  imageUrl  String?
+  createdAt DateTime @default(now())
+}
