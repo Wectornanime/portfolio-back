@@ -7,3 +7,13 @@ type HttpResponse = {
   data?: unknown
   message?: string
 }
+
+type HttpMethod = 'get' | 'post' | 'put' | 'patch' | 'delete';
+
+type HttpRouter = {
+  [path: string]: {
+    [method in HttpMethod]?: {
+      controller: Controller;
+    };
+  };
+};

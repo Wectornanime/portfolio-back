@@ -1,6 +1,6 @@
 import { prisma } from '@adapter/prisma.adapter';
 
-export default class GetAllInfoController implements Controller {
+export default class GetAllDataController implements Controller {
   async handle(): Promise<HttpResponse> {
     const info = await prisma.info.findFirst({
       include: { links: true }

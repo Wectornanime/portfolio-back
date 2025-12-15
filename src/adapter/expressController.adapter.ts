@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-export const expressRouterAdapter = (controller: Controller) => {
+export const expressControllerAdapter = (controller: Controller) => {
   return async (req: Request, resp: Response) => {
     const { statusCode, ...result } = await controller.handle();
 

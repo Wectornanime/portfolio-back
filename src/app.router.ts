@@ -1,22 +1,16 @@
-import { Router } from 'express';
-import { expressRouterAdapter } from '@adapter/express.adapter';
+import { certificatesRouter } from './routers/certificates.router';
+import { dataRouter } from './routers/data.router';
+import { infoRouter } from './routers/info.router';
+import { projectsRouter } from './routers/projects.router';
+import { skillsRouter } from './routers/skills.router';
 
-import GetAllProjectsController from './controllers/projects/getAll-projects.controller';
-import GetAllCertificatesController from './controllers/certificates/getAll-certificates.controller';
-import GetAllSkillsController from './controllers/skills/getAll-skills.controller';
-import GetAllInfoController from './controllers/info/getAll-info.controller';
-import GetAllDataController from './controllers/data/getAll-data.controller';
-
-export default class AppRouter {
-  private router = Router();
-
-  routes() {
-    this.router.get('/', expressRouterAdapter(new GetAllDataController));
-    this.router.get('/projects', expressRouterAdapter(new GetAllProjectsController));
-    this.router.get('/certificates', expressRouterAdapter(new GetAllCertificatesController));
-    this.router.get('/skills', expressRouterAdapter(new GetAllSkillsController));
-    this.router.get('/info', expressRouterAdapter(new GetAllInfoController));
-
-    return this.router;
-  }
+type RouterType = {
+  [path: string]: HttpRouter
 }
+export const appRouter: RouterType = {
+  '/': dataRouter,
+  '/projects': projectsRouter,
+  '/certificates': certificatesRouter,
+  '/skills': skillsRouter,
+  '/info': infoRouter,
+};
