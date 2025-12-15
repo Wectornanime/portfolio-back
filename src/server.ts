@@ -5,4 +5,7 @@ dotenv.config();
 
 const port = process.env.PORT || 3000;
 
-app.listen(port, () => console.log(`app listing at port ${port}`));
+app.listen(port, () => {
+  console.log(`The app is running at the environment: ${p*ort}`)
+  console.log(`app listing at port ${port}`)
+});
