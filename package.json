@@ -5,7 +5,9 @@
   "scripts": {
     "build": "tsup",
     "dev": "dotenv -e .env.development -- ts-node-dev -r tsconfig-paths/register --respawn --transpile-only --ignore-watch node_modules --no-notify src/server.ts",
-    "start": "dotenv -e .env.prod -- node dist/server.js"
+    "start": "dotenv -e .env.prod -- node dist/server.js",
+    "predeploy": "dotenv -e .env.prod -- prisma generate && dotenv -e .env.prod -- prisma migrate deploy",
+    "deploy": "npm run build"
   },
   "keywords": [],
   "author": "",

@@ -4,5 +4,6 @@ declare namespace NodeJS {
     SUPABASE_URL: string;
     SUPABASE_ANON_KEY: string;
     DATABASE_URL: string;
+    NODE_ENV: string;
   }
 }

@@ -6,6 +6,6 @@ dotenv.config();
 const port = process.env.PORT || 3000;
 
 app.listen(port, () => {
-  console.log(`The app is running at the environment: ${p*ort}`)
-  console.log(`app listing at port ${port}`)
+  console.log(`The app is running at the environment: ${process.env.NODE_ENV}`);
+  console.log(`App listing at port: ${port}`);
 });
