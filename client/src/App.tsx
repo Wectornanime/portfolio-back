@@ -1,19 +1,15 @@
 import { Route, Routes } from "react-router-dom";
 
-import IndexPage from "@/pages/index";
-import DocsPage from "@/pages/docs";
-import PricingPage from "@/pages/pricing";
-import BlogPage from "@/pages/blog";
-import AboutPage from "@/pages/about";
+import { routes } from "@/config/routes";
 
 function App() {
+  const routerList = Object.entries(routes);
+
   return (
     <Routes>
-      <Route element={<IndexPage />} path="/" />
-      <Route element={<DocsPage />} path="/docs" />
-      <Route element={<PricingPage />} path="/pricing" />
-      <Route element={<BlogPage />} path="/blog" />
-      <Route element={<AboutPage />} path="/about" />
+      {routerList.map(([path, PageComponent]) => (
+        <Route key={path} element={<PageComponent />} path={path} />
+      ))}
     </Routes>
   );
 }

@@ -1,28 +1,25 @@
-import clsx from "clsx";
-import { Button } from "@heroui/button";
 import { Link } from "@heroui/link";
-import { Card, CardBody } from "@heroui/card";
-import {
-  Drawer,
-  DrawerBody,
-  DrawerContent,
-  DrawerHeader,
-} from "@heroui/drawer";
 import {
   Navbar as HeroUINavbar,
   NavbarBrand,
   NavbarContent,
   NavbarItem,
 } from "@heroui/navbar";
-import { link as linkStyles } from "@heroui/theme";
-import { useDisclosure } from "@heroui/react";
 import {
-  KeyboardDoubleArrowLeftRounded as KeyboardDoubleArrowLeftRoundedIcon,
+  Drawer,
+  DrawerContent,
+  DrawerHeader,
+  DrawerBody,
+} from "@heroui/drawer";
+import { Card, CardBody, useDisclosure } from "@heroui/react";
+import { Button } from "@heroui/button";
+import {
   KeyboardDoubleArrowRightRounded as KeyboardDoubleArrowRightRoundedIcon,
+  KeyboardDoubleArrowLeftRounded as KeyboardDoubleArrowLeftRoundedIcon,
 } from "@mui/icons-material";
 
-import { ThemeSwitch } from "@/components/theme-switch";
 import { siteConfig } from "@/config/site";
+import { ThemeSwitch } from "@/components/theme-switch";
 import { GithubIcon } from "@/components/icons";
 
 export const Navbar = () => {
@@ -35,45 +32,37 @@ export const Navbar = () => {
           <Button isIconOnly variant="light" onPress={onOpen}>
             <KeyboardDoubleArrowRightRoundedIcon />
           </Button>
+          <Drawer
+            hideCloseButton
+            isOpen={isOpen}
+            placement="left"
+            size="xs"
+            onOpenChange={onOpenChange}
+          >
+            <DrawerContent>
+              {(onClose) => (
+                <>
+                  <DrawerHeader className="flex-row-reverse">
+                    <Button isIconOnly variant="light" onPress={onClose}>
+                      <KeyboardDoubleArrowLeftRoundedIcon />
+                    </Button>
+                  </DrawerHeader>
+                  <DrawerBody>
+                    {siteConfig.navItems.map((item) => (
+                      <Card key={item.href}>
+                        <CardBody>
+                          <Link color="foreground" href={item.href}>
+                            {item.label}
+                          </Link>
+                        </CardBody>
+                      </Card>
+                    ))}
+                  </DrawerBody>
+                </>
+              )}
+            </DrawerContent>
+          </Drawer>
         </NavbarBrand>
-
-        <Drawer
-          hideCloseButton
-          isOpen={isOpen}
-          placement="left"
-          size="xs"
-          onOpenChange={onOpenChange}
-        >
-          <DrawerContent>
-            {(onClose) => (
-              <>
-                <DrawerHeader className="flex-row-reverse">
-                  <Button isIconOnly variant="light" onPress={onClose}>
-                    <KeyboardDoubleArrowLeftRoundedIcon />
-                  </Button>
-                </DrawerHeader>
-                <DrawerBody>
-                  {siteConfig.navItems.map((item) => (
-                    <Card key={item.href}>
-                      <CardBody>
-                        <Link
-                          className={clsx(
-                            linkStyles({ color: "foreground" }),
-                            "data-[active=true]:text-primary data-[active=true]:font-medium",
-                          )}
-                          color="foreground"
-                          href={item.href}
-                        >
-                          {item.label}
-                        </Link>
-                      </CardBody>
-                    </Card>
-                  ))}
-                </DrawerBody>
-              </>
-            )}
-          </DrawerContent>
-        </Drawer>
       </NavbarContent>
 
       <NavbarContent className="flex basis-1/5 sm:basis-full" justify="end">
