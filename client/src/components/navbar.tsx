@@ -11,11 +11,13 @@ import {
   DrawerHeader,
   DrawerBody,
 } from "@heroui/drawer";
-import { Card, CardBody, useDisclosure } from "@heroui/react";
+import { Avatar, useDisclosure } from "@heroui/react";
 import { Button } from "@heroui/button";
 import {
   KeyboardDoubleArrowRightRounded as KeyboardDoubleArrowRightRoundedIcon,
   KeyboardDoubleArrowLeftRounded as KeyboardDoubleArrowLeftRoundedIcon,
+  LogoutRounded as LogoutRoundedIcon,
+  SettingsRounded as SettingsRoundedIcon,
 } from "@mui/icons-material";
 
 import { siteConfig } from "@/config/site";
@@ -47,16 +49,41 @@ export const Navbar = () => {
                       <KeyboardDoubleArrowLeftRoundedIcon />
                     </Button>
                   </DrawerHeader>
-                  <DrawerBody>
-                    {siteConfig.navItems.map((item) => (
-                      <Card key={item.href}>
-                        <CardBody>
-                          <Link color="foreground" href={item.href}>
-                            {item.label}
-                          </Link>
-                        </CardBody>
-                      </Card>
-                    ))}
+                  <DrawerBody className="flex justify-between pb-4">
+                    <div>
+                      {siteConfig.navItems.map((item) => (
+                        <Link
+                          key={item.href}
+                          className="flex items-center gap-2 py-2"
+                          color="foreground"
+                          href={item.href}
+                          onClick={onClose}
+                        >
+                          <item.icon />
+                          {item.label}
+                        </Link>
+                      ))}
+                    </div>
+                    <div>
+                      <Link
+                        className="flex items-center gap-2 py-2"
+                        color="foreground"
+                        href="#"
+                        onClick={onClose}
+                      >
+                        <SettingsRoundedIcon />
+                        Preferencias
+                      </Link>
+                      <Link
+                        className="flex items-center gap-2 py-2"
+                        color="danger"
+                        href="#"
+                        onClick={onClose}
+                      >
+                        <LogoutRoundedIcon />
+                        Log out
+                      </Link>
+                    </div>
                   </DrawerBody>
                 </>
               )}
@@ -71,6 +98,9 @@ export const Navbar = () => {
             <GithubIcon className="text-default-500" />
           </Link>
           <ThemeSwitch />
+          <Link href="/user">
+            <Avatar size="sm" />
+          </Link>
         </NavbarItem>
       </NavbarContent>
     </HeroUINavbar>

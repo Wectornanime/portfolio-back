@@ -1,3 +1,8 @@
+import {
+  CircleRounded as CircleRoundedIcon,
+  HomeRounded as HomeRoundedIcon,
+} from "@mui/icons-material";
+
 export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
@@ -7,25 +12,30 @@ export const siteConfig = {
     {
       label: "Home",
       href: "/",
+      icon: HomeRoundedIcon,
     },
     {
       label: "Docs",
       href: "/docs",
+      icon: CircleRoundedIcon,
     },
     {
       label: "Pricing",
       href: "/pricing",
+      icon: CircleRoundedIcon,
     },
     {
       label: "Blog",
       href: "/blog",
+      icon: CircleRoundedIcon,
     },
     {
       label: "About",
       href: "/about",
+      icon: CircleRoundedIcon,
     },
   ],
   links: {
-    github: "https://github.com/heroui-inc/heroui",
+    github: "https://github.com/Wectornanime/portfolio-back",
   },
 };
