@@ -1,8 +1,8 @@
 import IndexPage from "@/pages/index";
-import DocsPage from "@/pages/docs";
+import ProjectsPage from "@/pages/projects";
 
 export const routes = {
   "/": IndexPage,
   "/:id": IndexPage,
-  "/docs": DocsPage,
+  "/projects": ProjectsPage,
 };
