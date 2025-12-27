@@ -64,7 +64,7 @@ export const Navbar = () => {
                         return (
                           <Link
                             key={item.href}
-                            className={`flex items-center gap-2 py-2 ${isActive ? "text-primary font-medium" : "text-foreground"}`}
+                            className={`flex items-center gap-2 py-2 px-1 rounded-lg ${isActive ? "font-semibold bg-white/10 hover:bg-white/30" : "hover:bg-white/10"}`}
                             color="foreground"
                             href={item.href}
                             onClick={onClose}
