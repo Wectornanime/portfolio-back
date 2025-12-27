@@ -4,7 +4,7 @@ import { Image } from "@heroui/react";
 
 import { title } from "@/components/primitives";
 
-export default function DocsPage() {
+export default function ProjectsPage() {
   return (
     <>
       <h1 className={title()}>Projects</h1>

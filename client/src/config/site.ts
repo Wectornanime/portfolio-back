@@ -2,6 +2,7 @@ import {
   CircleRounded as CircleRoundedIcon,
   HomeRounded as HomeRoundedIcon,
   SchoolRounded as SchoolRoundedIcon,
+  WorkRounded as WorkRoundedIcon,
 } from "@mui/icons-material";
 
 export type SiteConfig = typeof siteConfig;
@@ -18,12 +19,12 @@ export const siteConfig = {
     {
       label: "Projects",
       href: "/projects",
-      icon: SchoolRoundedIcon,
+      icon: WorkRoundedIcon,
     },
     {
-      label: "Pricing",
-      href: "/pricing",
-      icon: CircleRoundedIcon,
+      label: "Certificates",
+      href: "/certificates",
+      icon: SchoolRoundedIcon,
     },
     {
       label: "Blog",
