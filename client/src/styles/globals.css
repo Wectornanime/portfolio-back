@@ -19,5 +19,5 @@
 }
 
 .masonry > * {
-  @apply mb-4 break-inside-avoid;
+  @apply mb-4 break-inside-avoid w-[1/4];
 }
