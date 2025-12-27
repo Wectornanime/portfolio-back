@@ -3,6 +3,6 @@ import ProjectsPage from "@/pages/projects";
 
 export const routes = {
   "/": IndexPage,
-  "/:id": IndexPage,
   "/projects": ProjectsPage,
+  "/projects/:id": IndexPage,
 };

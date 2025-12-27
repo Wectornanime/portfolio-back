@@ -19,12 +19,15 @@ import {
   LogoutRounded as LogoutRoundedIcon,
   SettingsRounded as SettingsRoundedIcon,
 } from "@mui/icons-material";
+import { useLocation } from "react-router-dom";
 
 import { siteConfig } from "@/config/site";
 import { ThemeSwitch } from "@/components/theme-switch";
 import { GithubIcon } from "@/components/icons";
 
 export const Navbar = () => {
+  const location = useLocation();
+  const pathname = location.pathname;
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   return (
@@ -51,18 +54,26 @@ export const Navbar = () => {
                   </DrawerHeader>
                   <DrawerBody className="flex justify-between pb-4">
                     <div>
-                      {siteConfig.navItems.map((item) => (
-                        <Link
-                          key={item.href}
-                          className="flex items-center gap-2 py-2"
-                          color="foreground"
-                          href={item.href}
-                          onClick={onClose}
-                        >
-                          <item.icon />
-                          {item.label}
-                        </Link>
-                      ))}
+                      {siteConfig.navItems.map((item) => {
+                        const isHome = item.href === "/";
+                        const active = pathname.startsWith(item.href);
+                        const isActive = isHome
+                          ? location.pathname === "/"
+                          : active;
+
+                        return (
+                          <Link
+                            key={item.href}
+                            className={`flex items-center gap-2 py-2 ${isActive ? "text-primary font-medium" : "text-foreground"}`}
+                            color="foreground"
+                            href={item.href}
+                            onClick={onClose}
+                          >
+                            <item.icon />
+                            {item.label}
+                          </Link>
+                        );
+                      })}
                     </div>
                     <div>
                       <Link
