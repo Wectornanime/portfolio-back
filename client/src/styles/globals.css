@@ -21,3 +21,7 @@
 .masonry > * {
   @apply mb-4 break-inside-avoid w-[1/4];
 }
+
+.full {
+  @apply w-full h-full
+}
