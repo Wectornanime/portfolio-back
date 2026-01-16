@@ -9,7 +9,8 @@ type HttpResponse = {
 }
 
 type HttpRequest = {
-  params: { id?: string }
+  params: { id?: string },
+  body?: unknown
 }
 
 type HttpMethod = 'get' | 'post' | 'put' | 'patch' | 'delete';
