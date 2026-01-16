@@ -3,7 +3,7 @@ interface Controller {
 }
 
 type HttpResponse = {
-  statusCode: 200 | 404 | 400 | 500
+  statusCode: 200 | 204 | 404 | 400 | 500
   data?: unknown
   message?: string
 }
