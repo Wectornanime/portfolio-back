@@ -3,7 +3,11 @@ import { Request, Response } from 'express';
 export const expressControllerAdapter = (controller: Controller) => {
   return async (req: Request, resp: Response) => {
     try {
-      const { statusCode, ...result } = await controller.handle();
+      const httpRequest = {
+        params: req.params,
+      };
+
+      const { statusCode, ...result } = await controller.handle(httpRequest);
 
       return resp.status(statusCode).send(result);
     } catch (error) {
