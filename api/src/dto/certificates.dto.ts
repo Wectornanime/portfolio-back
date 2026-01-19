@@ -5,3 +5,9 @@ export const createCertificateDto = object({
   link: string().nullable(),
   imageUrl: string().nullable(),
 });
+
+export const updateCertificateDto = object({
+  title: string(),
+  link: string().nullable(),
+  imageUrl: string().nullable(),
+});

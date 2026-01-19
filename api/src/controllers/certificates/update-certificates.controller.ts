@@ -1,0 +1,38 @@
+import { prisma } from '@adapter/prisma.adapter';
+import { updateCertificateDto } from 'src/dto/certificates.dto';
+
+export default class UpdateCertificatesController implements Controller {
+  async handle(request: HttpRequest): Promise<HttpResponse> {
+    const { id } = request.params;
+    const { body } = request;
+
+    const requestId = Number(id);
+
+    const certificate = await prisma.certificate.findFirst({
+      where: { id: requestId },
+    });
+    if (!certificate) {
+      return { statusCode: 400, message: 'Não foi possível encontrar um certificado com o id fornecido.' };
+    }
+
+    const { data, error } = updateCertificateDto.safeParse(body);
+    if (error) {
+      return { statusCode: 400, message: 'Não foi possível validar os dados da requisição.' };
+    }
+
+    await prisma.certificate.update({
+      where: { id: requestId },
+      data: {
+        title: data.title,
+        link: data.link,
+        imageUrl: data.imageUrl
+      }
+    });
+
+    const newCertificate = await prisma.certificate.findFirst({
+      where: { id: requestId }
+    });
+
+    return { statusCode: 200, data: newCertificate };
+  }
+}
