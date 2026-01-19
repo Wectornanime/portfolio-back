@@ -21,9 +21,17 @@ import {
 import { useMemo, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
+import { api } from "@/services/api.service";
+
 type itemListLinkType = {
   key: string;
-  label: string;
+  title: string;
+  link: string;
+};
+
+type ProjectDataType = {
+  title: string;
+  text: string;
   link: string;
 };
 
@@ -31,6 +39,11 @@ export default function CreateProjectsPage() {
   const location = useLocation();
   const navigate = useNavigate();
 
+  const [projectData, setProjectData] = useState<ProjectDataType>({
+    text: "",
+    title: "",
+    link: "",
+  });
   const [linkList, setLinkList] = useState<itemListLinkType[]>([
     // {
     //   key: "1",
@@ -47,7 +60,7 @@ export default function CreateProjectsPage() {
   const [editingRowId, setEditingRowId] = useState<string | null>(null);
   const [draftRow, setDraftRow] = useState<itemListLinkType>({
     key: "",
-    label: "",
+    title: "",
     link: "",
   });
 
@@ -62,7 +75,7 @@ export default function CreateProjectsPage() {
     setEditingRowId(null);
     setDraftRow({
       key: "",
-      label: "",
+      title: "",
       link: "",
     });
   };
@@ -83,7 +96,7 @@ export default function CreateProjectsPage() {
 
     const newRow = {
       key: Date.now().toString(),
-      label: "",
+      title: "",
       link: "",
     };
 
@@ -96,6 +109,24 @@ export default function CreateProjectsPage() {
     const pathParent = path.substring(0, path.lastIndexOf("/"));
 
     navigate(pathParent);
+  };
+
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const body = {
+      imageUrl: null,
+      title: projectData.title,
+      text: projectData.text,
+      links: linkList.map((link) => {
+        return {
+          title: link.title,
+          link: link.link,
+        };
+      }),
+    };
+
+    api.post(`/projects`, body);
   };
 
   const tableTopContent = useMemo(() => {
@@ -116,9 +147,27 @@ export default function CreateProjectsPage() {
   }, [linkList]);
 
   return (
-    <Form className="full" onReset={onReset}>
-      <Input isRequired label="Título" size="sm" type="text" />
-      <Textarea isRequired label="Descrição" size="sm" type="text" />
+    <Form className="full" onReset={onReset} onSubmit={(e) => onSubmit(e)}>
+      <Input
+        isRequired
+        label="Título"
+        size="sm"
+        type="text"
+        value={projectData.title}
+        onChange={(e) => {
+          setProjectData({ ...projectData, title: e.target.value });
+        }}
+      />
+      <Textarea
+        isRequired
+        label="Descrição"
+        size="sm"
+        type="text"
+        value={projectData.text}
+        onChange={(e) => {
+          setProjectData({ ...projectData, text: e.target.value });
+        }}
+      />
 
       <Table hideHeader topContent={tableTopContent}>
         <TableHeader>
@@ -133,17 +182,17 @@ export default function CreateProjectsPage() {
               <TableCell>
                 {isEditing(row.key) ? (
                   <Input
-                    placeholder="label"
+                    placeholder="title"
                     size="sm"
                     type="text"
-                    value={draftRow.label}
+                    value={draftRow.title}
                     variant="underlined"
                     onChange={(e) =>
-                      setDraftRow({ ...draftRow, label: e.target.value })
+                      setDraftRow({ ...draftRow, title: e.target.value })
                     }
                   />
                 ) : (
-                  <p className="text-medium">{row.label}</p>
+                  <p className="text-medium">{row.title}</p>
                 )}
               </TableCell>
 
@@ -152,6 +201,13 @@ export default function CreateProjectsPage() {
                   <Input
                     placeholder="link"
                     size="sm"
+                    startContent={
+                      <div className="pointer-events-none flex items-center">
+                        <span className="text-default-400 text-small">
+                          https://
+                        </span>
+                      </div>
+                    }
                     type="url"
                     value={draftRow.link}
                     variant="underlined"
