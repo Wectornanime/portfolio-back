@@ -2,6 +2,7 @@ import CreateProjectsController from 'src/controllers/projects/create-projects.c
 import DeleteProjectsController from 'src/controllers/projects/delete-projects.controller';
 import GetAllProjectsController from 'src/controllers/projects/getAll-projects.controller';
 import GetOneProjectsController from 'src/controllers/projects/getOne-projects.controller';
+import UpdateProjectsController from 'src/controllers/projects/update-projects.controller';
 
 export const projectsRouter: HttpRouter = {
   '/': {
@@ -16,8 +17,11 @@ export const projectsRouter: HttpRouter = {
     get: {
       controller: new GetOneProjectsController
     },
+    put: {
+      controller: new UpdateProjectsController
+    },
     delete: {
-      controller: new DeleteProjectsController()
+      controller: new DeleteProjectsController
     }
   }
 };

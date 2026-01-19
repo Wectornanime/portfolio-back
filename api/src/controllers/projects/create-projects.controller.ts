@@ -7,7 +7,6 @@ export default class CreateProjectsController implements Controller {
 
     const { data, error } = createProjectDto.safeParse(body);
     if (error) {
-      console.log(error);
       return { statusCode: 400, message: 'Não foi possível validar os dados enviados.' };
     }
 
