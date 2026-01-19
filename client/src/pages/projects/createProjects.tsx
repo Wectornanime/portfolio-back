@@ -114,6 +114,9 @@ export default function CreateProjectsPage() {
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    const path = location.pathname;
+    const pathParent = path.substring(0, path.lastIndexOf("/"));
+
     const body = {
       imageUrl: null,
       title: projectData.title,
@@ -127,6 +130,8 @@ export default function CreateProjectsPage() {
     };
 
     api.post(`/projects`, body);
+
+    navigate(pathParent);
   };
 
   const tableTopContent = useMemo(() => {
