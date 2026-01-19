@@ -1,5 +1,12 @@
 import { Input, Textarea } from "@heroui/input";
 import {
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  useDisclosure,
+} from "@heroui/modal";
+import {
   Button,
   Form,
   Link,
@@ -41,6 +48,7 @@ export default function InfoProjectsPage() {
 
   const location = useLocation();
   const navigate = useNavigate();
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   const [projectData, setProjectData] = useState<ProjectDataType | null>(null);
   const [linkList, setLinkList] = useState<itemListLinkType[]>([]);
@@ -83,7 +91,7 @@ export default function InfoProjectsPage() {
     if (linkList.length >= 2) return;
 
     const newRow = {
-      id: Date.now().toString(),
+      id: `new-${Date.now().toString()}`,
       title: "",
       link: "",
     };
@@ -96,6 +104,38 @@ export default function InfoProjectsPage() {
     const path = location.pathname;
     const pathParent = path.substring(0, path.lastIndexOf("/"));
 
+    navigate(pathParent);
+  };
+
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (!projectData) return;
+
+    const body = {
+      imageUrl: null,
+      title: projectData.title,
+      text: projectData.text,
+      links: linkList.map((link) => {
+        if (typeof link.id === "string" && link.id.includes("new")) {
+          return {
+            title: link.title,
+            link: link.link,
+          };
+        }
+
+        return link;
+      }),
+    };
+
+    api.put(`/projects/${id}`, body);
+  };
+
+  const handleDelete = () => {
+    const path = location.pathname;
+    const pathParent = path.substring(0, path.lastIndexOf("/"));
+
+    api.delete(`/projects/${id}`);
     navigate(pathParent);
   };
 
@@ -137,131 +177,178 @@ export default function InfoProjectsPage() {
   }, [linkList]);
 
   return projectData ? (
-    <Form className="full" onReset={onReset}>
-      <Input
-        isRequired
-        label="Título"
-        size="sm"
-        type="text"
-        value={projectData.title}
-        onChange={(e) => {
-          setProjectData({ ...projectData, title: e.target.value });
-        }}
-      />
-      <Textarea
-        isRequired
-        label="Descrição"
-        size="sm"
-        type="text"
-        value={projectData.text}
-        onChange={(e) => {
-          setProjectData({ ...projectData, text: e.target.value });
-        }}
-      />
+    <>
+      <Form className="full" onReset={onReset} onSubmit={(e) => onSubmit(e)}>
+        <Input
+          isRequired
+          label="Título"
+          size="sm"
+          type="text"
+          value={projectData.title}
+          onChange={(e) => {
+            setProjectData({ ...projectData, title: e.target.value });
+          }}
+        />
+        <Textarea
+          isRequired
+          label="Descrição"
+          size="sm"
+          type="text"
+          value={projectData.text}
+          onChange={(e) => {
+            setProjectData({ ...projectData, text: e.target.value });
+          }}
+        />
 
-      <Table hideHeader topContent={tableTopContent}>
-        <TableHeader>
-          <TableColumn>Label</TableColumn>
-          <TableColumn>Link</TableColumn>
-          <TableColumn className="text-center">Ações</TableColumn>
-        </TableHeader>
+        <Table hideHeader topContent={tableTopContent}>
+          <TableHeader>
+            <TableColumn>Label</TableColumn>
+            <TableColumn>Link</TableColumn>
+            <TableColumn className="text-center">Ações</TableColumn>
+          </TableHeader>
 
-        <TableBody>
-          {linkList.map((row) => (
-            <TableRow key={row.id}>
-              <TableCell>
-                {isEditing(row.id) ? (
-                  <Input
-                    placeholder="title"
-                    size="sm"
-                    type="text"
-                    value={draftRow.title}
-                    variant="underlined"
-                    onChange={(e) =>
-                      setDraftRow({ ...draftRow, title: e.target.value })
-                    }
-                  />
-                ) : (
-                  <p className="text-medium">{row.title}</p>
-                )}
-              </TableCell>
-
-              <TableCell>
-                {isEditing(row.id) ? (
-                  <Input
-                    placeholder="link"
-                    size="sm"
-                    type="url"
-                    value={draftRow.link}
-                    variant="underlined"
-                    onChange={(e) =>
-                      setDraftRow({ ...draftRow, link: e.target.value })
-                    }
-                  />
-                ) : (
-                  <Link isExternal className="text-medium" href={row.link}>
-                    {row.link}
-                  </Link>
-                )}
-              </TableCell>
-
-              <TableCell>
-                <div className="flex gap-2 justify-center">
+          <TableBody>
+            {linkList.map((row) => (
+              <TableRow key={row.id}>
+                <TableCell>
                   {isEditing(row.id) ? (
-                    <>
-                      <Tooltip content="Salvar mudanças">
-                        <span
-                          className="text-lg text-success-400 cursor-pointer active:opacity-50"
-                          onClickCapture={saveEdit}
-                        >
-                          <SaveRoundedIcon />
-                        </span>
-                      </Tooltip>
-                      <Tooltip content="Cancelar mudanças">
-                        <span
-                          className="text-lg text-danger-400 cursor-pointer active:opacity-50"
-                          onClickCapture={cancelEdit}
-                        >
-                          <CloseRoundedIcon />
-                        </span>
-                      </Tooltip>
-                    </>
+                    <Input
+                      placeholder="title"
+                      size="sm"
+                      type="text"
+                      value={draftRow.title}
+                      variant="underlined"
+                      onChange={(e) =>
+                        setDraftRow({ ...draftRow, title: e.target.value })
+                      }
+                    />
                   ) : (
-                    <>
-                      <Tooltip content="Editar link">
-                        <span
-                          className="text-lg text-default-400 cursor-pointer active:opacity-50"
-                          onClickCapture={() => startEdit(row)}
-                        >
-                          <EditRoundedIcon />
-                        </span>
-                      </Tooltip>
-                      <Tooltip content="Excluir link">
-                        <span
-                          className="text-lg text-danger-400 cursor-pointer active:opacity-50"
-                          onClickCapture={() => deleteRow(row.id)}
-                        >
-                          <DeleteRoundedIcon />
-                        </span>
-                      </Tooltip>
-                    </>
+                    <p className="text-medium">{row.title}</p>
                   )}
-                </div>
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+                </TableCell>
 
-      <div className="flex gap-2 mt-4">
-        <Button color="primary" type="submit">
-          Enviar
-        </Button>
-        <Button color="danger" type="reset" variant="light">
-          Cancelar
-        </Button>
-      </div>
-    </Form>
+                <TableCell>
+                  {isEditing(row.id) ? (
+                    <Input
+                      placeholder="link"
+                      size="sm"
+                      startContent={
+                        <div className="pointer-events-none flex items-center">
+                          <span className="text-default-400 text-small">
+                            https://
+                          </span>
+                        </div>
+                      }
+                      type="url"
+                      value={draftRow.link}
+                      variant="underlined"
+                      onChange={(e) =>
+                        setDraftRow({ ...draftRow, link: e.target.value })
+                      }
+                    />
+                  ) : (
+                    <Link isExternal className="text-medium" href={row.link}>
+                      {row.link}
+                    </Link>
+                  )}
+                </TableCell>
+
+                <TableCell>
+                  <div className="flex gap-2 justify-center">
+                    {isEditing(row.id) ? (
+                      <>
+                        <Tooltip content="Salvar mudanças">
+                          <span
+                            className="text-lg text-success-400 cursor-pointer active:opacity-50"
+                            onClickCapture={saveEdit}
+                          >
+                            <SaveRoundedIcon />
+                          </span>
+                        </Tooltip>
+                        <Tooltip content="Cancelar mudanças">
+                          <span
+                            className="text-lg text-danger-400 cursor-pointer active:opacity-50"
+                            onClickCapture={cancelEdit}
+                          >
+                            <CloseRoundedIcon />
+                          </span>
+                        </Tooltip>
+                      </>
+                    ) : (
+                      <>
+                        <Tooltip content="Editar link">
+                          <span
+                            className="text-lg text-default-400 cursor-pointer active:opacity-50"
+                            onClickCapture={() => startEdit(row)}
+                          >
+                            <EditRoundedIcon />
+                          </span>
+                        </Tooltip>
+                        <Tooltip content="Excluir link">
+                          <span
+                            className="text-lg text-danger-400 cursor-pointer active:opacity-50"
+                            onClickCapture={() => deleteRow(row.id)}
+                          >
+                            <DeleteRoundedIcon />
+                          </span>
+                        </Tooltip>
+                      </>
+                    )}
+                  </div>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+
+        <div className="flex gap-2 mt-4">
+          <Button color="primary" type="submit">
+            Atualizar
+          </Button>
+          <Button type="reset" variant="flat">
+            Descartar alterações
+          </Button>
+
+          <Button color="danger" variant="light" onPress={onOpen}>
+            Excluir projeto
+          </Button>
+        </div>
+      </Form>
+
+      <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader className="flex flex-col gap-1">
+                Confirmar a exclusão desse projeto?
+              </ModalHeader>
+              <ModalBody>
+                <p>
+                  A exclusão será permanente, sem possibilidade de reverter.
+                </p>
+
+                <div className="flex gap-2 m-auto">
+                  <Button
+                    color="danger"
+                    variant="light"
+                    onClickCapture={() => {
+                      onClose();
+                      handleDelete();
+                    }}
+                  >
+                    Confirmar a exclusão
+                  </Button>
+
+                  <Button variant="light" onClickCapture={onClose}>
+                    Cancelar
+                  </Button>
+                </div>
+              </ModalBody>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
+    </>
   ) : (
     <div className="flex full justify-center">
       <Spinner size="lg" />

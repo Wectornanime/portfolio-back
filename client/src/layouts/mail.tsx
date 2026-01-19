@@ -87,7 +87,7 @@ export default function MailLayout({
 
               <h1 className="font-bold text-4xl mb-2">Title</h1>
             </div>
-            <div className="flex full">
+            <div className="flex full mb-1 overflow-auto">
               {id === "new" ? createPage : infoPage}
             </div>
           </div>
