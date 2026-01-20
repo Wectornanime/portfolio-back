@@ -1,4 +1,5 @@
 import CreateSkillsController from 'src/controllers/skills/create-skills.controller';
+import DeleteSkillsController from 'src/controllers/skills/delete-skills.controller';
 import GetAllSkillsController from 'src/controllers/skills/getAll-skills.controller';
 import GetOneSkillsController from 'src/controllers/skills/getOne-skills.controller';
 import UpdateSkillsController from 'src/controllers/skills/update-skills.controller';
@@ -18,6 +19,9 @@ export const skillsRouter: HttpRouter = {
     },
     put: {
       controller: new UpdateSkillsController
+    },
+    delete: {
+      controller: new DeleteSkillsController
     }
   }
 };
