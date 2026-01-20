@@ -1,6 +1,7 @@
 import CreateSkillsController from 'src/controllers/skills/create-skills.controller';
 import GetAllSkillsController from 'src/controllers/skills/getAll-skills.controller';
 import GetOneSkillsController from 'src/controllers/skills/getOne-skills.controller';
+import UpdateSkillsController from 'src/controllers/skills/update-skills.controller';
 
 export const skillsRouter: HttpRouter = {
   '/': {
@@ -14,6 +15,9 @@ export const skillsRouter: HttpRouter = {
   '/:id': {
     get: {
       controller: new GetOneSkillsController,
+    },
+    put: {
+      controller: new UpdateSkillsController
     }
   }
 };
