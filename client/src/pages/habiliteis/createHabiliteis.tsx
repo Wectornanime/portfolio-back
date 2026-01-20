@@ -1,23 +1,21 @@
 import { Input } from "@heroui/input";
-import { Button, Form } from "@heroui/react";
+import { Button, Form, Link, LinkIcon } from "@heroui/react";
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import { api } from "@/services/api.service";
 
-type CertificateDataType = {
+type SkillDataType = {
   title: string;
-  imageUrl: string | null;
-  link: string | null;
+  iconUrl: string;
 };
 
-export default function CreateCertificatesPage() {
+export default function CreateHabiliteisPage() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const [certificateData, setCertificateData] = useState<CertificateDataType>({
-    link: "",
-    imageUrl: "",
+  const [skillData, setSkillData] = useState<SkillDataType>({
+    iconUrl: "",
     title: "",
   });
 
@@ -31,44 +29,55 @@ export default function CreateCertificatesPage() {
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!certificateData) return;
+    if (!skillData) return;
 
     const path = location.pathname;
     const pathParent = path.substring(0, path.lastIndexOf("/"));
 
     const body = {
-      imageUrl: null,
-      title: certificateData.title,
-      link: certificateData.link,
+      title: skillData.title,
+      iconUrl: skillData.iconUrl,
     };
 
-    api.post(`/certificates`, body);
+    api.post(`/skills`, body);
 
     navigate(pathParent);
   };
 
   return (
-    <Form className="full" onReset={onReset} onSubmit={(e) => onSubmit(e)}>
+    <Form
+      className="full pt-1 px-2"
+      onReset={onReset}
+      onSubmit={(e) => onSubmit(e)}
+    >
       <Input
         isRequired
         label="Título"
         size="sm"
         type="text"
-        value={certificateData.title}
+        value={skillData.title}
         onChange={(e) => {
-          setCertificateData({ ...certificateData, title: e.target.value });
+          setSkillData({ ...skillData, title: e.target.value });
         }}
       />
 
       <Input
-        label="Link do certificado"
+        isRequired
+        description="Use a classe css da versão de fonte do devicon.dev. O ícone aparecerá ao lado quando a classe estiver correta."
+        endContent={<i className={`text-3xl ${skillData.iconUrl}`} />}
+        label="Classe devicon"
         size="sm"
-        type="url"
-        value={certificateData.link || ""}
+        type="text"
+        value={skillData.iconUrl || ""}
         onChange={(e) => {
-          setCertificateData({ ...certificateData, link: e.target.value });
+          setSkillData({ ...skillData, iconUrl: e.target.value });
         }}
       />
+
+      <Link isExternal className="text-small" href="https://devicon.dev">
+        devicon.dev
+        <LinkIcon />
+      </Link>
 
       <div className="flex gap-2 mt-4">
         <Button color="primary" type="submit">

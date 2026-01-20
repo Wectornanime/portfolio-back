@@ -6,27 +6,25 @@ import {
   ModalBody,
   useDisclosure,
 } from "@heroui/modal";
-import { Button, Form, Spinner } from "@heroui/react";
+import { Button, Form, Link, LinkIcon, Spinner } from "@heroui/react";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 import { api } from "@/services/api.service";
 
-type CertificateDataType = {
+type SkillDataType = {
   title: string;
-  imageUrl: string | null;
-  link: string | null;
+  iconUrl: string;
 };
 
-export default function InfoCertificatesPage() {
+export default function InfoHabiliteisPage() {
   const { id } = useParams();
 
   const location = useLocation();
   const navigate = useNavigate();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
-  const [certificateData, setCertificateData] =
-    useState<CertificateDataType | null>(null);
+  const [skillData, setSkillData] = useState<SkillDataType | null>(null);
 
   const onReset = () => {
     const path = location.pathname;
@@ -38,32 +36,31 @@ export default function InfoCertificatesPage() {
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!certificateData) return;
+    if (!skillData) return;
 
     const body = {
-      imageUrl: null,
-      title: certificateData.title,
-      link: certificateData.link,
+      title: skillData.title,
+      iconUrl: skillData.iconUrl,
     };
 
-    api.put(`/certificates/${id}`, body);
+    api.put(`/skills/${id}`, body);
   };
 
   const handleDelete = () => {
     const path = location.pathname;
     const pathParent = path.substring(0, path.lastIndexOf("/"));
 
-    api.delete(`/certificates/${id}`);
+    api.delete(`/skills/${id}`);
     navigate(pathParent);
   };
 
   const fetchData = async () => {
-    setCertificateData(null);
+    setSkillData(null);
 
-    const { status, data } = await api.get(`/certificates/${id}`);
+    const { status, data } = await api.get(`/skills/${id}`);
 
     if (status === 200) {
-      setCertificateData(data.data);
+      setSkillData(data.data);
     } else {
       window.alert("Não foi possível buscar os dados.");
     }
@@ -73,7 +70,7 @@ export default function InfoCertificatesPage() {
     fetchData();
   }, [id]);
 
-  return certificateData ? (
+  return skillData ? (
     <>
       <Form className="full" onReset={onReset} onSubmit={(e) => onSubmit(e)}>
         <Input
@@ -81,21 +78,29 @@ export default function InfoCertificatesPage() {
           label="Título"
           size="sm"
           type="text"
-          value={certificateData.title}
+          value={skillData.title}
           onChange={(e) => {
-            setCertificateData({ ...certificateData, title: e.target.value });
+            setSkillData({ ...skillData, title: e.target.value });
           }}
         />
 
         <Input
-          label="Link do certificado"
+          isRequired
+          description="Use a classe css da versão de fonte do devicon.dev. O ícone aparecerá ao lado quando a classe estiver correta."
+          endContent={<i className={`text-3xl ${skillData.iconUrl}`} />}
+          label="Classe devicon"
           size="sm"
-          type="url"
-          value={certificateData.link || ""}
+          type="text"
+          value={skillData.iconUrl || ""}
           onChange={(e) => {
-            setCertificateData({ ...certificateData, link: e.target.value });
+            setSkillData({ ...skillData, iconUrl: e.target.value });
           }}
         />
+
+        <Link isExternal className="text-small" href="https://devicon.dev">
+          devicon.dev
+          <LinkIcon />
+        </Link>
 
         <div className="flex gap-2 mt-4">
           <Button color="primary" type="submit">
@@ -106,7 +111,7 @@ export default function InfoCertificatesPage() {
           </Button>
 
           <Button color="danger" variant="light" onPress={onOpen}>
-            Excluir certificado
+            Excluir habilidade
           </Button>
         </div>
       </Form>
@@ -116,7 +121,7 @@ export default function InfoCertificatesPage() {
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1">
-                Confirmar a exclusão desse certificado?
+                Confirmar a exclusão dessa habilidade?
               </ModalHeader>
               <ModalBody>
                 <p>

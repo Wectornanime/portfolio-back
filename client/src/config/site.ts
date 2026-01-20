@@ -1,7 +1,8 @@
 import {
-  CircleRounded as CircleRoundedIcon,
   HomeRounded as HomeRoundedIcon,
   SchoolRounded as SchoolRoundedIcon,
+  StarRounded as StarRoundedIcon,
+  EmojiEmotionsRounded as EmojiEmotionsRoundedIcon,
   WorkRounded as WorkRoundedIcon,
 } from "@mui/icons-material";
 
@@ -27,14 +28,14 @@ export const siteConfig = {
       icon: SchoolRoundedIcon,
     },
     {
-      label: "Blog",
-      href: "/blog",
-      icon: CircleRoundedIcon,
+      label: "Habiliteis",
+      href: "/habiliteis",
+      icon: StarRoundedIcon,
     },
     {
-      label: "About",
-      href: "/about",
-      icon: CircleRoundedIcon,
+      label: "Profile",
+      href: "/profile",
+      icon: EmojiEmotionsRoundedIcon,
     },
   ],
   links: {
