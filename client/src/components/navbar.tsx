@@ -17,7 +17,6 @@ import {
   KeyboardDoubleArrowRightRounded as KeyboardDoubleArrowRightRoundedIcon,
   KeyboardDoubleArrowLeftRounded as KeyboardDoubleArrowLeftRoundedIcon,
   LogoutRounded as LogoutRoundedIcon,
-  SettingsRounded as SettingsRoundedIcon,
 } from "@mui/icons-material";
 import { useLocation } from "react-router-dom";
 
@@ -76,7 +75,7 @@ export const Navbar = () => {
                       })}
                     </div>
                     <div>
-                      <Link
+                      {/* <Link
                         className="flex items-center gap-2 py-2"
                         color="foreground"
                         href="#"
@@ -84,7 +83,7 @@ export const Navbar = () => {
                       >
                         <SettingsRoundedIcon />
                         Preferencias
-                      </Link>
+                      </Link> */}
                       <Link
                         className="flex items-center gap-2 py-2"
                         color="danger"

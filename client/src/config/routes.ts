@@ -1,7 +1,8 @@
 import CertificatesPage from "@/pages/certificates";
-import IndexPage from "@/pages/index";
 import HabiliteisPage from "@/pages/habiliteis";
+import IndexPage from "@/pages/index";
 import NotFoundPage from "@/pages/notFound";
+import ProfilePage from "@/pages/profile";
 import ProjectsPage from "@/pages/projects";
 
 export const routes = {
@@ -12,5 +13,6 @@ export const routes = {
   "/habiliteis/:id": HabiliteisPage,
   "/projects": ProjectsPage,
   "/projects/:id": ProjectsPage,
+  "/profile": ProfilePage,
   "*": NotFoundPage,
 };
