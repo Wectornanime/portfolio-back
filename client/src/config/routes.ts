@@ -5,6 +5,7 @@ import LoginPage from "@/pages/login";
 import NotFoundPage from "@/pages/notFound";
 import ProfilePage from "@/pages/profile";
 import ProjectsPage from "@/pages/projects";
+import RegisterPage from "@/pages/register";
 
 export const routes = {
   "/": IndexPage,
@@ -16,5 +17,6 @@ export const routes = {
   "/projects": ProjectsPage,
   "/projects/:id": ProjectsPage,
   "/profile": ProfilePage,
+  "/register": RegisterPage,
   "*": NotFoundPage,
 };

@@ -41,7 +41,7 @@ export default function LoginPage() {
   );
 
   return (
-    <div className="full">
+    <div className="full flex justify-center">
       <Card className="full max-w-[400px] p-1 justify-center items-center">
         <Form className="full p-1 justify-center items-center">
           <Input
