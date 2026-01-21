@@ -1,5 +1,6 @@
 import { prisma } from '@adapter/prisma.adapter';
 import { createUserDto } from 'src/dto/user.dto';
+import { generateJwtToken } from 'src/helpers/jwt.helper';
 import { hashPassword } from 'src/helpers/password.helper';
 import { badRequest, successCreated } from 'src/helpers/response.helper';
 
@@ -36,6 +37,8 @@ export default class CreateUserController implements Controller {
       }
     });
 
-    return successCreated(newUser);
+    const jwtToken = generateJwtToken({ userId: newUser.id, email: data.email });
+
+    return successCreated({ token: jwtToken });
   }
 }
