@@ -55,8 +55,9 @@ export const ModelName = {
   ProjectLink: 'ProjectLink',
   Certificate: 'Certificate',
   Skill: 'Skill',
-  Info: 'Info',
-  InfoLink: 'InfoLink'
+  UserLink: 'UserLink',
+  AuthUser: 'AuthUser',
+  User: 'User'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -77,6 +78,7 @@ export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof
 
 export const ProjectScalarFieldEnum = {
   id: 'id',
+  userId: 'userId',
   imageUrl: 'imageUrl',
   title: 'title',
   text: 'text',
@@ -99,6 +101,7 @@ export type ProjectLinkScalarFieldEnum = (typeof ProjectLinkScalarFieldEnum)[key
 
 export const CertificateScalarFieldEnum = {
   id: 'id',
+  userId: 'userId',
   title: 'title',
   link: 'link',
   imageUrl: 'imageUrl',
@@ -110,6 +113,7 @@ export type CertificateScalarFieldEnum = (typeof CertificateScalarFieldEnum)[key
 
 export const SkillScalarFieldEnum = {
   id: 'id',
+  userId: 'userId',
   title: 'title',
   iconUrl: 'iconUrl',
   createdAt: 'createdAt'
@@ -118,27 +122,39 @@ export const SkillScalarFieldEnum = {
 export type SkillScalarFieldEnum = (typeof SkillScalarFieldEnum)[keyof typeof SkillScalarFieldEnum]
 
 
-export const InfoScalarFieldEnum = {
+export const UserLinkScalarFieldEnum = {
   id: 'id',
-  imageUrl: 'imageUrl',
-  title: 'title',
-  subtitle: 'subtitle',
-  aboutMe: 'aboutMe',
-  createdAt: 'createdAt'
-} as const
-
-export type InfoScalarFieldEnum = (typeof InfoScalarFieldEnum)[keyof typeof InfoScalarFieldEnum]
-
-
-export const InfoLinkScalarFieldEnum = {
-  id: 'id',
-  infoId: 'infoId',
+  userId: 'userId',
   title: 'title',
   link: 'link',
   createdAt: 'createdAt'
 } as const
 
-export type InfoLinkScalarFieldEnum = (typeof InfoLinkScalarFieldEnum)[keyof typeof InfoLinkScalarFieldEnum]
+export type UserLinkScalarFieldEnum = (typeof UserLinkScalarFieldEnum)[keyof typeof UserLinkScalarFieldEnum]
+
+
+export const AuthUserScalarFieldEnum = {
+  id: 'id',
+  email: 'email',
+  passwordHash: 'passwordHash',
+  createdAt: 'createdAt'
+} as const
+
+export type AuthUserScalarFieldEnum = (typeof AuthUserScalarFieldEnum)[keyof typeof AuthUserScalarFieldEnum]
+
+
+export const UserScalarFieldEnum = {
+  id: 'id',
+  authUserId: 'authUserId',
+  imageUrl: 'imageUrl',
+  name: 'name',
+  lastName: 'lastName',
+  subtitle: 'subtitle',
+  aboutMe: 'aboutMe',
+  createdAt: 'createdAt'
+} as const
+
+export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
 export const SortOrder = {

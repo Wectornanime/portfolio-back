@@ -58,12 +58,17 @@ export type Certificate = Prisma.CertificateModel
  */
 export type Skill = Prisma.SkillModel
 /**
- * Model Info
+ * Model UserLink
  * 
  */
-export type Info = Prisma.InfoModel
+export type UserLink = Prisma.UserLinkModel
 /**
- * Model InfoLink
+ * Model AuthUser
  * 
  */
-export type InfoLink = Prisma.InfoLinkModel
+export type AuthUser = Prisma.AuthUserModel
+/**
+ * Model User
+ * 
+ */
+export type User = Prisma.UserModel

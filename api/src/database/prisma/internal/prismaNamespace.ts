@@ -388,8 +388,9 @@ export const ModelName = {
   ProjectLink: 'ProjectLink',
   Certificate: 'Certificate',
   Skill: 'Skill',
-  Info: 'Info',
-  InfoLink: 'InfoLink'
+  UserLink: 'UserLink',
+  AuthUser: 'AuthUser',
+  User: 'User'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -405,7 +406,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "project" | "projectLink" | "certificate" | "skill" | "info" | "infoLink"
+    modelProps: "project" | "projectLink" | "certificate" | "skill" | "userLink" | "authUser" | "user"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -705,151 +706,225 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
-    Info: {
-      payload: Prisma.$InfoPayload<ExtArgs>
-      fields: Prisma.InfoFieldRefs
+    UserLink: {
+      payload: Prisma.$UserLinkPayload<ExtArgs>
+      fields: Prisma.UserLinkFieldRefs
       operations: {
         findUnique: {
-          args: Prisma.InfoFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$InfoPayload> | null
+          args: Prisma.UserLinkFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserLinkPayload> | null
         }
         findUniqueOrThrow: {
-          args: Prisma.InfoFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$InfoPayload>
+          args: Prisma.UserLinkFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserLinkPayload>
         }
         findFirst: {
-          args: Prisma.InfoFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$InfoPayload> | null
+          args: Prisma.UserLinkFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserLinkPayload> | null
         }
         findFirstOrThrow: {
-          args: Prisma.InfoFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$InfoPayload>
+          args: Prisma.UserLinkFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserLinkPayload>
         }
         findMany: {
-          args: Prisma.InfoFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$InfoPayload>[]
+          args: Prisma.UserLinkFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserLinkPayload>[]
         }
         create: {
-          args: Prisma.InfoCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$InfoPayload>
+          args: Prisma.UserLinkCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserLinkPayload>
         }
         createMany: {
-          args: Prisma.InfoCreateManyArgs<ExtArgs>
+          args: Prisma.UserLinkCreateManyArgs<ExtArgs>
           result: BatchPayload
         }
         createManyAndReturn: {
-          args: Prisma.InfoCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$InfoPayload>[]
+          args: Prisma.UserLinkCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserLinkPayload>[]
         }
         delete: {
-          args: Prisma.InfoDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$InfoPayload>
+          args: Prisma.UserLinkDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserLinkPayload>
         }
         update: {
-          args: Prisma.InfoUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$InfoPayload>
+          args: Prisma.UserLinkUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserLinkPayload>
         }
         deleteMany: {
-          args: Prisma.InfoDeleteManyArgs<ExtArgs>
+          args: Prisma.UserLinkDeleteManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateMany: {
-          args: Prisma.InfoUpdateManyArgs<ExtArgs>
+          args: Prisma.UserLinkUpdateManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateManyAndReturn: {
-          args: Prisma.InfoUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$InfoPayload>[]
+          args: Prisma.UserLinkUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserLinkPayload>[]
         }
         upsert: {
-          args: Prisma.InfoUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$InfoPayload>
+          args: Prisma.UserLinkUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserLinkPayload>
         }
         aggregate: {
-          args: Prisma.InfoAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateInfo>
+          args: Prisma.UserLinkAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateUserLink>
         }
         groupBy: {
-          args: Prisma.InfoGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.InfoGroupByOutputType>[]
+          args: Prisma.UserLinkGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserLinkGroupByOutputType>[]
         }
         count: {
-          args: Prisma.InfoCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.InfoCountAggregateOutputType> | number
+          args: Prisma.UserLinkCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserLinkCountAggregateOutputType> | number
         }
       }
     }
-    InfoLink: {
-      payload: Prisma.$InfoLinkPayload<ExtArgs>
-      fields: Prisma.InfoLinkFieldRefs
+    AuthUser: {
+      payload: Prisma.$AuthUserPayload<ExtArgs>
+      fields: Prisma.AuthUserFieldRefs
       operations: {
         findUnique: {
-          args: Prisma.InfoLinkFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$InfoLinkPayload> | null
+          args: Prisma.AuthUserFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthUserPayload> | null
         }
         findUniqueOrThrow: {
-          args: Prisma.InfoLinkFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$InfoLinkPayload>
+          args: Prisma.AuthUserFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthUserPayload>
         }
         findFirst: {
-          args: Prisma.InfoLinkFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$InfoLinkPayload> | null
+          args: Prisma.AuthUserFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthUserPayload> | null
         }
         findFirstOrThrow: {
-          args: Prisma.InfoLinkFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$InfoLinkPayload>
+          args: Prisma.AuthUserFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthUserPayload>
         }
         findMany: {
-          args: Prisma.InfoLinkFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$InfoLinkPayload>[]
+          args: Prisma.AuthUserFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthUserPayload>[]
         }
         create: {
-          args: Prisma.InfoLinkCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$InfoLinkPayload>
+          args: Prisma.AuthUserCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthUserPayload>
         }
         createMany: {
-          args: Prisma.InfoLinkCreateManyArgs<ExtArgs>
+          args: Prisma.AuthUserCreateManyArgs<ExtArgs>
           result: BatchPayload
         }
         createManyAndReturn: {
-          args: Prisma.InfoLinkCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$InfoLinkPayload>[]
+          args: Prisma.AuthUserCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthUserPayload>[]
         }
         delete: {
-          args: Prisma.InfoLinkDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$InfoLinkPayload>
+          args: Prisma.AuthUserDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthUserPayload>
         }
         update: {
-          args: Prisma.InfoLinkUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$InfoLinkPayload>
+          args: Prisma.AuthUserUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthUserPayload>
         }
         deleteMany: {
-          args: Prisma.InfoLinkDeleteManyArgs<ExtArgs>
+          args: Prisma.AuthUserDeleteManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateMany: {
-          args: Prisma.InfoLinkUpdateManyArgs<ExtArgs>
+          args: Prisma.AuthUserUpdateManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateManyAndReturn: {
-          args: Prisma.InfoLinkUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$InfoLinkPayload>[]
+          args: Prisma.AuthUserUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthUserPayload>[]
         }
         upsert: {
-          args: Prisma.InfoLinkUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$InfoLinkPayload>
+          args: Prisma.AuthUserUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AuthUserPayload>
         }
         aggregate: {
-          args: Prisma.InfoLinkAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateInfoLink>
+          args: Prisma.AuthUserAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateAuthUser>
         }
         groupBy: {
-          args: Prisma.InfoLinkGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.InfoLinkGroupByOutputType>[]
+          args: Prisma.AuthUserGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AuthUserGroupByOutputType>[]
         }
         count: {
-          args: Prisma.InfoLinkCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.InfoLinkCountAggregateOutputType> | number
+          args: Prisma.AuthUserCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AuthUserCountAggregateOutputType> | number
+        }
+      }
+    }
+    User: {
+      payload: Prisma.$UserPayload<ExtArgs>
+      fields: Prisma.UserFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.UserFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.UserFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPayload>
+        }
+        findFirst: {
+          args: Prisma.UserFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.UserFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPayload>
+        }
+        findMany: {
+          args: Prisma.UserFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPayload>[]
+        }
+        create: {
+          args: Prisma.UserCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPayload>
+        }
+        createMany: {
+          args: Prisma.UserCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.UserCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPayload>[]
+        }
+        delete: {
+          args: Prisma.UserDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPayload>
+        }
+        update: {
+          args: Prisma.UserUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPayload>
+        }
+        deleteMany: {
+          args: Prisma.UserDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.UserUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.UserUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPayload>[]
+        }
+        upsert: {
+          args: Prisma.UserUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPayload>
+        }
+        aggregate: {
+          args: Prisma.UserAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateUser>
+        }
+        groupBy: {
+          args: Prisma.UserGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.UserCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserCountAggregateOutputType> | number
         }
       }
     }
@@ -894,6 +969,7 @@ export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof
 
 export const ProjectScalarFieldEnum = {
   id: 'id',
+  userId: 'userId',
   imageUrl: 'imageUrl',
   title: 'title',
   text: 'text',
@@ -916,6 +992,7 @@ export type ProjectLinkScalarFieldEnum = (typeof ProjectLinkScalarFieldEnum)[key
 
 export const CertificateScalarFieldEnum = {
   id: 'id',
+  userId: 'userId',
   title: 'title',
   link: 'link',
   imageUrl: 'imageUrl',
@@ -927,6 +1004,7 @@ export type CertificateScalarFieldEnum = (typeof CertificateScalarFieldEnum)[key
 
 export const SkillScalarFieldEnum = {
   id: 'id',
+  userId: 'userId',
   title: 'title',
   iconUrl: 'iconUrl',
   createdAt: 'createdAt'
@@ -935,27 +1013,39 @@ export const SkillScalarFieldEnum = {
 export type SkillScalarFieldEnum = (typeof SkillScalarFieldEnum)[keyof typeof SkillScalarFieldEnum]
 
 
-export const InfoScalarFieldEnum = {
+export const UserLinkScalarFieldEnum = {
   id: 'id',
-  imageUrl: 'imageUrl',
-  title: 'title',
-  subtitle: 'subtitle',
-  aboutMe: 'aboutMe',
-  createdAt: 'createdAt'
-} as const
-
-export type InfoScalarFieldEnum = (typeof InfoScalarFieldEnum)[keyof typeof InfoScalarFieldEnum]
-
-
-export const InfoLinkScalarFieldEnum = {
-  id: 'id',
-  infoId: 'infoId',
+  userId: 'userId',
   title: 'title',
   link: 'link',
   createdAt: 'createdAt'
 } as const
 
-export type InfoLinkScalarFieldEnum = (typeof InfoLinkScalarFieldEnum)[keyof typeof InfoLinkScalarFieldEnum]
+export type UserLinkScalarFieldEnum = (typeof UserLinkScalarFieldEnum)[keyof typeof UserLinkScalarFieldEnum]
+
+
+export const AuthUserScalarFieldEnum = {
+  id: 'id',
+  email: 'email',
+  passwordHash: 'passwordHash',
+  createdAt: 'createdAt'
+} as const
+
+export type AuthUserScalarFieldEnum = (typeof AuthUserScalarFieldEnum)[keyof typeof AuthUserScalarFieldEnum]
+
+
+export const UserScalarFieldEnum = {
+  id: 'id',
+  authUserId: 'authUserId',
+  imageUrl: 'imageUrl',
+  name: 'name',
+  lastName: 'lastName',
+  subtitle: 'subtitle',
+  aboutMe: 'aboutMe',
+  createdAt: 'createdAt'
+} as const
+
+export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1142,8 +1232,9 @@ export type GlobalOmitConfig = {
   projectLink?: Prisma.ProjectLinkOmit
   certificate?: Prisma.CertificateOmit
   skill?: Prisma.SkillOmit
-  info?: Prisma.InfoOmit
-  infoLink?: Prisma.InfoLinkOmit
+  userLink?: Prisma.UserLinkOmit
+  authUser?: Prisma.AuthUserOmit
+  user?: Prisma.UserOmit
 }
 
 /* Types for Logging */

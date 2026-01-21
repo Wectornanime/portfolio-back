@@ -15,11 +15,14 @@ datasource db {
 
 model Project {
   id        Int           @id @default(autoincrement())
+  userId    Int
   imageUrl  String?
   title     String
   text      String
   links     ProjectLink[]
   createdAt DateTime      @default(now())
+
+  user User @relation(fields: [userId], references: [id])
 }
 
 model ProjectLink {
@@ -34,35 +37,59 @@ model ProjectLink {
 
 model Certificate {
   id        Int      @id @default(autoincrement())
+  userId    Int
   title     String
   link      String?
   imageUrl  String?
   createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
 }
 
 model Skill {
   id        Int      @id @default(autoincrement())
+  userId    Int
   title     String
   iconUrl   String
   createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
 }
 
-model Info {
-  id        Int        @id @default(autoincrement())
-  imageUrl  String?
-  title     String
-  subtitle  String
-  aboutMe   String
-  links     InfoLink[]
-  createdAt DateTime   @default(now())
-}
-
-model InfoLink {
+model UserLink {
   id        Int      @id @default(autoincrement())
-  infoId    Int
+  userId    Int
   title     String
   link      String
   createdAt DateTime @default(now())
 
-  info Info @relation(fields: [infoId], references: [id])
+  user User @relation(fields: [userId], references: [id])
+}
+
+model AuthUser {
+  id           Int      @id @default(autoincrement())
+  email        String   @unique
+  passwordHash String
+  createdAt    DateTime @default(now())
+
+  user User?
+}
+
+model User {
+  id         Int     @id @default(autoincrement())
+  authUserId Int     @unique
+  imageUrl   String?
+  name       String
+  lastName   String
+  subtitle   String
+  aboutMe    String
+
+  links        UserLink[]
+  certificates Certificate[]
+  Projects     Project[]
+  skills       Skill[]
+
+  createdAt DateTime @default(now())
+
+  authUser AuthUser @relation(fields: [authUserId], references: [id])
 }
