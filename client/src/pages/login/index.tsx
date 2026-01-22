@@ -73,7 +73,7 @@ export default function LoginPage() {
       setAuthToken(data.data.token);
       navigate("/");
       addToast({
-        title: "Login realizado com Sucesso",
+        title: "Login realizado com sucesso",
         color: "success",
       });
     }

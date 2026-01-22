@@ -23,6 +23,7 @@ import { useLocation } from "react-router-dom";
 import { siteConfig } from "@/config/site";
 import { ThemeSwitch } from "@/components/theme-switch";
 import { GithubIcon } from "@/components/icons";
+import { doLogout } from "@/utils/doLogout";
 
 export const Navbar = () => {
   const location = useLocation();
@@ -87,8 +88,11 @@ export const Navbar = () => {
                       <Link
                         className="flex items-center gap-2 py-2"
                         color="danger"
-                        href="#"
-                        onClick={onClose}
+                        href="/login"
+                        onClick={() => {
+                          onClose();
+                          doLogout();
+                        }}
                       >
                         <LogoutRoundedIcon />
                         Log out
