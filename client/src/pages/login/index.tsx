@@ -1,5 +1,13 @@
 import { Input } from "@heroui/input";
-import { addToast, Button, Card, Form, Link, Spinner, Tooltip } from "@heroui/react";
+import {
+  addToast,
+  Button,
+  Card,
+  Form,
+  Link,
+  Spinner,
+  Tooltip,
+} from "@heroui/react";
 import {
   VisibilityOffRounded as VisibilityOffRoundedIcon,
   VisibilityRounded as VisibilityRoundedIcon,
@@ -65,7 +73,7 @@ export default function LoginPage() {
       setAuthToken(data.data.token);
       navigate("/");
       addToast({
-        title: "Toast Title",
+        title: "Login realizado com Sucesso",
         color: "success",
       });
     }
