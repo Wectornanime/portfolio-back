@@ -164,12 +164,16 @@ export default function ProfilePage() {
   return profileData ? (
     <ScrollShadow hideScrollBar className="full">
       <Form
-        className="full max-w-[880px] m-auto p-1"
+        className="max-w-[880px] m-auto p-1"
         onReset={fetchData}
         onSubmit={onSubmit}
       >
         <Card className="w-full flex-row gap-2 shrink-0 p-4 items-center">
-          <Avatar showFallback size="lg" src={profileData.imageUrl || ""} />
+          <Avatar
+            name={`${profileData.name} ${profileData.lastName}` || ""}
+            size="lg"
+            src={profileData.imageUrl || ""}
+          />
           <Dropdown>
             <DropdownTrigger>
               <Button color="primary" size="sm">
