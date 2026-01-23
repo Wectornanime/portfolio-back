@@ -18,6 +18,7 @@ import { useNavigate } from "react-router-dom";
 import { api } from "@/services/api.service";
 import LoadingOverlay from "@/components/loadingOverlay";
 import { setAuthToken } from "@/utils/authToken";
+import { useAuth } from "@/contexts/authContext";
 
 type LoginType = {
   login: string;
@@ -26,6 +27,7 @@ type LoginType = {
 
 export default function LoginPage() {
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const [loginData, setLoginData] = useState<LoginType>({
     login: "",
@@ -71,6 +73,10 @@ export default function LoginPage() {
 
     if (status === 200) {
       setAuthToken(data.data.token);
+      login({
+        avatarUrl: data.data.user.imageUrl || "",
+        name: `${data.data.user.name} ${data.data.user.lastName}`,
+      });
       navigate("/");
       addToast({
         title: "Login realizado com sucesso",
