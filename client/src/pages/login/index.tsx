@@ -18,7 +18,7 @@ import { useNavigate } from "react-router-dom";
 import { api } from "@/services/api.service";
 import LoadingOverlay from "@/components/loadingOverlay";
 import { setAuthToken } from "@/utils/authToken";
-import { useAuth } from "@/contexts/authContext";
+import { useAuth } from "@/contexts/auth.context";
 
 type LoginType = {
   login: string;

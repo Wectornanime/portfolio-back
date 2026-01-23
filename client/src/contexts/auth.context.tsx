@@ -9,6 +9,7 @@ import { addToast } from "@heroui/react";
 
 import { api } from "@/services/api.service";
 import { getAuthToken, removeAuthToken } from "@/utils/authToken";
+import { authBridge } from "@/bridges/auth.bridge";
 
 type User = {
   name: string;
@@ -20,7 +21,7 @@ type AuthContextType = {
   isLoggedIn: boolean;
   loading: boolean;
   logout: () => void;
-  login: (user: User) => void;
+  login: (user: User | null) => void;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -30,6 +31,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [loading, setLoading] = useState<boolean>(true);
 
   const isLoggedIn = !!user;
+
+  useEffect(() => {
+    authBridge.clearUser = () => setUser(null);
+
+    return () => {
+      authBridge.clearUser = null;
+    };
+  }, [setUser]);
 
   useEffect(() => {
     async function loadUser() {
@@ -74,7 +83,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     });
   };
 
-  const login = (user: User) => {
+  const login = (user: User | null) => {
     setUser(user);
   };
 

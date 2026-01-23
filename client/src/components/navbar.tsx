@@ -23,7 +23,7 @@ import { useLocation } from "react-router-dom";
 import { siteConfig } from "@/config/site";
 import { ThemeSwitch } from "@/components/theme-switch";
 import { GithubIcon } from "@/components/icons";
-import { useAuth } from "@/contexts/authContext";
+import { useAuth } from "@/contexts/auth.context";
 
 export const Navbar = () => {
   const location = useLocation();
