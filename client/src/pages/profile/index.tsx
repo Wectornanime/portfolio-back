@@ -34,9 +34,10 @@ import {
 
 import { api } from "@/services/api.service";
 
-type InfoDataType = {
+type profileDataType = {
   imageUrl: string | null;
-  title: string;
+  name: string;
+  lastName: string;
   subtitle: string;
   aboutMe: string;
 };
@@ -48,7 +49,7 @@ type InfoLinkType = {
 };
 
 export default function ProfilePage() {
-  const [infoData, setInfoData] = useState<InfoDataType | null>(null);
+  const [profileData, setProfileData] = useState<profileDataType | null>(null);
   const [linkList, setLinkList] = useState<InfoLinkType[]>([]);
 
   const [editingRowId, setEditingRowId] = useState<string | null>(null);
@@ -101,12 +102,13 @@ export default function ProfilePage() {
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!infoData) return;
+    if (!profileData) return;
 
     const body = {
-      title: infoData.title,
-      subtitle: infoData.subtitle,
-      aboutMe: infoData.aboutMe,
+      name: profileData.name,
+      lastName: profileData.name,
+      subtitle: profileData.subtitle,
+      aboutMe: profileData.aboutMe,
       links: linkList.map((link) => {
         if (typeof link.id === "string" && link.id.includes("new")) {
           return {
@@ -119,19 +121,19 @@ export default function ProfilePage() {
       }),
     };
 
-    api.put(`/info/$`, body);
+    api.put("/me", body);
   };
 
   const fetchData = async () => {
-    setInfoData(null);
+    setProfileData(null);
     setLinkList([]);
 
-    const { status, data } = await api.get("/info/");
+    const { status, data } = await api.get("/me");
 
     if (status === 200) {
-      const { links, ...infoData } = data.data;
+      const { links, ...profileData } = data.data;
 
-      setInfoData(infoData);
+      setProfileData(profileData);
       setLinkList(links);
     } else {
       window.alert("Não foi possível buscar os dados.");
@@ -159,7 +161,7 @@ export default function ProfilePage() {
     );
   }, [linkList]);
 
-  return infoData ? (
+  return profileData ? (
     <ScrollShadow hideScrollBar className="full">
       <Form
         className="full max-w-[880px] m-auto p-1"
@@ -167,7 +169,7 @@ export default function ProfilePage() {
         onSubmit={onSubmit}
       >
         <Card className="w-full flex-row gap-2 shrink-0 p-4 items-center">
-          <Avatar showFallback size="lg" src={infoData.imageUrl || ""} />
+          <Avatar showFallback size="lg" src={profileData.imageUrl || ""} />
           <Dropdown>
             <DropdownTrigger>
               <Button color="primary" size="sm">
@@ -179,28 +181,42 @@ export default function ProfilePage() {
               <DropdownItem key="url">Usar link</DropdownItem>
             </DropdownMenu>
           </Dropdown>
-          <Button isDisabled={!infoData.imageUrl} size="sm">
+          <Button isDisabled={!profileData.imageUrl} size="sm">
             Remover imagem
           </Button>
         </Card>
-        <Input
-          isRequired
-          label="Título"
-          size="sm"
-          type="text"
-          value={infoData.title}
-          onChange={(e) => {
-            setInfoData({ ...infoData, title: e.target.value });
-          }}
-        />
+
+        <div className="full flex gap-2">
+          <Input
+            isRequired
+            label="Nome"
+            size="sm"
+            type="text"
+            value={profileData.name}
+            onChange={(e) => {
+              setProfileData({ ...profileData, name: e.target.value });
+            }}
+          />
+          <Input
+            isRequired
+            label="Sobrenome"
+            size="sm"
+            type="text"
+            value={profileData.lastName}
+            onChange={(e) => {
+              setProfileData({ ...profileData, lastName: e.target.value });
+            }}
+          />
+        </div>
+
         <Input
           isRequired
           label="Subtitulo"
           size="sm"
           type="text"
-          value={infoData.subtitle}
+          value={profileData.subtitle}
           onChange={(e) => {
-            setInfoData({ ...infoData, subtitle: e.target.value });
+            setProfileData({ ...profileData, subtitle: e.target.value });
           }}
         />
         <Textarea
@@ -208,9 +224,9 @@ export default function ProfilePage() {
           label="Sobre mim"
           size="sm"
           type="text"
-          value={infoData.aboutMe}
+          value={profileData.aboutMe}
           onChange={(e) => {
-            setInfoData({ ...infoData, aboutMe: e.target.value });
+            setProfileData({ ...profileData, aboutMe: e.target.value });
           }}
         />
         <Table hideHeader topContent={tableTopContent}>
