@@ -14,18 +14,30 @@ export const skillsRouter: HttpRouter = {
       ]
     },
     post: {
-      controller: new CreateSkillsController
+      controller: new CreateSkillsController,
+      middlewares: [
+        new AuthMiddleware
+      ]
     }
   },
   '/:id': {
     get: {
       controller: new GetOneSkillsController,
+      middlewares: [
+        new AuthMiddleware
+      ]
     },
     put: {
-      controller: new UpdateSkillsController
+      controller: new UpdateSkillsController,
+      middlewares: [
+        new AuthMiddleware
+      ]
     },
     delete: {
-      controller: new DeleteSkillsController
+      controller: new DeleteSkillsController,
+      middlewares: [
+        new AuthMiddleware
+      ]
     }
   }
 };

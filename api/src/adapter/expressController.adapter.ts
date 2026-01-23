@@ -5,7 +5,9 @@ export const expressControllerAdapter = (controller: Controller) => {
     try {
       const httpRequest = {
         params: req.params,
-        body: req.body
+        body: req.body,
+        headers: req.headers,
+        user: req.user
       };
 
       const { statusCode, ...result } = await controller.handle(httpRequest);
