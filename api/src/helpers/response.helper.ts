@@ -5,7 +5,7 @@ export function badRequest(message: string): HttpResponse {
   };
 };
 
-export function success(data?: unknown): HttpResponse {
+export function successResponse(data?: unknown): HttpResponse {
   return {
     statusCode: 200,
     data
@@ -29,5 +29,12 @@ export function internalError(): HttpResponse {
   return {
     statusCode: 500,
     message: 'Ocorreu um erro inesperado com o nosso servidor.'
+  };
+};
+
+export function unauthorized(): HttpResponse {
+  return {
+    statusCode: 401,
+    message: 'Não foi possível validar o token jwt'
   };
 };
