@@ -18,7 +18,7 @@ type HttpRequest = {
   params: { id?: string },
   body?: unknown,
   headers?: IncomingHttpHeaders,
-  user?: unknown,
+  user?: UserSession,
 }
 
 type HttpMethod = 'get' | 'post' | 'put' | 'patch' | 'delete';

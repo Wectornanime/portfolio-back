@@ -3,7 +3,7 @@ import { createCertificateDto } from 'src/dto/certificates.dto';
 
 export default class CreateCertificatesController implements Controller {
   async handle(request: HttpRequest): Promise<HttpResponse> {
-    const { body } = request;
+    const { body, user } = request;
 
     const { data, error } = createCertificateDto.safeParse(body);
     if (error) {
@@ -12,12 +12,13 @@ export default class CreateCertificatesController implements Controller {
 
     const newCertificate = await prisma.certificate.create({
       data: {
+        userId: user!.id,
         title: data.title,
         link: data.link,
         imageUrl: data.imageUrl,
       }
     });
 
-    return { statusCode: 200, data: newCertificate };
+    return { statusCode: 201, data: newCertificate };
   }
 }

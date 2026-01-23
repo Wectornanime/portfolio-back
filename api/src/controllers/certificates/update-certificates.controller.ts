@@ -4,12 +4,15 @@ import { updateCertificateDto } from 'src/dto/certificates.dto';
 export default class UpdateCertificatesController implements Controller {
   async handle(request: HttpRequest): Promise<HttpResponse> {
     const { id } = request.params;
-    const { body } = request;
+    const { body, user } = request;
 
     const requestId = Number(id);
 
     const certificate = await prisma.certificate.findFirst({
-      where: { id: requestId },
+      where: {
+        id: requestId,
+        userId: user!.id
+      },
     });
     if (!certificate) {
       return { statusCode: 400, message: 'Não foi possível encontrar um certificado com o id fornecido.' };

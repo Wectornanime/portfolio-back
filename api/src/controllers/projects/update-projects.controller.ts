@@ -4,12 +4,15 @@ import { updateProjectDto } from 'src/dto/projects.dto';
 export default class UpdateProjectsController implements Controller {
   async handle(request: HttpRequest): Promise<HttpResponse> {
     const { id } = request.params;
-    const { body } = request;
+    const { body, user } = request;
 
     const requestId = Number(id);
 
     const project = await prisma.project.findFirst({
-      where: { id: requestId },
+      where: {
+        id: requestId,
+        userId: user!.id
+      },
     });
     if (!project) {
       return { statusCode: 400, message: 'Não foi possível encontrar um projeto com o id fornecido.' };

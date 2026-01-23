@@ -3,7 +3,7 @@ import { createSkillDto } from 'src/dto/skills.dto';
 
 export default class CreateSkillsController implements Controller {
   async handle(request: HttpRequest): Promise<HttpResponse> {
-    const { body } = request;
+    const { body, user } = request;
 
     const { data, error } = createSkillDto.safeParse(body);
     if (error) {
@@ -12,6 +12,7 @@ export default class CreateSkillsController implements Controller {
 
     const newProject = await prisma.skill.create({
       data: {
+        userId: user!.id,
         title: data.title,
         iconUrl: data.iconUrl
       }

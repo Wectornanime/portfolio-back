@@ -4,12 +4,15 @@ import { updateSkillDto } from 'src/dto/skills.dto';
 export default class UpdateSkillsController implements Controller {
   async handle(request: HttpRequest): Promise<HttpResponse> {
     const { id } = request.params;
-    const { body } = request;
+    const { body, user } = request;
 
     const requestId = Number(id);
 
     const skill = await prisma.skill.findFirst({
-      where: { id: requestId },
+      where: {
+        id: requestId,
+        userId: user!.id
+      },
     });
     if (!skill) {
       return { statusCode: 400, message: 'Não foi possível encontrar uma habilidade com o id fornecido.' };
