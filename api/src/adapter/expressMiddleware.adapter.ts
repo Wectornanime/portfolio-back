@@ -5,7 +5,8 @@ export const expressMiddlewareAdapter = (middleware: Middleware) => {
     try {
       const httpRequest = {
         params: req.params,
-        body: req.body
+        body: req.body,
+        headers: req.headers
       };
 
       const { success, ...result } = await middleware.handle(httpRequest);
@@ -17,6 +18,7 @@ export const expressMiddlewareAdapter = (middleware: Middleware) => {
       if (success && result.request) {
         req.params = result.request.params;
         req.body = result.request.body;
+        req.headers = result.request.headers;
       }
 
       next();

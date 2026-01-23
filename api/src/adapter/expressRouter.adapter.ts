@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { expressControllerAdapter } from './expressController.adapter';
-import { expressMiddlewareAdapter } from './espressMiddleware.adapter';
+import { expressMiddlewareAdapter } from './expressMiddleware.adapter';
 
 type RoutesType = {
   [path: string]: HttpRouter
