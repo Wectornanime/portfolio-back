@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { expressControllerAdapter } from './expressController.adapter';
+import { expressMiddlewareAdapter } from './espressMiddleware.adapter';
 
 type RoutesType = {
   [path: string]: HttpRouter
@@ -12,7 +13,11 @@ const mountRoute = (httpRouter: HttpRouter): Router => {
     Object.entries(item).forEach(([method, handles]) => {
       const httpMethod = method as HttpMethod;
 
-      router[httpMethod](path, expressControllerAdapter(handles.controller));
+      const adaptedMiddlewares = handles.middlewares?.map(expressMiddlewareAdapter) || [];
+
+      const adaptedController = expressControllerAdapter(handles.controller);
+
+      router[httpMethod](path, ...adaptedMiddlewares, adaptedController);
     });
   });
 

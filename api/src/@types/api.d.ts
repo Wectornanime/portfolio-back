@@ -2,6 +2,12 @@ interface Controller {
   handle(request: HttpRequest): Promise<HttpResponse>
 }
 
+interface Middleware {
+  handle(request: HttpRequest): Promise<MiddlewareReturn>
+}
+
+type MiddlewareReturn = { success: boolean, request?: HttpRequest, response?: HttpResponse }
+
 type HttpResponse = {
   statusCode: 200 | 201 | 204 | 404 | 400 | 500
   data?: unknown
@@ -19,6 +25,7 @@ type HttpRouter = {
   [path: string]: {
     [method in HttpMethod]?: {
       controller: Controller;
+      middlewares?: Middleware[];
     };
   };
 };
