@@ -19,6 +19,14 @@ type HttpRequest = {
   body?: unknown,
   headers?: IncomingHttpHeaders,
   user?: UserSession,
+  file?: FileType
+}
+
+type FileType = {
+  originalname: string,
+  mimetype: string,
+  size: number,
+  buffer: Buffer
 }
 
 type HttpMethod = 'get' | 'post' | 'put' | 'patch' | 'delete';
