@@ -13,6 +13,7 @@ import {
   TableHeader,
   TableRow,
 } from "@heroui/table";
+import { Modal, ModalBody, ModalContent, ModalHeader } from "@heroui/modal";
 import {
   addToast,
   Avatar,
@@ -24,6 +25,7 @@ import {
   ScrollShadow,
   Spinner,
   Tooltip,
+  useDisclosure,
 } from "@heroui/react";
 import { useEffect, useMemo, useState } from "react";
 import {
@@ -33,6 +35,9 @@ import {
   EditRounded as EditRoundedIcon,
   SaveRounded as SaveRoundedIcon,
 } from "@mui/icons-material";
+
+import ChangeUserImageByUrl from "./changeUserImageByUrl";
+import ChangeUserImageByUpload from "./changeUserImageByUpload";
 
 import { api } from "@/services/api.service";
 
@@ -51,6 +56,9 @@ type InfoLinkType = {
 };
 
 export default function ProfilePage() {
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const [openOnModal, setOpenOnModal] = useState<string>("");
+
   const [profileData, setProfileData] = useState<profileDataType | null>(null);
   const [linkList, setLinkList] = useState<InfoLinkType[]>([]);
 
@@ -99,6 +107,11 @@ export default function ProfilePage() {
 
     setLinkList((prev) => [...prev, newRow]);
     startEdit(newRow);
+  };
+
+  const changeImage = (key: string) => {
+    setOpenOnModal(key);
+    onOpen();
   };
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -181,184 +194,212 @@ export default function ProfilePage() {
   }, [linkList]);
 
   return profileData ? (
-    <ScrollShadow hideScrollBar className="full">
-      <Form
-        className="max-w-[880px] m-auto p-1"
-        onReset={fetchData}
-        onSubmit={onSubmit}
-      >
-        <Card className="w-full flex-row gap-2 shrink-0 p-4 items-center">
-          <Avatar
-            name={`${profileData.name} ${profileData.lastName}` || ""}
-            size="lg"
-            src={profileData.imageUrl || ""}
-          />
-          <Dropdown>
-            <DropdownTrigger>
-              <Button color="primary" size="sm">
-                Trocar imagem
-              </Button>
-            </DropdownTrigger>
-            <DropdownMenu aria-label="Static Actions">
-              <DropdownItem key="upload">Enviar novo arquivo</DropdownItem>
-              <DropdownItem key="url">Usar link</DropdownItem>
-            </DropdownMenu>
-          </Dropdown>
-          <Button isDisabled={!profileData.imageUrl} size="sm">
-            Remover imagem
-          </Button>
-        </Card>
-
-        <div className="full flex gap-2">
+    <>
+      <ScrollShadow hideScrollBar className="full">
+        <Form
+          className="max-w-[880px] m-auto p-1"
+          onReset={fetchData}
+          onSubmit={onSubmit}
+        >
+          <Card className="w-full flex-row gap-2 shrink-0 p-4 items-center">
+            <Avatar
+              name={`${profileData.name} ${profileData.lastName}` || ""}
+              size="lg"
+              src={profileData.imageUrl || ""}
+            />
+            <Dropdown>
+              <DropdownTrigger>
+                <Button color="primary" size="sm">
+                  Trocar imagem
+                </Button>
+              </DropdownTrigger>
+              <DropdownMenu aria-label="Static Actions">
+                <DropdownItem
+                  key="upload"
+                  onClickCapture={() => changeImage("upload")}
+                >
+                  Enviar novo arquivo
+                </DropdownItem>
+                <DropdownItem
+                  key="url"
+                  onClickCapture={() => changeImage("url")}
+                >
+                  Usar link
+                </DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
+            <Button isDisabled={!profileData.imageUrl} size="sm">
+              Remover imagem
+            </Button>
+          </Card>
+          <div className="full flex gap-2">
+            <Input
+              isRequired
+              label="Nome"
+              size="sm"
+              type="text"
+              value={profileData.name}
+              onChange={(e) => {
+                setProfileData({ ...profileData, name: e.target.value });
+              }}
+            />
+            <Input
+              isRequired
+              label="Sobrenome"
+              size="sm"
+              type="text"
+              value={profileData.lastName}
+              onChange={(e) => {
+                setProfileData({ ...profileData, lastName: e.target.value });
+              }}
+            />
+          </div>
           <Input
             isRequired
-            label="Nome"
+            label="Subtitulo"
             size="sm"
             type="text"
-            value={profileData.name}
+            value={profileData.subtitle}
             onChange={(e) => {
-              setProfileData({ ...profileData, name: e.target.value });
+              setProfileData({ ...profileData, subtitle: e.target.value });
             }}
           />
-          <Input
+          <Textarea
             isRequired
-            label="Sobrenome"
+            label="Sobre mim"
             size="sm"
             type="text"
-            value={profileData.lastName}
+            value={profileData.aboutMe}
             onChange={(e) => {
-              setProfileData({ ...profileData, lastName: e.target.value });
+              setProfileData({ ...profileData, aboutMe: e.target.value });
             }}
           />
-        </div>
-
-        <Input
-          isRequired
-          label="Subtitulo"
-          size="sm"
-          type="text"
-          value={profileData.subtitle}
-          onChange={(e) => {
-            setProfileData({ ...profileData, subtitle: e.target.value });
-          }}
-        />
-        <Textarea
-          isRequired
-          label="Sobre mim"
-          size="sm"
-          type="text"
-          value={profileData.aboutMe}
-          onChange={(e) => {
-            setProfileData({ ...profileData, aboutMe: e.target.value });
-          }}
-        />
-        <Table hideHeader topContent={tableTopContent}>
-          <TableHeader>
-            <TableColumn>Label</TableColumn>
-            <TableColumn>Link</TableColumn>
-            <TableColumn className="text-center">Ações</TableColumn>
-          </TableHeader>
-          <TableBody>
-            {linkList.map((row) => (
-              <TableRow key={row.id}>
-                <TableCell>
-                  {isEditing(row.id) ? (
-                    <Input
-                      placeholder="title"
-                      size="sm"
-                      type="text"
-                      value={draftRow.title}
-                      variant="underlined"
-                      onChange={(e) =>
-                        setDraftRow({ ...draftRow, title: e.target.value })
-                      }
-                    />
-                  ) : (
-                    <p className="text-medium">{row.title}</p>
-                  )}
-                </TableCell>
-                <TableCell>
-                  {isEditing(row.id) ? (
-                    <Input
-                      placeholder="link"
-                      size="sm"
-                      startContent={
-                        <div className="pointer-events-none flex items-center">
-                          <span className="text-default-400 text-small">
-                            https://
-                          </span>
-                        </div>
-                      }
-                      type="url"
-                      value={draftRow.link}
-                      variant="underlined"
-                      onChange={(e) =>
-                        setDraftRow({ ...draftRow, link: e.target.value })
-                      }
-                    />
-                  ) : (
-                    <Link isExternal className="text-medium" href={row.link}>
-                      {row.link}
-                    </Link>
-                  )}
-                </TableCell>
-                <TableCell>
-                  <div className="flex gap-2 justify-center">
+          <Table hideHeader topContent={tableTopContent}>
+            <TableHeader>
+              <TableColumn>Label</TableColumn>
+              <TableColumn>Link</TableColumn>
+              <TableColumn className="text-center">Ações</TableColumn>
+            </TableHeader>
+            <TableBody>
+              {linkList.map((row) => (
+                <TableRow key={row.id}>
+                  <TableCell>
                     {isEditing(row.id) ? (
-                      <>
-                        <Tooltip content="Salvar mudanças">
-                          <span
-                            className="text-lg text-success-400 cursor-pointer active:opacity-50"
-                            onClickCapture={saveEdit}
-                          >
-                            <SaveRoundedIcon />
-                          </span>
-                        </Tooltip>
-                        <Tooltip content="Cancelar mudanças">
-                          <span
-                            className="text-lg text-danger-400 cursor-pointer active:opacity-50"
-                            onClickCapture={cancelEdit}
-                          >
-                            <CloseRoundedIcon />
-                          </span>
-                        </Tooltip>
-                      </>
+                      <Input
+                        placeholder="title"
+                        size="sm"
+                        type="text"
+                        value={draftRow.title}
+                        variant="underlined"
+                        onChange={(e) =>
+                          setDraftRow({ ...draftRow, title: e.target.value })
+                        }
+                      />
                     ) : (
-                      <>
-                        <Tooltip content="Editar link">
-                          <span
-                            className="text-lg text-default-400 cursor-pointer active:opacity-50"
-                            onClickCapture={() => startEdit(row)}
-                          >
-                            <EditRoundedIcon />
-                          </span>
-                        </Tooltip>
-                        <Tooltip content="Excluir link">
-                          <span
-                            className="text-lg text-danger-400 cursor-pointer active:opacity-50"
-                            onClickCapture={() => deleteRow(row.id)}
-                          >
-                            <DeleteRoundedIcon />
-                          </span>
-                        </Tooltip>
-                      </>
+                      <p className="text-medium">{row.title}</p>
                     )}
-                  </div>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-        <div className="flex gap-2 mt-4">
-          <Button color="primary" type="submit">
-            Atualizar perfil
-          </Button>
-          <Button type="reset" variant="flat">
-            Descartar alterações
-          </Button>
-        </div>
-      </Form>
-    </ScrollShadow>
+                  </TableCell>
+                  <TableCell>
+                    {isEditing(row.id) ? (
+                      <Input
+                        placeholder="link"
+                        size="sm"
+                        startContent={
+                          <div className="pointer-events-none flex items-center">
+                            <span className="text-default-400 text-small">
+                              https://
+                            </span>
+                          </div>
+                        }
+                        type="url"
+                        value={draftRow.link}
+                        variant="underlined"
+                        onChange={(e) =>
+                          setDraftRow({ ...draftRow, link: e.target.value })
+                        }
+                      />
+                    ) : (
+                      <Link isExternal className="text-medium" href={row.link}>
+                        {row.link}
+                      </Link>
+                    )}
+                  </TableCell>
+                  <TableCell>
+                    <div className="flex gap-2 justify-center">
+                      {isEditing(row.id) ? (
+                        <>
+                          <Tooltip content="Salvar mudanças">
+                            <span
+                              className="text-lg text-success-400 cursor-pointer active:opacity-50"
+                              onClickCapture={saveEdit}
+                            >
+                              <SaveRoundedIcon />
+                            </span>
+                          </Tooltip>
+                          <Tooltip content="Cancelar mudanças">
+                            <span
+                              className="text-lg text-danger-400 cursor-pointer active:opacity-50"
+                              onClickCapture={cancelEdit}
+                            >
+                              <CloseRoundedIcon />
+                            </span>
+                          </Tooltip>
+                        </>
+                      ) : (
+                        <>
+                          <Tooltip content="Editar link">
+                            <span
+                              className="text-lg text-default-400 cursor-pointer active:opacity-50"
+                              onClickCapture={() => startEdit(row)}
+                            >
+                              <EditRoundedIcon />
+                            </span>
+                          </Tooltip>
+                          <Tooltip content="Excluir link">
+                            <span
+                              className="text-lg text-danger-400 cursor-pointer active:opacity-50"
+                              onClickCapture={() => deleteRow(row.id)}
+                            >
+                              <DeleteRoundedIcon />
+                            </span>
+                          </Tooltip>
+                        </>
+                      )}
+                    </div>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+          <div className="flex gap-2 mt-4">
+            <Button color="primary" type="submit">
+              Atualizar perfil
+            </Button>
+            <Button type="reset" variant="flat">
+              Descartar alterações
+            </Button>
+          </div>
+        </Form>
+      </ScrollShadow>
+      <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader>
+                <p>Trocar imagem de usuário</p>
+              </ModalHeader>
+              <ModalBody>
+                {openOnModal === "url" ? (
+                  <ChangeUserImageByUrl onClose={onClose} />
+                ) : (
+                  <ChangeUserImageByUpload onClose={onClose} />
+                )}
+              </ModalBody>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
+    </>
   ) : (
     <div className="full max-w-[880px] m-auto">
       <Spinner className="full m-auto" size="lg" />
