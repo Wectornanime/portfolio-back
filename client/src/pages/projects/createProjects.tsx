@@ -1,5 +1,6 @@
 import { Input, Textarea } from "@heroui/input";
 import {
+  addToast,
   Button,
   Form,
   Link,
@@ -111,7 +112,7 @@ export default function CreateProjectsPage() {
     navigate(pathParent);
   };
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const path = location.pathname;
@@ -129,7 +130,14 @@ export default function CreateProjectsPage() {
       }),
     };
 
-    api.post(`/projects`, body);
+    const { status } = await api.post(`/projects`, body);
+
+    if (status === 200) {
+      addToast({
+        color: "success",
+        title: "Projeto criado com sucesso",
+      });
+    }
 
     navigate(pathParent);
   };

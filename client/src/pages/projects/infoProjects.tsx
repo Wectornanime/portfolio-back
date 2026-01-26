@@ -7,7 +7,9 @@ import {
   useDisclosure,
 } from "@heroui/modal";
 import {
+  addToast,
   Button,
+  closeToast,
   Form,
   Link,
   Spinner,
@@ -107,10 +109,17 @@ export default function InfoProjectsPage() {
     navigate(pathParent);
   };
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!projectData) return;
+
+    const toastId = addToast({
+      title: "Atualizando projeto",
+      timeout: Infinity,
+      shouldShowTimeoutProgress: true,
+      endContent: <Spinner size="sm" />,
+    });
 
     const body = {
       imageUrl: null,
@@ -128,14 +137,32 @@ export default function InfoProjectsPage() {
       }),
     };
 
-    api.put(`/projects/${id}`, body);
+    const { status } = await api.put(`/projects/${id}`, body);
+
+    if (!toastId) return;
+    closeToast(toastId);
+
+    if (status === 200) {
+      addToast({
+        color: "success",
+        title: "Projeto atualizado com sucesso",
+      });
+    }
   };
 
-  const handleDelete = () => {
+  const handleDelete = async () => {
     const path = location.pathname;
     const pathParent = path.substring(0, path.lastIndexOf("/"));
 
-    api.delete(`/projects/${id}`);
+    const { status } = await api.delete(`/projects/${id}`);
+
+    if (status === 200) {
+      addToast({
+        color: "success",
+        title: "Projeto deletado com sucesso",
+      });
+    }
+
     navigate(pathParent);
   };
 
@@ -150,8 +177,6 @@ export default function InfoProjectsPage() {
 
       setProjectData(projectData);
       setLinkList(links);
-    } else {
-      window.alert("Não foi possível buscar os dados.");
     }
   };
 

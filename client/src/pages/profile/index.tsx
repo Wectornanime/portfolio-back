@@ -104,14 +104,14 @@ export default function ProfilePage() {
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    if (!profileData) return;
+
     const toastId = addToast({
       title: "Atualizando perfil",
       timeout: Infinity,
       shouldShowTimeoutProgress: true,
       endContent: <Spinner size="sm" />,
     });
-
-    if (!profileData) return;
 
     const body = {
       name: profileData.name,
