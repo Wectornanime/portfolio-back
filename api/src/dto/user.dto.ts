@@ -21,3 +21,7 @@ export const updateUserDto = object({
     link: string()
   }))
 });
+
+export const patchImageUserDto = object({
+  imageUrl: string()
+});
