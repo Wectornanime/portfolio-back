@@ -1,4 +1,5 @@
 import { prisma } from '@adapter/prisma.adapter';
+import { successResponse } from 'src/helpers/response.helper';
 
 export default class GetAllCertificatesController implements Controller {
   async handle(request: HttpRequest): Promise<HttpResponse> {
@@ -8,6 +9,6 @@ export default class GetAllCertificatesController implements Controller {
       where: { userId: user!.id }
     });
 
-    return { statusCode: 200, data: certificates };
+    return successResponse(certificates);
   }
 }

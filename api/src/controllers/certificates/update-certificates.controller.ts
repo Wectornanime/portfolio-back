@@ -1,5 +1,6 @@
 import { prisma } from '@adapter/prisma.adapter';
 import { updateCertificateDto } from 'src/dto/certificates.dto';
+import { badRequest, successResponse, unprocessableEntity } from 'src/helpers/response.helper';
 
 export default class UpdateCertificatesController implements Controller {
   async handle(request: HttpRequest): Promise<HttpResponse> {
@@ -15,12 +16,12 @@ export default class UpdateCertificatesController implements Controller {
       },
     });
     if (!certificate) {
-      return { statusCode: 400, message: 'Não foi possível encontrar um certificado com o id fornecido.' };
+      return badRequest('Não foi possível encontrar um certificado com o id fornecido.');
     }
 
     const { data, error } = updateCertificateDto.safeParse(body);
     if (error) {
-      return { statusCode: 400, message: 'Não foi possível validar os dados da requisição.' };
+      return unprocessableEntity();
     }
 
     await prisma.certificate.update({
@@ -36,6 +37,6 @@ export default class UpdateCertificatesController implements Controller {
       where: { id: requestId }
     });
 
-    return { statusCode: 200, data: newCertificate };
+    return successResponse(newCertificate);
   }
 }

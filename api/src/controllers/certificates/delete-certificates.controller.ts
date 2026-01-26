@@ -1,4 +1,5 @@
 import { prisma } from '@adapter/prisma.adapter';
+import { badRequest, successNoContent } from 'src/helpers/response.helper';
 
 export default class DeleteCertificatesController implements Controller {
   async handle(request: HttpRequest): Promise<HttpResponse> {
@@ -14,7 +15,7 @@ export default class DeleteCertificatesController implements Controller {
     });
 
     if (!certificate) {
-      return { statusCode: 400, message: 'Id não encontrado. Não foi possível remover o certificado.' };
+      return badRequest('Id não encontrado. Não foi possível remover o certificado.');
     }
 
     await prisma.certificate.delete({
@@ -24,6 +25,6 @@ export default class DeleteCertificatesController implements Controller {
       }
     });
 
-    return { statusCode: 204 };
+    return successNoContent();
   }
 }

@@ -1,4 +1,5 @@
 import { prisma } from '@adapter/prisma.adapter';
+import { notFound, successResponse } from 'src/helpers/response.helper';
 
 export default class GetOneSkillsController implements Controller {
   async handle(request: HttpRequest): Promise<HttpResponse> {
@@ -13,6 +14,8 @@ export default class GetOneSkillsController implements Controller {
       }
     });
 
-    return { statusCode: 200, data: skill };
+    if (!skill) return notFound();
+
+    return successResponse(skill);
   }
 }

@@ -1,4 +1,5 @@
 import { prisma } from '@adapter/prisma.adapter';
+import { successResponse } from 'src/helpers/response.helper';
 
 export default class GetAllProjectsController implements Controller {
   async handle(request: HttpRequest): Promise<HttpResponse> {
@@ -9,6 +10,6 @@ export default class GetAllProjectsController implements Controller {
       include: { links: true }
     });
 
-    return { statusCode: 200, data: projects };
+    return successResponse(projects);
   }
 }

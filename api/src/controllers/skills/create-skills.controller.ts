@@ -1,5 +1,6 @@
 import { prisma } from '@adapter/prisma.adapter';
 import { createSkillDto } from 'src/dto/skills.dto';
+import { successCreated, unprocessableEntity } from 'src/helpers/response.helper';
 
 export default class CreateSkillsController implements Controller {
   async handle(request: HttpRequest): Promise<HttpResponse> {
@@ -7,7 +8,7 @@ export default class CreateSkillsController implements Controller {
 
     const { data, error } = createSkillDto.safeParse(body);
     if (error) {
-      return { statusCode: 400, message: 'Não foi possível validar os dados enviados.' };
+      return unprocessableEntity();
     }
 
     const newProject = await prisma.skill.create({
@@ -18,6 +19,6 @@ export default class CreateSkillsController implements Controller {
       }
     });
 
-    return { statusCode: 200, data: newProject };
+    return successCreated(newProject);
   }
 }

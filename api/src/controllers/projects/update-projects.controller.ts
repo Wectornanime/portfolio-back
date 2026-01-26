@@ -1,5 +1,6 @@
 import { prisma } from '@adapter/prisma.adapter';
 import { updateProjectDto } from 'src/dto/projects.dto';
+import { badRequest, successResponse, unprocessableEntity } from 'src/helpers/response.helper';
 
 export default class UpdateProjectsController implements Controller {
   async handle(request: HttpRequest): Promise<HttpResponse> {
@@ -15,12 +16,12 @@ export default class UpdateProjectsController implements Controller {
       },
     });
     if (!project) {
-      return { statusCode: 400, message: 'Não foi possível encontrar um projeto com o id fornecido.' };
+      return badRequest('Não foi possível encontrar um projeto com o id fornecido.');
     }
 
     const { data, error } = updateProjectDto.safeParse(body);
     if (error) {
-      return { statusCode: 400, message: 'Não foi possível validar os dados da requisição.' };
+      return  unprocessableEntity();
     }
 
     await prisma.project.update({
@@ -70,6 +71,6 @@ export default class UpdateProjectsController implements Controller {
       include: { links: true }
     });
 
-    return { statusCode: 200, data: newProject };
+    return successResponse(newProject);
   }
 }

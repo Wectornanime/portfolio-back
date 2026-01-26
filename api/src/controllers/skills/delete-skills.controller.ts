@@ -1,4 +1,5 @@
 import { prisma } from '@adapter/prisma.adapter';
+import { badRequest, successNoContent } from 'src/helpers/response.helper';
 
 export default class DeleteSkillsController implements Controller {
   async handle(request: HttpRequest): Promise<HttpResponse> {
@@ -14,7 +15,7 @@ export default class DeleteSkillsController implements Controller {
     });
 
     if (!skill) {
-      return { statusCode: 400, message: 'Id não encontrado. Não foi possível remover a habilidade.' };
+      return badRequest('Id não encontrado. Não foi possível remover a habilidade.');
     }
 
     await prisma.skill.delete({
@@ -24,6 +25,6 @@ export default class DeleteSkillsController implements Controller {
       }
     });
 
-    return { statusCode: 204 };
+    return successNoContent();
   }
 }

@@ -1,5 +1,6 @@
 import { prisma } from '@adapter/prisma.adapter';
 import { createCertificateDto } from 'src/dto/certificates.dto';
+import { badRequest, successCreated } from 'src/helpers/response.helper';
 
 export default class CreateCertificatesController implements Controller {
   async handle(request: HttpRequest): Promise<HttpResponse> {
@@ -7,7 +8,7 @@ export default class CreateCertificatesController implements Controller {
 
     const { data, error } = createCertificateDto.safeParse(body);
     if (error) {
-      return { statusCode: 400, message: 'Não foi possível validar os dados enviados.' };
+      return badRequest('Não foi possível validar os dados enviados.');
     }
 
     const newCertificate = await prisma.certificate.create({
@@ -19,6 +20,6 @@ export default class CreateCertificatesController implements Controller {
       }
     });
 
-    return { statusCode: 201, data: newCertificate };
+    return successCreated(newCertificate);
   }
 }

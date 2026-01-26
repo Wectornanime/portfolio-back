@@ -1,4 +1,5 @@
 import { prisma } from '@adapter/prisma.adapter';
+import { badRequest, successNoContent } from 'src/helpers/response.helper';
 
 export default class DeleteProjectsController implements Controller {
   async handle(request: HttpRequest): Promise<HttpResponse> {
@@ -14,7 +15,7 @@ export default class DeleteProjectsController implements Controller {
     });
 
     if (!project) {
-      return { statusCode: 400, message: 'Id não encontrado. Não foi possível remover o projeto.' };
+      return badRequest('Id não encontrado. Não foi possível remover o projeto.');
     }
 
     await prisma.projectLink.deleteMany({
@@ -25,6 +26,6 @@ export default class DeleteProjectsController implements Controller {
       where: { id: idRequest }
     });
 
-    return { statusCode: 204 };
+    return successNoContent();
   }
 }

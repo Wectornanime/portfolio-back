@@ -1,5 +1,6 @@
 import { prisma } from '@adapter/prisma.adapter';
 import { createProjectDto } from 'src/dto/projects.dto';
+import { successCreated, unprocessableEntity } from 'src/helpers/response.helper';
 
 export default class CreateProjectsController implements Controller {
   async handle(request: HttpRequest): Promise<HttpResponse> {
@@ -7,7 +8,7 @@ export default class CreateProjectsController implements Controller {
 
     const { data, error } = createProjectDto.safeParse(body);
     if (error) {
-      return { statusCode: 400, message: 'Não foi possível validar os dados enviados.' };
+      return unprocessableEntity();
     }
 
     const newProject = await prisma.project.create({
@@ -25,6 +26,6 @@ export default class CreateProjectsController implements Controller {
       include: { links: true }
     });
 
-    return { statusCode: 200, data: newProject };
+    return successCreated(newProject);
   }
 }

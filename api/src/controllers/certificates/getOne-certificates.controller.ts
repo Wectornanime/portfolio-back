@@ -1,4 +1,5 @@
 import { prisma } from '@adapter/prisma.adapter';
+import { notFound, successResponse } from 'src/helpers/response.helper';
 
 export default class GetOneCertificatesController implements Controller {
   async handle(request: HttpRequest): Promise<HttpResponse> {
@@ -13,6 +14,8 @@ export default class GetOneCertificatesController implements Controller {
       }
     });
 
-    return { statusCode: 200, data: certificate };
+    if (!certificate) return notFound();
+
+    return successResponse(certificate);
   }
 }

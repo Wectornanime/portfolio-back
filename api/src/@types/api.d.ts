@@ -9,7 +9,7 @@ interface Middleware {
 type MiddlewareReturn = { success: boolean, request?: HttpRequest, response?: HttpResponse }
 
 type HttpResponse = {
-  statusCode: 200 | 201 | 204 | 400 | 401 | 404 | 500
+  statusCode: 200 | 201 | 204 | 400 | 401 | 404 | 405 | 422 | 500
   data?: unknown
   message?: string
 }
