@@ -132,7 +132,7 @@ export default function CreateProjectsPage() {
 
     const { status } = await api.post(`/projects`, body);
 
-    if (status === 200) {
+    if (status === 201) {
       addToast({
         color: "success",
         title: "Projeto criado com sucesso",

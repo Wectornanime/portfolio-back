@@ -77,7 +77,7 @@ export default function InfoHabiliteisPage() {
 
     const { status } = await api.delete(`/skills/${id}`);
 
-    if (status === 200) {
+    if (status === 204) {
       addToast({
         color: "success",
         title: "Habilidade deletada com sucesso",

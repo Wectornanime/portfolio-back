@@ -41,7 +41,7 @@ export default function CreateHabiliteisPage() {
 
     const { status } = await api.post(`/skills`, body);
 
-    if (status === 200) {
+    if (status === 201) {
       addToast({
         color: "success",
         title: "Habilidade criada com sucesso",

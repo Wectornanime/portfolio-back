@@ -6,7 +6,7 @@ import {
   ModalBody,
   useDisclosure,
 } from "@heroui/modal";
-import { Button, Form, Spinner } from "@heroui/react";
+import { addToast, Button, closeToast, Form, Spinner } from "@heroui/react";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 
@@ -35,10 +35,17 @@ export default function InfoCertificatesPage() {
     navigate(pathParent);
   };
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!certificateData) return;
+
+    const toastId = addToast({
+      title: "Atualizando certificado",
+      timeout: Infinity,
+      shouldShowTimeoutProgress: true,
+      endContent: <Spinner size="sm" />,
+    });
 
     const body = {
       imageUrl: null,
@@ -46,14 +53,31 @@ export default function InfoCertificatesPage() {
       link: certificateData.link,
     };
 
-    api.put(`/certificates/${id}`, body);
+    const { status } = await api.put(`/certificates/${id}`, body);
+
+    if (!toastId) return;
+    closeToast(toastId);
+
+    if (status === 200) {
+      addToast({
+        color: "success",
+        title: "Certificado atualizado com sucesso",
+      });
+    }
   };
 
-  const handleDelete = () => {
+  const handleDelete = async () => {
     const path = location.pathname;
     const pathParent = path.substring(0, path.lastIndexOf("/"));
 
-    api.delete(`/certificates/${id}`);
+    const { status } = await api.delete(`/certificates/${id}`);
+
+    if (status === 204) {
+      addToast({
+        color: "success",
+        title: "Certificado removido com sucesso",
+      });
+    }
     navigate(pathParent);
   };
 
@@ -65,7 +89,10 @@ export default function InfoCertificatesPage() {
     if (status === 200) {
       setCertificateData(data.data);
     } else {
-      window.alert("Não foi possível buscar os dados.");
+      addToast({
+        color: "warning",
+        title: "Não foi possível localizar o certificado",
+      });
     }
   };
 

@@ -1,5 +1,5 @@
 import { Input } from "@heroui/input";
-import { Button, Form } from "@heroui/react";
+import { addToast, Button, Form } from "@heroui/react";
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -28,7 +28,7 @@ export default function CreateCertificatesPage() {
     navigate(pathParent);
   };
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!certificateData) return;
@@ -42,7 +42,14 @@ export default function CreateCertificatesPage() {
       link: certificateData.link,
     };
 
-    api.post(`/certificates`, body);
+    const { status } = await api.post(`/certificates`, body);
+
+    if (status === 201) {
+      addToast({
+        color: "success",
+        title: "Certificado atualizado com sucesso",
+      });
+    }
 
     navigate(pathParent);
   };

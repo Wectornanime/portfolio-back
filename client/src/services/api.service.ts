@@ -23,6 +23,7 @@ api.interceptors.response.use(
   (response) => response,
   (error) => {
     const { status } = error;
+    const data = error.response.data;
 
     if (status === 401) {
       addToast({
@@ -36,6 +37,23 @@ api.interceptors.response.use(
       navigationBridge.navigate?.("/login");
     }
 
-    return Promise.reject(error);
+    if (status === 400 || status === 404) {
+      addToast({
+        title: "Ocorreu com sua requisição",
+        color: "warning",
+        description: data.message,
+      });
+    }
+
+    if (status === 500) {
+      addToast({
+        title: "Ocorreu um erro com o servidor",
+        color: "danger",
+        description:
+          "Parece que tivemos um problema com nosso servidor, por favor tente mais tarde.",
+      });
+    }
+
+    return { status, data };
   },
 );

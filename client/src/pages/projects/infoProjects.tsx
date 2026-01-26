@@ -156,7 +156,7 @@ export default function InfoProjectsPage() {
 
     const { status } = await api.delete(`/projects/${id}`);
 
-    if (status === 200) {
+    if (status === 204) {
       addToast({
         color: "success",
         title: "Projeto deletado com sucesso",
