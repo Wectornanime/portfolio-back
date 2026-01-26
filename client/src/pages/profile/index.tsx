@@ -14,9 +14,11 @@ import {
   TableRow,
 } from "@heroui/table";
 import {
+  addToast,
   Avatar,
   Button,
   Card,
+  closeToast,
   Form,
   Link,
   ScrollShadow,
@@ -99,8 +101,15 @@ export default function ProfilePage() {
     startEdit(newRow);
   };
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    const toastId = addToast({
+      title: "Atualizando perfil",
+      timeout: Infinity,
+      shouldShowTimeoutProgress: true,
+      endContent: <Spinner size="sm" />,
+    });
 
     if (!profileData) return;
 
@@ -121,7 +130,17 @@ export default function ProfilePage() {
       }),
     };
 
-    api.put("/me", body);
+    const { status } = await api.put("/me", body);
+
+    if (!toastId) return;
+    closeToast(toastId);
+
+    if (status === 200) {
+      addToast({
+        color: "success",
+        title: "Perfil atualizado com sucesso",
+      });
+    }
   };
 
   const fetchData = async () => {
