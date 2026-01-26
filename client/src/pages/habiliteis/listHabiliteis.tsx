@@ -1,6 +1,6 @@
 import { Card, CardBody } from "@heroui/card";
 import { Link } from "@heroui/link";
-import { Spinner } from "@heroui/react";
+import { addToast, Spinner } from "@heroui/react";
 import { useEffect, useState } from "react";
 
 import { api } from "@/services/api.service";
@@ -20,7 +20,10 @@ export default function ListHabiliteisPage() {
     if (status === 200) {
       setSkillList(data.data);
     } else {
-      window.alert("Não foi possível buscar os dados.");
+      addToast({
+        color: "warning",
+        title: "Não foi possível carregar a lista de habilidades",
+      });
     }
   };
 

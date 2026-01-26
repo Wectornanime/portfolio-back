@@ -6,7 +6,15 @@ import {
   ModalBody,
   useDisclosure,
 } from "@heroui/modal";
-import { Button, Form, Link, LinkIcon, Spinner } from "@heroui/react";
+import {
+  addToast,
+  Button,
+  closeToast,
+  Form,
+  Link,
+  LinkIcon,
+  Spinner,
+} from "@heroui/react";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 
@@ -33,24 +41,49 @@ export default function InfoHabiliteisPage() {
     navigate(pathParent);
   };
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!skillData) return;
+
+    const toastId = addToast({
+      title: "Atualizando habilidade",
+      timeout: Infinity,
+      shouldShowTimeoutProgress: true,
+      endContent: <Spinner size="sm" />,
+    });
 
     const body = {
       title: skillData.title,
       iconUrl: skillData.iconUrl,
     };
 
-    api.put(`/skills/${id}`, body);
+    const { status } = await api.put(`/skills/${id}`, body);
+
+    if (!toastId) return;
+    closeToast(toastId);
+
+    if (status === 200) {
+      addToast({
+        color: "success",
+        title: "Habilidade atualizada com sucesso",
+      });
+    }
   };
 
-  const handleDelete = () => {
+  const handleDelete = async () => {
     const path = location.pathname;
     const pathParent = path.substring(0, path.lastIndexOf("/"));
 
-    api.delete(`/skills/${id}`);
+    const { status } = await api.delete(`/skills/${id}`);
+
+    if (status === 200) {
+      addToast({
+        color: "success",
+        title: "Habilidade deletada com sucesso",
+      });
+    }
+
     navigate(pathParent);
   };
 
@@ -62,7 +95,10 @@ export default function InfoHabiliteisPage() {
     if (status === 200) {
       setSkillData(data.data);
     } else {
-      window.alert("Não foi possível buscar os dados.");
+      addToast({
+        color: "warning",
+        title: "Não foi possível carregar esta habilidade",
+      });
     }
   };
 

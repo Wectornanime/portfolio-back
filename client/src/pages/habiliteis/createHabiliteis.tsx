@@ -1,5 +1,5 @@
 import { Input } from "@heroui/input";
-import { Button, Form, Link, LinkIcon } from "@heroui/react";
+import { addToast, Button, Form, Link, LinkIcon } from "@heroui/react";
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -26,7 +26,7 @@ export default function CreateHabiliteisPage() {
     navigate(pathParent);
   };
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!skillData) return;
@@ -39,7 +39,19 @@ export default function CreateHabiliteisPage() {
       iconUrl: skillData.iconUrl,
     };
 
-    api.post(`/skills`, body);
+    const { status } = await api.post(`/skills`, body);
+
+    if (status === 200) {
+      addToast({
+        color: "success",
+        title: "Habilidade criada com sucesso",
+      });
+    } else {
+      addToast({
+        color: "warning",
+        title: "Não foi possível criar a habilidade",
+      });
+    }
 
     navigate(pathParent);
   };
