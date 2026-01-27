@@ -1,15 +1,28 @@
+import * as pdfjsLib from "pdfjs-dist";
+import pdfWorker from "pdfjs-dist/build/pdf.worker?url";
 import { Input } from "@heroui/input";
-import { addToast, Button, Form } from "@heroui/react";
+import {
+  addToast,
+  Button,
+  Card,
+  CardBody,
+  CardHeader,
+  Form,
+} from "@heroui/react";
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import { api } from "@/services/api.service";
+import Image from "@/components/Image";
 
 type CertificateDataType = {
   title: string;
-  imageUrl: string | null;
   link: string | null;
+  pdf: File | null;
+  preview: string | null;
 };
+
+pdfjsLib.GlobalWorkerOptions.workerSrc = pdfWorker;
 
 export default function CreateCertificatesPage() {
   const location = useLocation();
@@ -17,9 +30,35 @@ export default function CreateCertificatesPage() {
 
   const [certificateData, setCertificateData] = useState<CertificateDataType>({
     link: "",
-    imageUrl: "",
     title: "",
+    pdf: null,
+    preview: null,
   });
+
+  const handlePdfChange = async (file: File) => {
+    const arrayBuffer = await file.arrayBuffer();
+    const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+    const page = await pdf.getPage(1);
+
+    const viewport = page.getViewport({ scale: 1.5 });
+    const canvas = document.createElement("canvas");
+    const context = canvas.getContext("2d")!;
+
+    canvas.width = viewport.width;
+    canvas.height = viewport.height;
+
+    await page.render({
+      canvas,
+      canvasContext: context,
+      viewport,
+    }).promise;
+
+    setCertificateData({
+      ...certificateData,
+      pdf: file,
+      preview: canvas.toDataURL(),
+    });
+  };
 
   const onReset = () => {
     const path = location.pathname;
@@ -32,17 +71,29 @@ export default function CreateCertificatesPage() {
     e.preventDefault();
 
     if (!certificateData) return;
+    if (!certificateData.pdf) {
+      addToast({
+        color: "danger",
+        title: "O PDF do certificado é obrigatório",
+      });
+
+      return;
+    }
 
     const path = location.pathname;
     const pathParent = path.substring(0, path.lastIndexOf("/"));
 
-    const body = {
-      imageUrl: null,
-      title: certificateData.title,
-      link: certificateData.link,
-    };
+    const formData = new FormData();
 
-    const { status } = await api.post(`/certificates`, body);
+    formData.append("title", certificateData.title);
+    formData.append("link", certificateData.link || "");
+    formData.append("file", certificateData.pdf);
+
+    const { status } = await api.post(`/certificates`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
 
     if (status === 201) {
       addToast({
@@ -76,6 +127,33 @@ export default function CreateCertificatesPage() {
           setCertificateData({ ...certificateData, link: e.target.value });
         }}
       />
+
+      <Input
+        isRequired
+        accept="application/pdf"
+        label="Arquivo pdf do certificado"
+        size="sm"
+        type="file"
+        onChange={(e) => {
+          const file = e.target.files?.[0];
+
+          if (file) handlePdfChange(file);
+        }}
+      />
+
+      {certificateData.preview && (
+        <Card>
+          <CardHeader>
+            <h2 className="font-semibold text-lg">Pré-visualização</h2>
+          </CardHeader>
+          <CardBody>
+            <Image
+              className="w-[20%] border rounded"
+              src={certificateData.preview}
+            />
+          </CardBody>
+        </Card>
+      )}
 
       <div className="flex gap-2 mt-4">
         <Button color="primary" type="submit">
