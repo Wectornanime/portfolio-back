@@ -1,14 +1,9 @@
 import { Input, Textarea } from "@heroui/input";
-import {
-  Modal,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  useDisclosure,
-} from "@heroui/modal";
+import { Modal, ModalContent, ModalHeader, ModalBody } from "@heroui/modal";
 import {
   addToast,
   Button,
+  Card,
   closeToast,
   Form,
   Link,
@@ -24,6 +19,7 @@ import {
 import {
   AddRounded as AddRoundedIcon,
   CloseRounded as CloseRoundedIcon,
+  ContentCopyRounded as ContentCopyRoundedIcon,
   DeleteRounded as DeleteRoundedIcon,
   EditRounded as EditRoundedIcon,
   SaveRounded as SaveRoundedIcon,
@@ -31,7 +27,11 @@ import {
 import { useEffect, useMemo, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 
+import InfoProjectsChangeImageByUrl from "./infoProjectsChangeImageByUrl";
+import InfoProjectsChangeImageByUpload from "./infoProjectsChangeImageByUpload";
+
 import { api } from "@/services/api.service";
+import Image from "@/components/Image";
 
 type itemListLinkType = {
   id: string;
@@ -43,14 +43,17 @@ type ProjectDataType = {
   title: string;
   text: string;
   link: string;
+  imageUrl?: string;
 };
+
+type ModalType = "changeImageUrl" | "uploadImage" | "removeProject" | null;
 
 export default function InfoProjectsPage() {
   const { id } = useParams();
 
   const location = useLocation();
   const navigate = useNavigate();
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const [activeModal, setActiveModal] = useState<ModalType>(null);
 
   const [projectData, setProjectData] = useState<ProjectDataType | null>(null);
   const [linkList, setLinkList] = useState<itemListLinkType[]>([]);
@@ -102,6 +105,49 @@ export default function InfoProjectsPage() {
     startEdit(newRow);
   };
 
+  const copyImageLink = async () => {
+    if (!projectData || !projectData.imageUrl) return;
+
+    try {
+      await navigator.clipboard.writeText(projectData.imageUrl);
+      addToast({
+        color: "success",
+        title: "Link copiado!",
+      });
+    } catch {
+      addToast({
+        color: "warning",
+        title: "Não foi possível copiar o link!",
+      });
+    }
+  };
+
+  const removeImage = async () => {
+    const toastId = addToast({
+      title: "Removendo imagem do projeto",
+      timeout: Infinity,
+      shouldShowTimeoutProgress: true,
+      endContent: <Spinner size="sm" />,
+    });
+
+    const { status } = await api.patch(`/projects/${id}/patch/removeImageUrl`);
+
+    if (!toastId) return;
+    closeToast(toastId);
+
+    if (status === 200) {
+      addToast({
+        color: "success",
+        title: "A imagem do projeto foi removida com sucesso",
+      });
+    } else {
+      addToast({
+        color: "danger",
+        title: "Erro ao remover a imagem do projeto",
+      });
+    }
+  };
+
   const onReset = () => {
     const path = location.pathname;
     const pathParent = path.substring(0, path.lastIndexOf("/"));
@@ -122,7 +168,6 @@ export default function InfoProjectsPage() {
     });
 
     const body = {
-      imageUrl: null,
       title: projectData.title,
       text: projectData.text,
       links: linkList.map((link) => {
@@ -204,6 +249,34 @@ export default function InfoProjectsPage() {
   return projectData ? (
     <>
       <Form className="full" onReset={onReset} onSubmit={(e) => onSubmit(e)}>
+        <Card className="w-full flex-row gap-2 shrink-0 p-4 items-center">
+          <Image className="w-[20%]" src={projectData.imageUrl} />
+          <div className="flex flex-col gap-2">
+            <p className="font-light">
+              <span className="text-lg font-semibold">Link da imagem: </span>
+              {projectData.imageUrl}
+              <span>
+                <Tooltip content="Copiar link">
+                  <span
+                    className="text-lg text-default-400 cursor-pointer active:opacity-50"
+                    onClickCapture={copyImageLink}
+                  >
+                    <ContentCopyRoundedIcon fontSize="small" />
+                  </span>
+                </Tooltip>
+              </span>
+            </p>
+            <div className="flex gap-2">
+              <Button onClickCapture={() => setActiveModal("changeImageUrl")}>
+                Trocar link da imagem
+              </Button>
+              <Button onClickCapture={() => setActiveModal("uploadImage")}>
+                Enviar nova imagem
+              </Button>
+              <Button onClickCapture={removeImage}>Remover imagem</Button>
+            </div>
+          </div>
+        </Card>
         <Input
           isRequired
           label="Título"
@@ -334,13 +407,20 @@ export default function InfoProjectsPage() {
             Descartar alterações
           </Button>
 
-          <Button color="danger" variant="light" onPress={onOpen}>
+          <Button
+            color="danger"
+            variant="light"
+            onPress={() => setActiveModal("removeProject")}
+          >
             Excluir projeto
           </Button>
         </div>
       </Form>
 
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+      <Modal
+        isOpen={activeModal === "removeProject"}
+        onClose={() => setActiveModal(null)}
+      >
         <ModalContent>
           {(onClose) => (
             <>
@@ -368,6 +448,42 @@ export default function InfoProjectsPage() {
                     Cancelar
                   </Button>
                 </div>
+              </ModalBody>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
+
+      <Modal
+        isOpen={activeModal === "changeImageUrl"}
+        onClose={() => setActiveModal(null)}
+      >
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader className="flex flex-col gap-1">
+                Trocar imagem do projeto por link
+              </ModalHeader>
+              <ModalBody>
+                <InfoProjectsChangeImageByUrl onClose={onClose} />
+              </ModalBody>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
+
+      <Modal
+        isOpen={activeModal === "uploadImage"}
+        onClose={() => setActiveModal(null)}
+      >
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader className="flex flex-col gap-1">
+                Enviar nova imagem do projeto
+              </ModalHeader>
+              <ModalBody>
+                <InfoProjectsChangeImageByUpload onClose={onClose} />
               </ModalBody>
             </>
           )}

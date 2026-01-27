@@ -41,4 +41,8 @@ export const siteConfig = {
   links: {
     github: "https://github.com/Wectornanime/portfolio-back",
   },
+  defaultAssets: {
+    imageFallbackSrc:
+      "https://static.vecteezy.com/ti/vetor-gratis/p1/5720408-icone-imagem-cruzado-imagem-nao-disponivel-excluir-imagem-simbolo-gratis-vetor.jpg",
+  },
 };
