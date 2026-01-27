@@ -2,8 +2,11 @@ import CreateProjectsController from 'src/controllers/projects/create-projects.c
 import DeleteProjectsController from 'src/controllers/projects/delete-projects.controller';
 import GetAllProjectsController from 'src/controllers/projects/getAll-projects.controller';
 import GetOneProjectsController from 'src/controllers/projects/getOne-projects.controller';
+import PatchRemoveImageProjectController from 'src/controllers/projects/patch/removeImageProject.controller';
+import PatchUpdateImageProjectController from 'src/controllers/projects/patch/updateImageProject.controller';
 import UpdateProjectsController from 'src/controllers/projects/update-projects.controller';
 import AuthMiddleware from 'src/middlewares/auth.middleware';
+import FileMiddleware from 'src/middlewares/file.middleware';
 
 export const projectsRouter: HttpRouter = {
   '/': {
@@ -38,6 +41,18 @@ export const projectsRouter: HttpRouter = {
       middlewares: [
         new AuthMiddleware
       ]
+    }
+  },
+  '/:id/patch/removeImageUrl': {
+    patch: {
+      controller: new PatchRemoveImageProjectController,
+      middlewares: [new AuthMiddleware]
+    }
+  },
+  '/:id/patch/imageUrl': {
+    patch: {
+      controller: new PatchUpdateImageProjectController,
+      middlewares: [new AuthMiddleware, new FileMiddleware]
     }
   }
 };

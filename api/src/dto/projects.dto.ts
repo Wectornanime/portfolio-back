@@ -15,7 +15,6 @@ export const createProjectDto = object({
 export const updateProjectDto = object({
   title: string(),
   text: string(),
-  imageUrl: string().nullable(),
   links: array(
     object({
       id: number().positive().nullable().optional(),
@@ -23,4 +22,8 @@ export const updateProjectDto = object({
       link: string()
     })
   )
+});
+
+export const patchImageProjectDto = object({
+  imageUrl: string(),
 });
