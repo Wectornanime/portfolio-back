@@ -7,13 +7,15 @@ import {
   Card,
   CardBody,
   CardHeader,
+  closeToast,
   Form,
+  Spinner,
 } from "@heroui/react";
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import { api } from "@/services/api.service";
-import Image from "@/components/Image";
+import Image from "@/components/image";
 
 type CertificateDataType = {
   title: string;
@@ -80,6 +82,13 @@ export default function CreateCertificatesPage() {
       return;
     }
 
+    const toastId = addToast({
+      title: "Registrando certificado",
+      timeout: Infinity,
+      shouldShowTimeoutProgress: true,
+      endContent: <Spinner size="sm" />,
+    });
+
     const path = location.pathname;
     const pathParent = path.substring(0, path.lastIndexOf("/"));
 
@@ -95,10 +104,18 @@ export default function CreateCertificatesPage() {
       },
     });
 
+    if (!toastId) return;
+    closeToast(toastId);
+
     if (status === 201) {
       addToast({
         color: "success",
         title: "Certificado atualizado com sucesso",
+      });
+    } else {
+      addToast({
+        color: "warning",
+        title: "Não foi possível registrar o certificado",
       });
     }
 

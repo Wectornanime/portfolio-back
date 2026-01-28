@@ -4,12 +4,16 @@ import { addToast, Spinner } from "@heroui/react";
 import { useEffect, useState } from "react";
 
 import { api } from "@/services/api.service";
+import Image from "@/components/image";
+import { generatePdfImagePreview } from "@/utils/generatePdfImagePreview";
 
 type certificatesListType = {
   id: number;
   imageUrl: string | null;
   link: string | null;
   title: string;
+  pdfFileUrl: string;
+  previewUrl: string | undefined;
 };
 
 export default function ListCertificatesPage() {
@@ -21,7 +25,14 @@ export default function ListCertificatesPage() {
     const { data, status } = await api.get("/certificates");
 
     if (status === 200) {
-      setCertificatesList(data.data);
+      const certificatesWithPreview = await Promise.all(
+        data.data.map(async (item: any) => ({
+          ...item,
+          previewUrl: await generatePdfImagePreview(item.pdfFileUrl),
+        })),
+      );
+
+      setCertificatesList(certificatesWithPreview);
     } else {
       addToast({
         color: "warning",
@@ -39,16 +50,10 @@ export default function ListCertificatesPage() {
       {certificatesList.map((item) => (
         <Link key={item.id} href={`/certificates/${item.id}`}>
           <Card isFooterBlurred>
-            <div className="aspect-video w-full overflow-hidden">
-              <img
-                alt={`Imagem do certificado: ${item.title}`}
-                className="h-full w-full object-cover"
-                src={
-                  item.imageUrl ||
-                  "https://static.vecteezy.com/ti/vetor-gratis/p1/5720408-icone-imagem-cruzado-imagem-nao-disponivel-excluir-imagem-simbolo-gratis-vetor.jpg"
-                }
-              />
-            </div>
+            <Image
+              alt={`Imagem do certificado: ${item.title}`}
+              src={item.previewUrl || ""}
+            />
             <CardFooter className="flex shrink-0 flex-col absolute items-start justify-between overflow-hidden z-10 py-1 w-full bottom-0 bg-white/10">
               <h2 className="text-zinc-700 font-bold right-0">{item.title}</h2>
             </CardFooter>
