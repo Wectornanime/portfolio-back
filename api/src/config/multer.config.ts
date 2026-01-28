@@ -9,7 +9,8 @@ export const multerConfig = multer({
     const allowedMimes = [
       'image/jpeg',
       'image/png',
-      'image/webp'
+      'image/webp',
+      'application/pdf'
     ];
 
     if (allowedMimes.includes(file.mimetype)) {

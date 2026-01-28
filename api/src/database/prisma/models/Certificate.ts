@@ -42,6 +42,7 @@ export type CertificateMinAggregateOutputType = {
   title: string | null
   link: string | null
   imageUrl: string | null
+  pdfFileUrl: string | null
   createdAt: Date | null
 }
 
@@ -51,6 +52,7 @@ export type CertificateMaxAggregateOutputType = {
   title: string | null
   link: string | null
   imageUrl: string | null
+  pdfFileUrl: string | null
   createdAt: Date | null
 }
 
@@ -60,6 +62,7 @@ export type CertificateCountAggregateOutputType = {
   title: number
   link: number
   imageUrl: number
+  pdfFileUrl: number
   createdAt: number
   _all: number
 }
@@ -81,6 +84,7 @@ export type CertificateMinAggregateInputType = {
   title?: true
   link?: true
   imageUrl?: true
+  pdfFileUrl?: true
   createdAt?: true
 }
 
@@ -90,6 +94,7 @@ export type CertificateMaxAggregateInputType = {
   title?: true
   link?: true
   imageUrl?: true
+  pdfFileUrl?: true
   createdAt?: true
 }
 
@@ -99,6 +104,7 @@ export type CertificateCountAggregateInputType = {
   title?: true
   link?: true
   imageUrl?: true
+  pdfFileUrl?: true
   createdAt?: true
   _all?: true
 }
@@ -195,6 +201,7 @@ export type CertificateGroupByOutputType = {
   title: string
   link: string | null
   imageUrl: string | null
+  pdfFileUrl: string | null
   createdAt: Date
   _count: CertificateCountAggregateOutputType | null
   _avg: CertificateAvgAggregateOutputType | null
@@ -227,6 +234,7 @@ export type CertificateWhereInput = {
   title?: Prisma.StringFilter<"Certificate"> | string
   link?: Prisma.StringNullableFilter<"Certificate"> | string | null
   imageUrl?: Prisma.StringNullableFilter<"Certificate"> | string | null
+  pdfFileUrl?: Prisma.StringNullableFilter<"Certificate"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Certificate"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }
@@ -237,6 +245,7 @@ export type CertificateOrderByWithRelationInput = {
   title?: Prisma.SortOrder
   link?: Prisma.SortOrderInput | Prisma.SortOrder
   imageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  pdfFileUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
 }
@@ -250,6 +259,7 @@ export type CertificateWhereUniqueInput = Prisma.AtLeast<{
   title?: Prisma.StringFilter<"Certificate"> | string
   link?: Prisma.StringNullableFilter<"Certificate"> | string | null
   imageUrl?: Prisma.StringNullableFilter<"Certificate"> | string | null
+  pdfFileUrl?: Prisma.StringNullableFilter<"Certificate"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Certificate"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }, "id">
@@ -260,6 +270,7 @@ export type CertificateOrderByWithAggregationInput = {
   title?: Prisma.SortOrder
   link?: Prisma.SortOrderInput | Prisma.SortOrder
   imageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  pdfFileUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.CertificateCountOrderByAggregateInput
   _avg?: Prisma.CertificateAvgOrderByAggregateInput
@@ -277,6 +288,7 @@ export type CertificateScalarWhereWithAggregatesInput = {
   title?: Prisma.StringWithAggregatesFilter<"Certificate"> | string
   link?: Prisma.StringNullableWithAggregatesFilter<"Certificate"> | string | null
   imageUrl?: Prisma.StringNullableWithAggregatesFilter<"Certificate"> | string | null
+  pdfFileUrl?: Prisma.StringNullableWithAggregatesFilter<"Certificate"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Certificate"> | Date | string
 }
 
@@ -284,6 +296,7 @@ export type CertificateCreateInput = {
   title: string
   link?: string | null
   imageUrl?: string | null
+  pdfFileUrl?: string | null
   createdAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutCertificatesInput
 }
@@ -294,6 +307,7 @@ export type CertificateUncheckedCreateInput = {
   title: string
   link?: string | null
   imageUrl?: string | null
+  pdfFileUrl?: string | null
   createdAt?: Date | string
 }
 
@@ -301,6 +315,7 @@ export type CertificateUpdateInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   link?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pdfFileUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutCertificatesNestedInput
 }
@@ -311,6 +326,7 @@ export type CertificateUncheckedUpdateInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   link?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pdfFileUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -320,6 +336,7 @@ export type CertificateCreateManyInput = {
   title: string
   link?: string | null
   imageUrl?: string | null
+  pdfFileUrl?: string | null
   createdAt?: Date | string
 }
 
@@ -327,6 +344,7 @@ export type CertificateUpdateManyMutationInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   link?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pdfFileUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -336,6 +354,7 @@ export type CertificateUncheckedUpdateManyInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   link?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pdfFileUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -345,6 +364,7 @@ export type CertificateCountOrderByAggregateInput = {
   title?: Prisma.SortOrder
   link?: Prisma.SortOrder
   imageUrl?: Prisma.SortOrder
+  pdfFileUrl?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -359,6 +379,7 @@ export type CertificateMaxOrderByAggregateInput = {
   title?: Prisma.SortOrder
   link?: Prisma.SortOrder
   imageUrl?: Prisma.SortOrder
+  pdfFileUrl?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -368,6 +389,7 @@ export type CertificateMinOrderByAggregateInput = {
   title?: Prisma.SortOrder
   link?: Prisma.SortOrder
   imageUrl?: Prisma.SortOrder
+  pdfFileUrl?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -432,6 +454,7 @@ export type CertificateCreateWithoutUserInput = {
   title: string
   link?: string | null
   imageUrl?: string | null
+  pdfFileUrl?: string | null
   createdAt?: Date | string
 }
 
@@ -440,6 +463,7 @@ export type CertificateUncheckedCreateWithoutUserInput = {
   title: string
   link?: string | null
   imageUrl?: string | null
+  pdfFileUrl?: string | null
   createdAt?: Date | string
 }
 
@@ -478,6 +502,7 @@ export type CertificateScalarWhereInput = {
   title?: Prisma.StringFilter<"Certificate"> | string
   link?: Prisma.StringNullableFilter<"Certificate"> | string | null
   imageUrl?: Prisma.StringNullableFilter<"Certificate"> | string | null
+  pdfFileUrl?: Prisma.StringNullableFilter<"Certificate"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Certificate"> | Date | string
 }
 
@@ -486,6 +511,7 @@ export type CertificateCreateManyUserInput = {
   title: string
   link?: string | null
   imageUrl?: string | null
+  pdfFileUrl?: string | null
   createdAt?: Date | string
 }
 
@@ -493,6 +519,7 @@ export type CertificateUpdateWithoutUserInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   link?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pdfFileUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -501,6 +528,7 @@ export type CertificateUncheckedUpdateWithoutUserInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   link?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pdfFileUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -509,6 +537,7 @@ export type CertificateUncheckedUpdateManyWithoutUserInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   link?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pdfFileUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -520,6 +549,7 @@ export type CertificateSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   title?: boolean
   link?: boolean
   imageUrl?: boolean
+  pdfFileUrl?: boolean
   createdAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["certificate"]>
@@ -530,6 +560,7 @@ export type CertificateSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   title?: boolean
   link?: boolean
   imageUrl?: boolean
+  pdfFileUrl?: boolean
   createdAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["certificate"]>
@@ -540,6 +571,7 @@ export type CertificateSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   title?: boolean
   link?: boolean
   imageUrl?: boolean
+  pdfFileUrl?: boolean
   createdAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["certificate"]>
@@ -550,10 +582,11 @@ export type CertificateSelectScalar = {
   title?: boolean
   link?: boolean
   imageUrl?: boolean
+  pdfFileUrl?: boolean
   createdAt?: boolean
 }
 
-export type CertificateOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "title" | "link" | "imageUrl" | "createdAt", ExtArgs["result"]["certificate"]>
+export type CertificateOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "title" | "link" | "imageUrl" | "pdfFileUrl" | "createdAt", ExtArgs["result"]["certificate"]>
 export type CertificateInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
@@ -575,6 +608,7 @@ export type $CertificatePayload<ExtArgs extends runtime.Types.Extensions.Interna
     title: string
     link: string | null
     imageUrl: string | null
+    pdfFileUrl: string | null
     createdAt: Date
   }, ExtArgs["result"]["certificate"]>
   composites: {}
@@ -1005,6 +1039,7 @@ export interface CertificateFieldRefs {
   readonly title: Prisma.FieldRef<"Certificate", 'String'>
   readonly link: Prisma.FieldRef<"Certificate", 'String'>
   readonly imageUrl: Prisma.FieldRef<"Certificate", 'String'>
+  readonly pdfFileUrl: Prisma.FieldRef<"Certificate", 'String'>
   readonly createdAt: Prisma.FieldRef<"Certificate", 'DateTime'>
 }
     

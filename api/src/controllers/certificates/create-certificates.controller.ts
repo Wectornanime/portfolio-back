@@ -1,22 +1,33 @@
 import { prisma } from '@adapter/prisma.adapter';
+
 import { createCertificateDto } from 'src/dto/certificates.dto';
-import { badRequest, successCreated } from 'src/helpers/response.helper';
+import { successCreated, unprocessableEntity } from 'src/helpers/response.helper';
+import { uploadCertificatePdf } from 'src/services/supabase.service';
+import generateFileNames from 'src/utils/generateFileNames';
 
 export default class CreateCertificatesController implements Controller {
   async handle(request: HttpRequest): Promise<HttpResponse> {
-    const { body, user } = request;
+    const { body, file, user } = request;
+    const supabaseUrl = process.env.SUPABASE_URL;
 
-    const { data, error } = createCertificateDto.safeParse(body);
-    if (error) {
-      return badRequest('Não foi possível validar os dados enviados.');
-    }
+    if (!file) return unprocessableEntity();
+
+    const pdfName = generateFileNames(file);
+    const pdf = await uploadCertificatePdf(file, pdfName);
+
+    if (pdf.error) return unprocessableEntity();
+
+    const pdfFileUrl = `${supabaseUrl}/storage/v1/object/public/${pdf.data.fullPath}`;
+
+    const bodyParse = createCertificateDto.safeParse(body);
+    if (bodyParse.error) return unprocessableEntity();
 
     const newCertificate = await prisma.certificate.create({
       data: {
         userId: user!.id,
-        title: data.title,
-        link: data.link,
-        imageUrl: data.imageUrl,
+        title: bodyParse.data.title,
+        link: bodyParse.data.link,
+        pdfFileUrl
       }
     });
 

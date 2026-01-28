@@ -996,6 +996,7 @@ export const CertificateScalarFieldEnum = {
   title: 'title',
   link: 'link',
   imageUrl: 'imageUrl',
+  pdfFileUrl: 'pdfFileUrl',
   createdAt: 'createdAt'
 } as const
 

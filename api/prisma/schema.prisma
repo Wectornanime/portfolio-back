@@ -36,12 +36,13 @@ model ProjectLink {
 }
 
 model Certificate {
-  id        Int      @id @default(autoincrement())
-  userId    Int
-  title     String
-  link      String?
-  imageUrl  String?
-  createdAt DateTime @default(now())
+  id         Int      @id @default(autoincrement())
+  userId     Int
+  title      String
+  link       String?
+  imageUrl   String?
+  pdfFileUrl String?
+  createdAt  DateTime @default(now())
 
   user User @relation(fields: [userId], references: [id])
 }
