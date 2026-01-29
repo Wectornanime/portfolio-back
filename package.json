@@ -12,5 +12,8 @@
   "keywords": [],
   "author": "Wectornanime",
   "license": "MIT",
-  "description": "This is a simple portfolio project with an API and admin portal to control what is displayed in the portfolio."
+  "description": "This is a simple portfolio project with an API and admin portal to control what is displayed in the portfolio.",
+  "engines": {
+    "node": "20.19.5"
+  }
 }
