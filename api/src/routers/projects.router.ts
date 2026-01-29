@@ -12,35 +12,25 @@ export const projectsRouter: HttpRouter = {
   '/': {
     get: {
       controller: new GetAllProjectsController,
-      middlewares: [
-        new AuthMiddleware
-      ]
+      middlewares: [new AuthMiddleware]
     },
     post: {
       controller: new CreateProjectsController,
-      middlewares: [
-        new AuthMiddleware
-      ]
+      middlewares: [new AuthMiddleware, new FileMiddleware]
     }
   },
   '/:id': {
     get: {
       controller: new GetOneProjectsController,
-      middlewares: [
-        new AuthMiddleware
-      ]
+      middlewares: [new AuthMiddleware]
     },
     put: {
       controller: new UpdateProjectsController,
-      middlewares: [
-        new AuthMiddleware
-      ]
+      middlewares: [new AuthMiddleware]
     },
     delete: {
       controller: new DeleteProjectsController,
-      middlewares: [
-        new AuthMiddleware
-      ]
+      middlewares: [new AuthMiddleware]
     }
   },
   '/:id/patch/removeImageUrl': {

@@ -3,6 +3,7 @@ import { unprocessableEntity } from 'src/helpers/response.helper';
 
 export default class FileMiddleware implements Middleware {
   async handle(request: HttpRequest): Promise<MiddlewareReturn> {
+    const supabaseUrl = process.env.SUPABASE_URL;
     const { file } = request;
 
     if (!file) return { success: true };
@@ -19,7 +20,8 @@ export default class FileMiddleware implements Middleware {
     const newRequest: HttpRequest = {
       ...request,
       body: {
-        imageUrl: `https://hactnjylnphwtopczblt.supabase.co/storage/v1/object/public/images/${fileName}`
+        ...request.body as object,
+        imageUrl: `${supabaseUrl}/storage/v1/object/public/images/${fileName}`
       }
     };
 
