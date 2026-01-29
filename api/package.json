@@ -1,17 +1,17 @@
 {
   "name": "portfolio-back",
   "version": "1.0.0",
+  "keywords": [],
+  "author": "",
+
   "main": "src/server.ts",
   "scripts": {
     "build": "tsup",
     "dev": "dotenv -e .env.development -- ts-node-dev -r tsconfig-paths/register --respawn --transpile-only --ignore-watch node_modules --no-notify src/server.ts",
     "start": "dotenv -e .env.prod -- node dist/server.js",
-    "predeploy": "dotenv -e .env.prod -- prisma generate && dotenv -e .env.prod -- prisma migrate deploy",
-    "deploy": "npm run build"
+    "prisma:deploy": "dotenv -e .env.prod -- prisma generate && dotenv -e .env.prod -- prisma migrate deploy"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+
   "description": "",
   "devDependencies": {
     "@types/cors": "^2.8.19",
