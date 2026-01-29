@@ -10,7 +10,7 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 
 import { api } from "@/services/api.service";
-import Image from "@/components/Image";
+import Image from "@/components/image";
 
 interface props {
   onClose: () => void;

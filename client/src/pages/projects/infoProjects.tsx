@@ -31,7 +31,7 @@ import InfoProjectsChangeImageByUrl from "./infoProjectsChangeImageByUrl";
 import InfoProjectsChangeImageByUpload from "./infoProjectsChangeImageByUpload";
 
 import { api } from "@/services/api.service";
-import Image from "@/components/Image";
+import Image from "@/components/image";
 
 type itemListLinkType = {
   id: string;

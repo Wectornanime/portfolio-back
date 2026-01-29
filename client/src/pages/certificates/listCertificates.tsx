@@ -28,7 +28,9 @@ export default function ListCertificatesPage() {
       const certificatesWithPreview = await Promise.all(
         data.data.map(async (item: any) => ({
           ...item,
-          previewUrl: await generatePdfImagePreview(item.pdfFileUrl),
+          previewUrl: item.pdfFileUrl
+            ? await generatePdfImagePreview(item.pdfFileUrl)
+            : "",
         })),
       );
 

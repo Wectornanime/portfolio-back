@@ -1,8 +1,9 @@
 import { Card, CardBody } from "@heroui/card";
 import { Link } from "@heroui/link";
-import { addToast, Image, Spinner } from "@heroui/react";
+import { addToast, Spinner } from "@heroui/react";
 import { useEffect, useState } from "react";
 
+import Image from "@/components/image";
 import { api } from "@/services/api.service";
 
 type ProjectListType = {
@@ -39,17 +40,7 @@ export default function ListProjectsPage() {
       <Link key={item.id} className="min-w-full" href={`/projects/${item.id}`}>
         <Card className="min-w-full">
           <CardBody className="flex flex-row gap-2 items-center">
-            <div className="h-[65px] w-[100px] shrink-0">
-              <Image
-                className="object-cover object-center"
-                height={65}
-                src={
-                  item.imageUrl ||
-                  "https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg"
-                }
-                width={100}
-              />
-            </div>
+            <Image className="h-[65px] w-[100px]" src={item.imageUrl || ""} />
             <div>
               <h2 className="font-semibold text-large line-clamp-1">
                 {item.title}
