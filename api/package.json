@@ -9,7 +9,7 @@
     "prisma:deploy": "dotenv -e .env.prod -- prisma generate && dotenv -e .env.prod -- prisma migrate deploy"
   },
   "keywords": [],
-  "author": "",
+  "author": "Wectornanime",
   "license": "ISC",
   "description": "",
   "devDependencies": {
