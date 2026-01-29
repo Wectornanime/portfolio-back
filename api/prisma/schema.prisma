@@ -1,0 +1,96 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/database/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Project {
+  id        Int           @id @default(autoincrement())
+  userId    Int
+  imageUrl  String?
+  title     String
+  text      String
+  links     ProjectLink[]
+  createdAt DateTime      @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+}
+
+model ProjectLink {
+  id        Int      @id @default(autoincrement())
+  projectId Int
+  title     String
+  link      String
+  createdAt DateTime @default(now())
+
+  project Project @relation(fields: [projectId], references: [id])
+}
+
+model Certificate {
+  id         Int      @id @default(autoincrement())
+  userId     Int
+  title      String
+  link       String?
+  imageUrl   String?
+  pdfFileUrl String?
+  createdAt  DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+}
+
+model Skill {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  title     String
+  iconUrl   String
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+}
+
+model UserLink {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  title     String
+  link      String
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+}
+
+model AuthUser {
+  id           Int      @id @default(autoincrement())
+  email        String   @unique
+  passwordHash String
+  createdAt    DateTime @default(now())
+
+  user User?
+}
+
+model User {
+  id         Int     @id @default(autoincrement())
+  authUserId Int     @unique
+  imageUrl   String?
+  name       String
+  lastName   String
+  subtitle   String
+  aboutMe    String
+
+  links        UserLink[]
+  certificates Certificate[]
+  Projects     Project[]
+  skills       Skill[]
+
+  createdAt DateTime @default(now())
+
+  authUser AuthUser @relation(fields: [authUserId], references: [id])
+}
