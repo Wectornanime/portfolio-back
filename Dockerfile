@@ -15,7 +15,7 @@ RUN npm install --prefix client
 COPY . .
 
 # ===== BUILD ===== #
-RUN npm run deploy
+RUN npm run build
 
 # ===== PRODUCAO ===== #
 EXPOSE 3000
