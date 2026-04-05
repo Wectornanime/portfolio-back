@@ -2,10 +2,12 @@ import { prisma } from '@adapter/prisma.adapter';
 import { badRequest, successResponse } from 'src/helpers/response.helper';
 
 export default class GetOnePublicController implements Controller {
-  async handle(): Promise<HttpResponse> {
+  async handle(request: HttpRequest): Promise<HttpResponse> {
+    const { id } = request.params;
+    const requestId = Number(id);
 
     const info = await prisma.user.findFirst({
-      where: { id: 2 },
+      where: { id: requestId },
       omit: { authUserId: true },
       include: {
         links: true,
