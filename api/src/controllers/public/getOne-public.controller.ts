@@ -1,5 +1,5 @@
 import { prisma } from '@adapter/prisma.adapter';
-import { badRequest, successResponse } from 'src/helpers/response.helper';
+import { notFound, successResponse } from 'src/helpers/response.helper';
 
 export default class GetOnePublicController implements Controller {
   async handle(request: HttpRequest): Promise<HttpResponse> {
@@ -19,9 +19,7 @@ export default class GetOnePublicController implements Controller {
       }
     });
 
-    if (!info) {
-      return badRequest('deu ruim');
-    }
+    if (!info) return notFound();
 
     return successResponse(info);
   }
