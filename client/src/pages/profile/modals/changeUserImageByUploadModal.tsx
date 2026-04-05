@@ -7,15 +7,21 @@ import {
   Input,
   Spinner,
 } from "@heroui/react";
+import {
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalHeader,
+  ModalProps,
+} from "@heroui/modal";
 import { useState } from "react";
 
 import { api } from "@/services/api.service";
 
-interface props {
-  onClose: () => void;
-}
-
-export default function ChangeUserImageByUpload({ onClose }: props) {
+export default function ChangeUserImageByUploadModal({
+  isOpen,
+  onOpenChange,
+}: Omit<ModalProps, "children">) {
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string>("");
 
@@ -36,7 +42,7 @@ export default function ChangeUserImageByUpload({ onClose }: props) {
 
     if (!imageFile) return;
 
-    onClose();
+    onOpenChange?.(false);
 
     const toastId = addToast({
       title: "Atualizando perfil",
@@ -72,24 +78,37 @@ export default function ChangeUserImageByUpload({ onClose }: props) {
   };
 
   return (
-    <Form onReset={onClose} onSubmit={onSubmit}>
-      <Avatar size="lg" src={previewUrl} />
-      <Input
-        isRequired
-        accept="image/*"
-        label="Selecionar imagem"
-        size="sm"
-        type="file"
-        onChange={handleFileChange}
-      />
-      <div className="flex gap-2">
-        <Button color="primary" type="submit">
-          Trocar
-        </Button>
-        <Button color="danger" type="reset" variant="bordered">
-          Cancelar
-        </Button>
-      </div>
-    </Form>
+    <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+      <ModalContent>
+        {(onClose) => (
+          <>
+            <ModalHeader>
+              <p>Trocar imagem de usuário</p>
+            </ModalHeader>
+            <ModalBody>
+              <Form onReset={onClose} onSubmit={onSubmit}>
+                <Avatar size="lg" src={previewUrl} />
+                <Input
+                  isRequired
+                  accept="image/*"
+                  label="Selecionar imagem"
+                  size="sm"
+                  type="file"
+                  onChange={handleFileChange}
+                />
+                <div className="flex gap-2">
+                  <Button color="primary" type="submit">
+                    Trocar
+                  </Button>
+                  <Button color="danger" type="reset" variant="bordered">
+                    Cancelar
+                  </Button>
+                </div>
+              </Form>
+            </ModalBody>
+          </>
+        )}
+      </ModalContent>
+    </Modal>
   );
 }

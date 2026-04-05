@@ -13,7 +13,6 @@ import {
   TableHeader,
   TableRow,
 } from "@heroui/table";
-import { Modal, ModalBody, ModalContent, ModalHeader } from "@heroui/modal";
 import {
   addToast,
   Avatar,
@@ -26,7 +25,6 @@ import {
   ScrollShadow,
   Spinner,
   Tooltip,
-  useDisclosure,
 } from "@heroui/react";
 import { useEffect, useMemo, useState } from "react";
 import {
@@ -37,8 +35,8 @@ import {
   SaveRounded as SaveRoundedIcon,
 } from "@mui/icons-material";
 
-import ChangeUserImageByUrl from "./changeUserImageByUrl";
-import ChangeUserImageByUpload from "./changeUserImageByUpload";
+import ChangeUserImageByUrlModal from "./modals/changeUserImageByUrlModal";
+import ChangeUserImageByUploadModal from "./modals/changeUserImageByUploadModal";
 
 import { api } from "@/services/api.service";
 
@@ -60,9 +58,14 @@ type InfoLinkType = {
   link: string;
 };
 
+type ModalAllowKeys =
+  | "changeImageByUrl"
+  | "changeImageByUpload"
+  | "viewCurriculum"
+  | "changeCurriculum";
+
 export default function ProfilePage() {
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const [openOnModal, setOpenOnModal] = useState<string>("");
+  const [openModal, setOpenModal] = useState<ModalAllowKeys | null>(null);
 
   const [profileData, setProfileData] = useState<profileDataType | null>(null);
   const [linkList, setLinkList] = useState<InfoLinkType[]>([]);
@@ -73,6 +76,8 @@ export default function ProfilePage() {
     title: "",
     link: "",
   });
+
+  const onOpenChange = (isOpen: boolean) => !isOpen && setOpenModal(null);
 
   const isEditing = (key: string) => key === editingRowId;
 
@@ -112,11 +117,6 @@ export default function ProfilePage() {
 
     setLinkList((prev) => [...prev, newRow]);
     startEdit(newRow);
-  };
-
-  const changeImage = (key: string) => {
-    setOpenOnModal(key);
-    onOpen();
   };
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -243,13 +243,13 @@ export default function ProfilePage() {
               <DropdownMenu aria-label="Static Actions">
                 <DropdownItem
                   key="upload"
-                  onClickCapture={() => changeImage("upload")}
+                  onClickCapture={() => setOpenModal("changeImageByUpload")}
                 >
                   Enviar novo arquivo
                 </DropdownItem>
                 <DropdownItem
                   key="url"
-                  onClickCapture={() => changeImage("url")}
+                  onClickCapture={() => setOpenModal("changeImageByUrl")}
                 >
                   Usar link
                 </DropdownItem>
@@ -459,24 +459,15 @@ export default function ProfilePage() {
         </Form>
       </ScrollShadow>
 
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
-        <ModalContent>
-          {(onClose) => (
-            <>
-              <ModalHeader>
-                <p>Trocar imagem de usuário</p>
-              </ModalHeader>
-              <ModalBody>
-                {openOnModal === "url" ? (
-                  <ChangeUserImageByUrl onClose={onClose} />
-                ) : (
-                  <ChangeUserImageByUpload onClose={onClose} />
-                )}
-              </ModalBody>
-            </>
-          )}
-        </ModalContent>
-      </Modal>
+      <ChangeUserImageByUrlModal
+        isOpen={openModal === "changeImageByUrl"}
+        onOpenChange={onOpenChange}
+      />
+
+      <ChangeUserImageByUploadModal
+        isOpen={openModal === "changeImageByUpload"}
+        onOpenChange={onOpenChange}
+      />
     </>
   ) : (
     <div className="full max-w-[880px] m-auto">
