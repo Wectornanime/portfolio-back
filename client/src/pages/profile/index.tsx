@@ -20,6 +20,7 @@ import {
   Button,
   Card,
   closeToast,
+  Divider,
   Form,
   Link,
   ScrollShadow,
@@ -47,6 +48,10 @@ type profileDataType = {
   lastName: string;
   subtitle: string;
   aboutMe: string;
+  curriculum: {
+    url: string;
+    createdAt: Date;
+  };
 };
 
 type InfoLinkType = {
@@ -156,6 +161,27 @@ export default function ProfilePage() {
     }
   };
 
+  const handleDownload = async () => {
+    if (!profileData) return;
+
+    const fileUrl = profileData.curriculum.url;
+    const fileName = `curriculo-${profileData.name}_${profileData.lastName}.pdf`;
+
+    const response = await fetch(fileUrl);
+    const blob = await response.blob();
+
+    const url = window.URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+
+    a.href = url;
+    a.download = fileName;
+
+    a.click();
+
+    window.URL.revokeObjectURL(url);
+  };
+
   const fetchData = async () => {
     setProfileData(null);
     setLinkList([]);
@@ -178,7 +204,7 @@ export default function ProfilePage() {
 
   const tableTopContent = useMemo(() => {
     return (
-      <div className="flex justify-between items-end pl-4 pr-8">
+      <div className="flex justify-between items-end">
         <h2 className="font-semibold text-2xl">Links</h2>
         <Button
           color="primary"
@@ -195,15 +221,16 @@ export default function ProfilePage() {
 
   return profileData ? (
     <>
-      <ScrollShadow hideScrollBar className="full">
+      <ScrollShadow hideScrollBar className="full pb-4">
         <Form
           className="max-w-[880px] m-auto p-1"
           onReset={fetchData}
           onSubmit={onSubmit}
         >
-          <Card className="w-full flex-row gap-2 shrink-0 p-4 items-center">
+          <Card className="w-full flex-row px-4 py-3 gap-2 shrink-0 items-center">
             <Avatar
               name={`${profileData.name} ${profileData.lastName}` || ""}
+              radius="md"
               size="lg"
               src={profileData.imageUrl || ""}
             />
@@ -232,6 +259,7 @@ export default function ProfilePage() {
               Remover imagem
             </Button>
           </Card>
+
           <div className="full flex gap-2">
             <Input
               isRequired
@@ -243,6 +271,7 @@ export default function ProfilePage() {
                 setProfileData({ ...profileData, name: e.target.value });
               }}
             />
+
             <Input
               isRequired
               label="Sobrenome"
@@ -254,6 +283,7 @@ export default function ProfilePage() {
               }}
             />
           </div>
+
           <Input
             isRequired
             label="Subtitulo"
@@ -264,6 +294,7 @@ export default function ProfilePage() {
               setProfileData({ ...profileData, subtitle: e.target.value });
             }}
           />
+
           <Textarea
             isRequired
             label="Sobre mim"
@@ -274,6 +305,52 @@ export default function ProfilePage() {
               setProfileData({ ...profileData, aboutMe: e.target.value });
             }}
           />
+
+          <Card className="w-full p-4">
+            <div className="flex justify-between items-center">
+              <h2 className="text-lg font-semibold">Currículo</h2>
+
+              <Button color="primary" size="sm">
+                Atualizar
+              </Button>
+            </div>
+
+            <Divider className="my-3" />
+
+            {profileData.curriculum ? (
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-medium">curriculo.pdf</p>
+                  <p className="text-small text-default-400">
+                    Atualizado em:
+                    {` ${new Date(
+                      profileData.curriculum.createdAt,
+                    ).toLocaleDateString()}`}
+                  </p>
+                </div>
+
+                <div className="flex gap-2">
+                  <Button size="sm" variant="flat">
+                    Visualizar
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant="flat"
+                    onClickCapture={handleDownload}
+                  >
+                    Download
+                  </Button>
+                </div>
+              </div>
+            ) : (
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-medium">Ainda não enviado</p>
+                </div>
+              </div>
+            )}
+          </Card>
+
           <Table hideHeader topContent={tableTopContent}>
             <TableHeader>
               <TableColumn>Label</TableColumn>
@@ -381,6 +458,7 @@ export default function ProfilePage() {
           </div>
         </Form>
       </ScrollShadow>
+
       <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
         <ModalContent>
           {(onClose) => (
