@@ -1,18 +1,39 @@
-import { ModalBody, ModalContent, ModalHeader } from "@heroui/modal";
+import {
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalHeader,
+  ModalProps,
+} from "@heroui/modal";
 
-export default function ViewCurriculumModal() {
+interface props extends Omit<ModalProps, "children"> {
+  curriculumUrl: string;
+}
+
+export default function ViewCurriculumModal({
+  curriculumUrl,
+  isOpen,
+  onOpenChange,
+}: props) {
   return (
-    <ModalContent>
-      {() => (
-        <>
-          <ModalHeader>
-            <p>Trocar imagem de usuário</p>
-          </ModalHeader>
-          <ModalBody>
-            <h1>testando</h1>
-          </ModalBody>
-        </>
-      )}
-    </ModalContent>
-  )
+    <Modal isOpen={isOpen} size="4xl" onOpenChange={onOpenChange}>
+      <ModalContent>
+        {() => (
+          <>
+            <ModalHeader>
+              <p className="font-normal">curriculo.pdf</p>
+            </ModalHeader>
+
+            <ModalBody>
+              <embed
+                className="w-full h-[80vh]"
+                src={`${curriculumUrl}#toolbar=0`}
+                title="Curriculum preview"
+              />
+            </ModalBody>
+          </>
+        )}
+      </ModalContent>
+    </Modal>
+  );
 }

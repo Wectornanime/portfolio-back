@@ -37,6 +37,7 @@ import {
 
 import ChangeUserImageByUrlModal from "./modals/changeUserImageByUrlModal";
 import ChangeUserImageByUploadModal from "./modals/changeUserImageByUploadModal";
+import ViewCurriculumModal from "./modals/viewCurriculumModal";
 
 import { api } from "@/services/api.service";
 
@@ -330,7 +331,11 @@ export default function ProfilePage() {
                 </div>
 
                 <div className="flex gap-2">
-                  <Button size="sm" variant="flat">
+                  <Button
+                    size="sm"
+                    variant="flat"
+                    onClickCapture={() => setOpenModal("viewCurriculum")}
+                  >
                     Visualizar
                   </Button>
                   <Button
@@ -466,6 +471,12 @@ export default function ProfilePage() {
 
       <ChangeUserImageByUploadModal
         isOpen={openModal === "changeImageByUpload"}
+        onOpenChange={onOpenChange}
+      />
+
+      <ViewCurriculumModal
+        curriculumUrl={profileData.curriculum.url}
+        isOpen={openModal === "viewCurriculum"}
         onOpenChange={onOpenChange}
       />
     </>
