@@ -38,6 +38,7 @@ import {
 import ChangeUserImageByUrlModal from "./modals/changeUserImageByUrlModal";
 import ChangeUserImageByUploadModal from "./modals/changeUserImageByUploadModal";
 import ViewCurriculumModal from "./modals/viewCurriculumModal";
+import ChangeCurriculumModal from "./modals/changeCurriculumModal";
 
 import { api } from "@/services/api.service";
 
@@ -311,7 +312,11 @@ export default function ProfilePage() {
             <div className="flex justify-between items-center">
               <h2 className="text-lg font-semibold">Currículo</h2>
 
-              <Button color="primary" size="sm">
+              <Button
+                color="primary"
+                size="sm"
+                onClickCapture={() => setOpenModal("changeCurriculum")}
+              >
                 Atualizar
               </Button>
             </div>
@@ -477,6 +482,11 @@ export default function ProfilePage() {
       <ViewCurriculumModal
         curriculumUrl={profileData.curriculum.url}
         isOpen={openModal === "viewCurriculum"}
+        onOpenChange={onOpenChange}
+      />
+
+      <ChangeCurriculumModal
+        isOpen={openModal === "changeCurriculum"}
         onOpenChange={onOpenChange}
       />
     </>
