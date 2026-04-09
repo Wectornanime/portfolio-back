@@ -89,8 +89,19 @@ model User {
   certificates Certificate[]
   Projects     Project[]
   skills       Skill[]
+  curriculums  Curriculum[]
 
   createdAt DateTime @default(now())
 
   authUser AuthUser @relation(fields: [authUserId], references: [id])
+}
+
+model Curriculum {
+  id     Int    @id @default(autoincrement())
+  userId Int
+  url    String
+
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
 }

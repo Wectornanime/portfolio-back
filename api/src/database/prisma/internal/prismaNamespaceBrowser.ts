@@ -57,7 +57,8 @@ export const ModelName = {
   Skill: 'Skill',
   UserLink: 'UserLink',
   AuthUser: 'AuthUser',
-  User: 'User'
+  User: 'User',
+  Curriculum: 'Curriculum'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -156,6 +157,16 @@ export const UserScalarFieldEnum = {
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const CurriculumScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  url: 'url',
+  createdAt: 'createdAt'
+} as const
+
+export type CurriculumScalarFieldEnum = (typeof CurriculumScalarFieldEnum)[keyof typeof CurriculumScalarFieldEnum]
 
 
 export const SortOrder = {

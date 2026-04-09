@@ -390,7 +390,8 @@ export const ModelName = {
   Skill: 'Skill',
   UserLink: 'UserLink',
   AuthUser: 'AuthUser',
-  User: 'User'
+  User: 'User',
+  Curriculum: 'Curriculum'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -406,7 +407,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "project" | "projectLink" | "certificate" | "skill" | "userLink" | "authUser" | "user"
+    modelProps: "project" | "projectLink" | "certificate" | "skill" | "userLink" | "authUser" | "user" | "curriculum"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -928,6 +929,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Curriculum: {
+      payload: Prisma.$CurriculumPayload<ExtArgs>
+      fields: Prisma.CurriculumFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.CurriculumFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CurriculumPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.CurriculumFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CurriculumPayload>
+        }
+        findFirst: {
+          args: Prisma.CurriculumFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CurriculumPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.CurriculumFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CurriculumPayload>
+        }
+        findMany: {
+          args: Prisma.CurriculumFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CurriculumPayload>[]
+        }
+        create: {
+          args: Prisma.CurriculumCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CurriculumPayload>
+        }
+        createMany: {
+          args: Prisma.CurriculumCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.CurriculumCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CurriculumPayload>[]
+        }
+        delete: {
+          args: Prisma.CurriculumDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CurriculumPayload>
+        }
+        update: {
+          args: Prisma.CurriculumUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CurriculumPayload>
+        }
+        deleteMany: {
+          args: Prisma.CurriculumDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.CurriculumUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.CurriculumUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CurriculumPayload>[]
+        }
+        upsert: {
+          args: Prisma.CurriculumUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CurriculumPayload>
+        }
+        aggregate: {
+          args: Prisma.CurriculumAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCurriculum>
+        }
+        groupBy: {
+          args: Prisma.CurriculumGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CurriculumGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.CurriculumCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CurriculumCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1047,6 +1122,16 @@ export const UserScalarFieldEnum = {
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const CurriculumScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  url: 'url',
+  createdAt: 'createdAt'
+} as const
+
+export type CurriculumScalarFieldEnum = (typeof CurriculumScalarFieldEnum)[keyof typeof CurriculumScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1236,6 +1321,7 @@ export type GlobalOmitConfig = {
   userLink?: Prisma.UserLinkOmit
   authUser?: Prisma.AuthUserOmit
   user?: Prisma.UserOmit
+  curriculum?: Prisma.CurriculumOmit
 }
 
 /* Types for Logging */

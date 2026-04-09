@@ -72,3 +72,8 @@ export type AuthUser = Prisma.AuthUserModel
  * 
  */
 export type User = Prisma.UserModel
+/**
+ * Model Curriculum
+ * 
+ */
+export type Curriculum = Prisma.CurriculumModel
