@@ -48,7 +48,7 @@ type profileDataType = {
   lastName: string;
   subtitle: string;
   aboutMe: string;
-  curriculum: {
+  curriculum?: {
     url: string;
     createdAt: Date;
   };
@@ -164,7 +164,7 @@ export default function ProfilePage() {
   };
 
   const handleDownload = async () => {
-    if (!profileData) return;
+    if (!profileData || !profileData.curriculum) return;
 
     const fileUrl = profileData.curriculum.url;
     const fileName = `curriculo-${profileData.name}_${profileData.lastName}.pdf`;
@@ -479,11 +479,15 @@ export default function ProfilePage() {
         onOpenChange={onOpenChange}
       />
 
-      <ViewCurriculumModal
-        curriculumUrl={profileData.curriculum.url}
-        isOpen={openModal === "viewCurriculum"}
-        onOpenChange={onOpenChange}
-      />
+      {profileData.curriculum ? (
+        <ViewCurriculumModal
+          curriculumUrl={profileData.curriculum.url}
+          isOpen={openModal === "viewCurriculum"}
+          onOpenChange={onOpenChange}
+        />
+      ) : (
+        <></>
+      )}
 
       <ChangeCurriculumModal
         isOpen={openModal === "changeCurriculum"}

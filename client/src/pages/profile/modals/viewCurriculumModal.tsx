@@ -7,7 +7,7 @@ import {
 } from "@heroui/modal";
 
 interface props extends Omit<ModalProps, "children"> {
-  curriculumUrl: string;
+  curriculumUrl: string | undefined;
 }
 
 export default function ViewCurriculumModal({
