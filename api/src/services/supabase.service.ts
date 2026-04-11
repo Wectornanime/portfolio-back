@@ -6,3 +6,10 @@ export async function uploadCertificatePdf(file: FileType, path: string) {
     .from('certificates')
     .upload(path, file.buffer, { contentType: file.mimetype });
 }
+
+export async function uploadCurriculumPdf(file: FileType, path: string) {
+  return supabaseConfig
+    .storage
+    .from('curriculum')
+    .upload(path, file.buffer, { contentType: file.mimetype });
+}
