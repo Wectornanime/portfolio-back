@@ -10,6 +10,17 @@ export default class GetUserController implements Controller {
       include: { links: true }
     });
 
-    return successResponse(userData);
+    const curriculum = await prisma.curriculum.findFirst({
+      where: {
+        userId: user!.id
+      },
+      orderBy: { createdAt: 'desc' },
+      select: {
+        url: true,
+        createdAt: true
+      }
+    });
+
+    return successResponse({ ...userData, curriculum });
   }
 }
