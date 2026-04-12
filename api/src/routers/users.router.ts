@@ -34,7 +34,7 @@ export const usersLoggedRouter: HttpRouter = {
       ]
     }
   },
-  '/patch/certificate': {
+  '/patch/curriculum': {
     patch: {
       controller: new UserUpdateCurriculumController,
       middlewares: [new AuthMiddleware]
