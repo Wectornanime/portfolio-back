@@ -17,10 +17,15 @@ import { useState } from "react";
 
 import { api } from "@/services/api.service";
 
+interface props extends Omit<ModalProps, "children"> {
+  onChangeCurriculum: () => void;
+}
+
 export default function ChangeCurriculumModal({
   isOpen,
   onOpenChange,
-}: Omit<ModalProps, "children">) {
+  onChangeCurriculum,
+}: props) {
   const [curriculumFile, setCurriculumFile] = useState<File | null>(null);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -63,6 +68,8 @@ export default function ChangeCurriculumModal({
         color: "success",
         title: "Currículo atualizado com sucesso",
       });
+
+      onChangeCurriculum();
     } else {
       addToast({
         color: "danger",

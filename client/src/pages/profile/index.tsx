@@ -184,6 +184,10 @@ export default function ProfilePage() {
     window.URL.revokeObjectURL(url);
   };
 
+  const changeCurriculum = async () => {
+    await fetchData();
+  };
+
   const fetchData = async () => {
     setProfileData(null);
     setLinkList([]);
@@ -331,7 +335,7 @@ export default function ProfilePage() {
                     Atualizado em:
                     {` ${new Date(
                       profileData.curriculum.createdAt,
-                    ).toLocaleDateString()}`}
+                    ).toLocaleString()}`}
                   </p>
                 </div>
 
@@ -491,6 +495,7 @@ export default function ProfilePage() {
 
       <ChangeCurriculumModal
         isOpen={openModal === "changeCurriculum"}
+        onChangeCurriculum={changeCurriculum}
         onOpenChange={onOpenChange}
       />
     </>
