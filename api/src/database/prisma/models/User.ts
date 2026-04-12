@@ -246,7 +246,7 @@ export type UserWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   links?: Prisma.UserLinkListRelationFilter
   certificates?: Prisma.CertificateListRelationFilter
-  Projects?: Prisma.ProjectListRelationFilter
+  projects?: Prisma.ProjectListRelationFilter
   skills?: Prisma.SkillListRelationFilter
   curriculums?: Prisma.CurriculumListRelationFilter
   authUser?: Prisma.XOR<Prisma.AuthUserScalarRelationFilter, Prisma.AuthUserWhereInput>
@@ -263,7 +263,7 @@ export type UserOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   links?: Prisma.UserLinkOrderByRelationAggregateInput
   certificates?: Prisma.CertificateOrderByRelationAggregateInput
-  Projects?: Prisma.ProjectOrderByRelationAggregateInput
+  projects?: Prisma.ProjectOrderByRelationAggregateInput
   skills?: Prisma.SkillOrderByRelationAggregateInput
   curriculums?: Prisma.CurriculumOrderByRelationAggregateInput
   authUser?: Prisma.AuthUserOrderByWithRelationInput
@@ -283,7 +283,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   links?: Prisma.UserLinkListRelationFilter
   certificates?: Prisma.CertificateListRelationFilter
-  Projects?: Prisma.ProjectListRelationFilter
+  projects?: Prisma.ProjectListRelationFilter
   skills?: Prisma.SkillListRelationFilter
   curriculums?: Prisma.CurriculumListRelationFilter
   authUser?: Prisma.XOR<Prisma.AuthUserScalarRelationFilter, Prisma.AuthUserWhereInput>
@@ -328,7 +328,7 @@ export type UserCreateInput = {
   createdAt?: Date | string
   links?: Prisma.UserLinkCreateNestedManyWithoutUserInput
   certificates?: Prisma.CertificateCreateNestedManyWithoutUserInput
-  Projects?: Prisma.ProjectCreateNestedManyWithoutUserInput
+  projects?: Prisma.ProjectCreateNestedManyWithoutUserInput
   skills?: Prisma.SkillCreateNestedManyWithoutUserInput
   curriculums?: Prisma.CurriculumCreateNestedManyWithoutUserInput
   authUser: Prisma.AuthUserCreateNestedOneWithoutUserInput
@@ -345,7 +345,7 @@ export type UserUncheckedCreateInput = {
   createdAt?: Date | string
   links?: Prisma.UserLinkUncheckedCreateNestedManyWithoutUserInput
   certificates?: Prisma.CertificateUncheckedCreateNestedManyWithoutUserInput
-  Projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutUserInput
+  projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutUserInput
   skills?: Prisma.SkillUncheckedCreateNestedManyWithoutUserInput
   curriculums?: Prisma.CurriculumUncheckedCreateNestedManyWithoutUserInput
 }
@@ -359,7 +359,7 @@ export type UserUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   links?: Prisma.UserLinkUpdateManyWithoutUserNestedInput
   certificates?: Prisma.CertificateUpdateManyWithoutUserNestedInput
-  Projects?: Prisma.ProjectUpdateManyWithoutUserNestedInput
+  projects?: Prisma.ProjectUpdateManyWithoutUserNestedInput
   skills?: Prisma.SkillUpdateManyWithoutUserNestedInput
   curriculums?: Prisma.CurriculumUpdateManyWithoutUserNestedInput
   authUser?: Prisma.AuthUserUpdateOneRequiredWithoutUserNestedInput
@@ -376,7 +376,7 @@ export type UserUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   links?: Prisma.UserLinkUncheckedUpdateManyWithoutUserNestedInput
   certificates?: Prisma.CertificateUncheckedUpdateManyWithoutUserNestedInput
-  Projects?: Prisma.ProjectUncheckedUpdateManyWithoutUserNestedInput
+  projects?: Prisma.ProjectUncheckedUpdateManyWithoutUserNestedInput
   skills?: Prisma.SkillUncheckedUpdateManyWithoutUserNestedInput
   curriculums?: Prisma.CurriculumUncheckedUpdateManyWithoutUserNestedInput
 }
@@ -649,7 +649,7 @@ export type UserCreateWithoutCertificatesInput = {
   aboutMe: string
   createdAt?: Date | string
   links?: Prisma.UserLinkCreateNestedManyWithoutUserInput
-  Projects?: Prisma.ProjectCreateNestedManyWithoutUserInput
+  projects?: Prisma.ProjectCreateNestedManyWithoutUserInput
   skills?: Prisma.SkillCreateNestedManyWithoutUserInput
   curriculums?: Prisma.CurriculumCreateNestedManyWithoutUserInput
   authUser: Prisma.AuthUserCreateNestedOneWithoutUserInput
@@ -665,7 +665,7 @@ export type UserUncheckedCreateWithoutCertificatesInput = {
   aboutMe: string
   createdAt?: Date | string
   links?: Prisma.UserLinkUncheckedCreateNestedManyWithoutUserInput
-  Projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutUserInput
+  projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutUserInput
   skills?: Prisma.SkillUncheckedCreateNestedManyWithoutUserInput
   curriculums?: Prisma.CurriculumUncheckedCreateNestedManyWithoutUserInput
 }
@@ -694,7 +694,7 @@ export type UserUpdateWithoutCertificatesInput = {
   aboutMe?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   links?: Prisma.UserLinkUpdateManyWithoutUserNestedInput
-  Projects?: Prisma.ProjectUpdateManyWithoutUserNestedInput
+  projects?: Prisma.ProjectUpdateManyWithoutUserNestedInput
   skills?: Prisma.SkillUpdateManyWithoutUserNestedInput
   curriculums?: Prisma.CurriculumUpdateManyWithoutUserNestedInput
   authUser?: Prisma.AuthUserUpdateOneRequiredWithoutUserNestedInput
@@ -710,7 +710,7 @@ export type UserUncheckedUpdateWithoutCertificatesInput = {
   aboutMe?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   links?: Prisma.UserLinkUncheckedUpdateManyWithoutUserNestedInput
-  Projects?: Prisma.ProjectUncheckedUpdateManyWithoutUserNestedInput
+  projects?: Prisma.ProjectUncheckedUpdateManyWithoutUserNestedInput
   skills?: Prisma.SkillUncheckedUpdateManyWithoutUserNestedInput
   curriculums?: Prisma.CurriculumUncheckedUpdateManyWithoutUserNestedInput
 }
@@ -724,7 +724,7 @@ export type UserCreateWithoutSkillsInput = {
   createdAt?: Date | string
   links?: Prisma.UserLinkCreateNestedManyWithoutUserInput
   certificates?: Prisma.CertificateCreateNestedManyWithoutUserInput
-  Projects?: Prisma.ProjectCreateNestedManyWithoutUserInput
+  projects?: Prisma.ProjectCreateNestedManyWithoutUserInput
   curriculums?: Prisma.CurriculumCreateNestedManyWithoutUserInput
   authUser: Prisma.AuthUserCreateNestedOneWithoutUserInput
 }
@@ -740,7 +740,7 @@ export type UserUncheckedCreateWithoutSkillsInput = {
   createdAt?: Date | string
   links?: Prisma.UserLinkUncheckedCreateNestedManyWithoutUserInput
   certificates?: Prisma.CertificateUncheckedCreateNestedManyWithoutUserInput
-  Projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutUserInput
+  projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutUserInput
   curriculums?: Prisma.CurriculumUncheckedCreateNestedManyWithoutUserInput
 }
 
@@ -769,7 +769,7 @@ export type UserUpdateWithoutSkillsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   links?: Prisma.UserLinkUpdateManyWithoutUserNestedInput
   certificates?: Prisma.CertificateUpdateManyWithoutUserNestedInput
-  Projects?: Prisma.ProjectUpdateManyWithoutUserNestedInput
+  projects?: Prisma.ProjectUpdateManyWithoutUserNestedInput
   curriculums?: Prisma.CurriculumUpdateManyWithoutUserNestedInput
   authUser?: Prisma.AuthUserUpdateOneRequiredWithoutUserNestedInput
 }
@@ -785,7 +785,7 @@ export type UserUncheckedUpdateWithoutSkillsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   links?: Prisma.UserLinkUncheckedUpdateManyWithoutUserNestedInput
   certificates?: Prisma.CertificateUncheckedUpdateManyWithoutUserNestedInput
-  Projects?: Prisma.ProjectUncheckedUpdateManyWithoutUserNestedInput
+  projects?: Prisma.ProjectUncheckedUpdateManyWithoutUserNestedInput
   curriculums?: Prisma.CurriculumUncheckedUpdateManyWithoutUserNestedInput
 }
 
@@ -797,7 +797,7 @@ export type UserCreateWithoutLinksInput = {
   aboutMe: string
   createdAt?: Date | string
   certificates?: Prisma.CertificateCreateNestedManyWithoutUserInput
-  Projects?: Prisma.ProjectCreateNestedManyWithoutUserInput
+  projects?: Prisma.ProjectCreateNestedManyWithoutUserInput
   skills?: Prisma.SkillCreateNestedManyWithoutUserInput
   curriculums?: Prisma.CurriculumCreateNestedManyWithoutUserInput
   authUser: Prisma.AuthUserCreateNestedOneWithoutUserInput
@@ -813,7 +813,7 @@ export type UserUncheckedCreateWithoutLinksInput = {
   aboutMe: string
   createdAt?: Date | string
   certificates?: Prisma.CertificateUncheckedCreateNestedManyWithoutUserInput
-  Projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutUserInput
+  projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutUserInput
   skills?: Prisma.SkillUncheckedCreateNestedManyWithoutUserInput
   curriculums?: Prisma.CurriculumUncheckedCreateNestedManyWithoutUserInput
 }
@@ -842,7 +842,7 @@ export type UserUpdateWithoutLinksInput = {
   aboutMe?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   certificates?: Prisma.CertificateUpdateManyWithoutUserNestedInput
-  Projects?: Prisma.ProjectUpdateManyWithoutUserNestedInput
+  projects?: Prisma.ProjectUpdateManyWithoutUserNestedInput
   skills?: Prisma.SkillUpdateManyWithoutUserNestedInput
   curriculums?: Prisma.CurriculumUpdateManyWithoutUserNestedInput
   authUser?: Prisma.AuthUserUpdateOneRequiredWithoutUserNestedInput
@@ -858,7 +858,7 @@ export type UserUncheckedUpdateWithoutLinksInput = {
   aboutMe?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   certificates?: Prisma.CertificateUncheckedUpdateManyWithoutUserNestedInput
-  Projects?: Prisma.ProjectUncheckedUpdateManyWithoutUserNestedInput
+  projects?: Prisma.ProjectUncheckedUpdateManyWithoutUserNestedInput
   skills?: Prisma.SkillUncheckedUpdateManyWithoutUserNestedInput
   curriculums?: Prisma.CurriculumUncheckedUpdateManyWithoutUserNestedInput
 }
@@ -872,7 +872,7 @@ export type UserCreateWithoutAuthUserInput = {
   createdAt?: Date | string
   links?: Prisma.UserLinkCreateNestedManyWithoutUserInput
   certificates?: Prisma.CertificateCreateNestedManyWithoutUserInput
-  Projects?: Prisma.ProjectCreateNestedManyWithoutUserInput
+  projects?: Prisma.ProjectCreateNestedManyWithoutUserInput
   skills?: Prisma.SkillCreateNestedManyWithoutUserInput
   curriculums?: Prisma.CurriculumCreateNestedManyWithoutUserInput
 }
@@ -887,7 +887,7 @@ export type UserUncheckedCreateWithoutAuthUserInput = {
   createdAt?: Date | string
   links?: Prisma.UserLinkUncheckedCreateNestedManyWithoutUserInput
   certificates?: Prisma.CertificateUncheckedCreateNestedManyWithoutUserInput
-  Projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutUserInput
+  projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutUserInput
   skills?: Prisma.SkillUncheckedCreateNestedManyWithoutUserInput
   curriculums?: Prisma.CurriculumUncheckedCreateNestedManyWithoutUserInput
 }
@@ -917,7 +917,7 @@ export type UserUpdateWithoutAuthUserInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   links?: Prisma.UserLinkUpdateManyWithoutUserNestedInput
   certificates?: Prisma.CertificateUpdateManyWithoutUserNestedInput
-  Projects?: Prisma.ProjectUpdateManyWithoutUserNestedInput
+  projects?: Prisma.ProjectUpdateManyWithoutUserNestedInput
   skills?: Prisma.SkillUpdateManyWithoutUserNestedInput
   curriculums?: Prisma.CurriculumUpdateManyWithoutUserNestedInput
 }
@@ -932,7 +932,7 @@ export type UserUncheckedUpdateWithoutAuthUserInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   links?: Prisma.UserLinkUncheckedUpdateManyWithoutUserNestedInput
   certificates?: Prisma.CertificateUncheckedUpdateManyWithoutUserNestedInput
-  Projects?: Prisma.ProjectUncheckedUpdateManyWithoutUserNestedInput
+  projects?: Prisma.ProjectUncheckedUpdateManyWithoutUserNestedInput
   skills?: Prisma.SkillUncheckedUpdateManyWithoutUserNestedInput
   curriculums?: Prisma.CurriculumUncheckedUpdateManyWithoutUserNestedInput
 }
@@ -946,7 +946,7 @@ export type UserCreateWithoutCurriculumsInput = {
   createdAt?: Date | string
   links?: Prisma.UserLinkCreateNestedManyWithoutUserInput
   certificates?: Prisma.CertificateCreateNestedManyWithoutUserInput
-  Projects?: Prisma.ProjectCreateNestedManyWithoutUserInput
+  projects?: Prisma.ProjectCreateNestedManyWithoutUserInput
   skills?: Prisma.SkillCreateNestedManyWithoutUserInput
   authUser: Prisma.AuthUserCreateNestedOneWithoutUserInput
 }
@@ -962,7 +962,7 @@ export type UserUncheckedCreateWithoutCurriculumsInput = {
   createdAt?: Date | string
   links?: Prisma.UserLinkUncheckedCreateNestedManyWithoutUserInput
   certificates?: Prisma.CertificateUncheckedCreateNestedManyWithoutUserInput
-  Projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutUserInput
+  projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutUserInput
   skills?: Prisma.SkillUncheckedCreateNestedManyWithoutUserInput
 }
 
@@ -991,7 +991,7 @@ export type UserUpdateWithoutCurriculumsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   links?: Prisma.UserLinkUpdateManyWithoutUserNestedInput
   certificates?: Prisma.CertificateUpdateManyWithoutUserNestedInput
-  Projects?: Prisma.ProjectUpdateManyWithoutUserNestedInput
+  projects?: Prisma.ProjectUpdateManyWithoutUserNestedInput
   skills?: Prisma.SkillUpdateManyWithoutUserNestedInput
   authUser?: Prisma.AuthUserUpdateOneRequiredWithoutUserNestedInput
 }
@@ -1007,7 +1007,7 @@ export type UserUncheckedUpdateWithoutCurriculumsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   links?: Prisma.UserLinkUncheckedUpdateManyWithoutUserNestedInput
   certificates?: Prisma.CertificateUncheckedUpdateManyWithoutUserNestedInput
-  Projects?: Prisma.ProjectUncheckedUpdateManyWithoutUserNestedInput
+  projects?: Prisma.ProjectUncheckedUpdateManyWithoutUserNestedInput
   skills?: Prisma.SkillUncheckedUpdateManyWithoutUserNestedInput
 }
 
@@ -1019,7 +1019,7 @@ export type UserUncheckedUpdateWithoutCurriculumsInput = {
 export type UserCountOutputType = {
   links: number
   certificates: number
-  Projects: number
+  projects: number
   skills: number
   curriculums: number
 }
@@ -1027,7 +1027,7 @@ export type UserCountOutputType = {
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   links?: boolean | UserCountOutputTypeCountLinksArgs
   certificates?: boolean | UserCountOutputTypeCountCertificatesArgs
-  Projects?: boolean | UserCountOutputTypeCountProjectsArgs
+  projects?: boolean | UserCountOutputTypeCountProjectsArgs
   skills?: boolean | UserCountOutputTypeCountSkillsArgs
   curriculums?: boolean | UserCountOutputTypeCountCurriculumsArgs
 }
@@ -1089,7 +1089,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   createdAt?: boolean
   links?: boolean | Prisma.User$linksArgs<ExtArgs>
   certificates?: boolean | Prisma.User$certificatesArgs<ExtArgs>
-  Projects?: boolean | Prisma.User$ProjectsArgs<ExtArgs>
+  projects?: boolean | Prisma.User$projectsArgs<ExtArgs>
   skills?: boolean | Prisma.User$skillsArgs<ExtArgs>
   curriculums?: boolean | Prisma.User$curriculumsArgs<ExtArgs>
   authUser?: boolean | Prisma.AuthUserDefaultArgs<ExtArgs>
@@ -1135,7 +1135,7 @@ export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = run
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   links?: boolean | Prisma.User$linksArgs<ExtArgs>
   certificates?: boolean | Prisma.User$certificatesArgs<ExtArgs>
-  Projects?: boolean | Prisma.User$ProjectsArgs<ExtArgs>
+  projects?: boolean | Prisma.User$projectsArgs<ExtArgs>
   skills?: boolean | Prisma.User$skillsArgs<ExtArgs>
   curriculums?: boolean | Prisma.User$curriculumsArgs<ExtArgs>
   authUser?: boolean | Prisma.AuthUserDefaultArgs<ExtArgs>
@@ -1153,7 +1153,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   objects: {
     links: Prisma.$UserLinkPayload<ExtArgs>[]
     certificates: Prisma.$CertificatePayload<ExtArgs>[]
-    Projects: Prisma.$ProjectPayload<ExtArgs>[]
+    projects: Prisma.$ProjectPayload<ExtArgs>[]
     skills: Prisma.$SkillPayload<ExtArgs>[]
     curriculums: Prisma.$CurriculumPayload<ExtArgs>[]
     authUser: Prisma.$AuthUserPayload<ExtArgs>
@@ -1563,7 +1563,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   readonly [Symbol.toStringTag]: "PrismaPromise"
   links<T extends Prisma.User$linksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$linksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserLinkPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   certificates<T extends Prisma.User$certificatesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$certificatesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CertificatePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  Projects<T extends Prisma.User$ProjectsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$ProjectsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  projects<T extends Prisma.User$projectsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$projectsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   skills<T extends Prisma.User$skillsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$skillsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SkillPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   curriculums<T extends Prisma.User$curriculumsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$curriculumsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CurriculumPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   authUser<T extends Prisma.AuthUserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AuthUserDefaultArgs<ExtArgs>>): Prisma.Prisma__AuthUserClient<runtime.Types.Result.GetResult<Prisma.$AuthUserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
@@ -2048,9 +2048,9 @@ export type User$certificatesArgs<ExtArgs extends runtime.Types.Extensions.Inter
 }
 
 /**
- * User.Projects
+ * User.projects
  */
-export type User$ProjectsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type User$projectsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the Project
    */

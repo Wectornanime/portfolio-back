@@ -13,7 +13,7 @@ export default class GetOnePublicController implements Controller {
         links: true,
         skills: true,
         certificates: true,
-        Projects: {
+        projects: {
           include: { links: true }
         }
       }

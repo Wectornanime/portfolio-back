@@ -87,7 +87,7 @@ model User {
 
   links        UserLink[]
   certificates Certificate[]
-  Projects     Project[]
+  projects     Project[]
   skills       Skill[]
   curriculums  Curriculum[]
 
